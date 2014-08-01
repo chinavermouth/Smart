@@ -64,6 +64,10 @@ NSString *const CellIdentifier = @"cellIdentifier";
         [self listReports];
         [self addFooter];
     });
+    
+    UIImageView *headViewImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"reportFunc"]];
+    headViewImg.frame = CGRectMake(0, 0, 320, 200);
+    self.tableView.tableHeaderView = headViewImg;
 
 }
 
@@ -317,32 +321,11 @@ NSString *const CellIdentifier = @"cellIdentifier";
     [self.navigationController pushViewController:reportDetailViewController animated:YES];
 }
 
-// 设置区域头customView
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section;
-{
-    UIView *customView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 75)];
-    UILabel *header = [[UILabel alloc] initWithFrame:CGRectMake(0, 30, self.view.bounds.size.width, 20)];
-    header.text = @"";
-    header.textColor = [UIColor blackColor];
-    header.backgroundColor = [UIColor clearColor];
-    header.textAlignment = NSTextAlignmentCenter;
-    header.font = [UIFont systemFontOfSize:20.0f];
-    [customView addSubview:header];
-    return customView;
-}
-
-// 设置区域头高
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 5.0f;
-}
-
 
 #pragma mark MBProgressHUD methods
 
 - (void)hudWasHidden:(MBProgressHUD *)hud
 {
-    NSLog(@"Hud:%@",hud);
     [HUD removeFromSuperview];
     HUD = nil;
 }

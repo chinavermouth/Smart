@@ -144,7 +144,7 @@
         appScrollView.contentSize = CGSizeMake(SCREEN_SIZE.width, frame.size.height*1.2);
     [bgScrollView addSubview:appScrollView];
     
-    // 列出小区按钮
+    // 选择小区按钮
     frame.origin.x = MARGIN_LEFT;
     frame.origin.y = MARGIN_TOP;
     frame.size.width = BTN_WIDTH;
@@ -162,7 +162,7 @@
     
     // 添加文字
     UILabel *icoLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, BTNICON_HEIGHT, BTNLBL_WIDTH, BTNLBL_HEIGHT)];
-    [icoLbl setText:@"列出小区"];
+    [icoLbl setText:@"选择小区"];
     icoLbl.textColor = [UIColor blackColor];
     icoLbl.font = [UIFont systemFontOfSize:12.0f];
     icoLbl.textAlignment = NSTextAlignmentCenter;

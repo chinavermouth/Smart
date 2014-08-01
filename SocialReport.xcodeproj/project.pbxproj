@@ -136,6 +136,9 @@
 		F66C2A911941A11900E49ECD /* publicReport.png in Resources */ = {isa = PBXBuildFile; fileRef = F66C2A901941A11900E49ECD /* publicReport.png */; };
 		F66C2A931941A2A000E49ECD /* tenement.png in Resources */ = {isa = PBXBuildFile; fileRef = F66C2A921941A2A000E49ECD /* tenement.png */; };
 		F66C2A961941A2BB00E49ECD /* TenementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F66C2A951941A2BB00E49ECD /* TenementViewController.m */; };
+		F67696B8198B372B0069A9B9 /* reportFunc.png in Resources */ = {isa = PBXBuildFile; fileRef = F67696B7198B372B0069A9B9 /* reportFunc.png */; };
+		F67696BA198B3E690069A9B9 /* currentRegion@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F67696B9198B3E690069A9B9 /* currentRegion@2x.png */; };
+		F67696BC198B408D0069A9B9 /* searchInfo_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = F67696BB198B408D0069A9B9 /* searchInfo_bg.png */; };
 		F67CD9FE18FFBEB800ADF362 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F67CD9F418FFBEB800ADF362 /* MJRefresh.bundle */; };
 		F67CD9FF18FFBEB800ADF362 /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = F67CD9F718FFBEB800ADF362 /* MJRefreshBaseView.m */; };
 		F67CDA0018FFBEB800ADF362 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = F67CD9F918FFBEB800ADF362 /* MJRefreshConst.m */; };
@@ -388,6 +391,9 @@
 		F66C2A921941A2A000E49ECD /* tenement.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tenement.png; sourceTree = "<group>"; };
 		F66C2A941941A2BB00E49ECD /* TenementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TenementViewController.h; sourceTree = "<group>"; };
 		F66C2A951941A2BB00E49ECD /* TenementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TenementViewController.m; sourceTree = "<group>"; };
+		F67696B7198B372B0069A9B9 /* reportFunc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reportFunc.png; sourceTree = "<group>"; };
+		F67696B9198B3E690069A9B9 /* currentRegion@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "currentRegion@2x.png"; sourceTree = "<group>"; };
+		F67696BB198B408D0069A9B9 /* searchInfo_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = searchInfo_bg.png; sourceTree = "<group>"; };
 		F67CD9F418FFBEB800ADF362 /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
 		F67CD9F518FFBEB800ADF362 /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefresh.h; sourceTree = "<group>"; };
 		F67CD9F618FFBEB800ADF362 /* MJRefreshBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBaseView.h; sourceTree = "<group>"; };
@@ -610,6 +616,9 @@
 		E98BD19818AB096800428E13 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				F67696BB198B408D0069A9B9 /* searchInfo_bg.png */,
+				F67696B9198B3E690069A9B9 /* currentRegion@2x.png */,
+				F67696B7198B372B0069A9B9 /* reportFunc.png */,
 				F6AF94F3194AACF700B8A7CC /* 2.jpg */,
 				F6AF94F1194AAACE00B8A7CC /* 1.jpg */,
 				F6A43034194556C800390D12 /* about@2x.png */,
@@ -1038,6 +1047,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F67696BA198B3E690069A9B9 /* currentRegion@2x.png in Resources */,
 				E93392EC18AF6D5B00904E97 /* showMore_h@2x.png in Resources */,
 				F66C2A8B1941955200E49ECD /* menu3_selected@2x.png in Resources */,
 				F65031BC18EA738100F4796C /* editBtn_bg@2x.png in Resources */,
@@ -1051,6 +1061,7 @@
 				E93333DD18ACB38B0045D2C2 /* rent@2x.png in Resources */,
 				E93333CF18AC6F890045D2C2 /* report@2x.png in Resources */,
 				F66C2A871941955200E49ECD /* menu1_selected@2x.png in Resources */,
+				F67696B8198B372B0069A9B9 /* reportFunc.png in Resources */,
 				E9467DDA18C4815900A33348 /* news_forward_h@2x.png in Resources */,
 				F66C2A8C1941955200E49ECD /* menu3@2x.png in Resources */,
 				E98F28D718AB0C8900D9E0B5 /* Default@2x.png in Resources */,
@@ -1104,6 +1115,7 @@
 				E98F28D618AB0C8900D9E0B5 /* Default-568h@2x.png in Resources */,
 				E93333D518ACADAA0045D2C2 /* checkIn@2x.png in Resources */,
 				F65031B418EA495200F4796C /* bg-568h@2x.png in Resources */,
+				F67696BC198B408D0069A9B9 /* searchInfo_bg.png in Resources */,
 				E93392E718AF535800904E97 /* RadioButton-Unselected.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -36,12 +36,10 @@
     CGRect frame = self.view.frame;
     
     // bgScrollView
-    if([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
-        frame.size.height -= 45;
-    else
+    if([[[UIDevice currentDevice] systemVersion] floatValue] < 7.0)
     {
         frame.origin.y = 0;
-        frame.size.height -= self.navigationController.navigationBar.bounds.size.height + 45;
+        frame.size.height -= self.navigationController.navigationBar.bounds.size.height;
     }
     bgScrollView = [[UIScrollView alloc]initWithFrame:frame];
     bgScrollView.directionalLockEnabled = YES;
@@ -52,15 +50,25 @@
     bgScrollView.contentSize = CGSizeMake(320, frame.size.height - 64);
     [self.view addSubview:bgScrollView];
     
-    // searchLbl
+    //searchImg
     frame.origin.x = 20;
+    frame.origin.y = 18;
+    frame.size.width = 20;
+    frame.size.height = 20;
+    UIImageView *searchImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"currentRegion"]];
+    searchImg.frame = frame;
+    [bgScrollView addSubview:searchImg];
+    
+    // searchLbl
+    frame.origin.x = 20 + searchImg.frame.size.width + 10;
     frame.origin.y = 15;
     frame.size.width = 280;
     frame.size.height = 30;
     searchLbl = [[UILabel alloc] initWithFrame:frame];
     searchLbl.text = @"";
-    searchLbl.textColor = [UIColor blueColor];
+    //    searchLbl.textColor = [UIColor blueColor];
     searchLbl.font = [UIFont systemFontOfSize:18.0f];
+    searchLbl.backgroundColor = [UIColor clearColor];
     [bgScrollView addSubview:searchLbl];
     
     // searchBuildingBtn
@@ -151,20 +159,22 @@
     searchRoomNumIco.image = [UIImage imageNamed:@"arrow"];
     [bgScrollView addSubview:searchRoomNumIco];
     
-    // contentLbl
-    frame.origin.x = 20;
-    frame.origin.y = searchRoomNumBtn.frame.origin.y + searchRoomNumBtn.frame.size.height + PADDING_TOP;
-    frame.size.width = 150;
+    // searchInfoBtn
+    frame.origin.x = PADDING_LEFT + 5;
+    frame.origin.y = searchRoomNumBtn.frame.origin.y + searchRoomNumBtn.frame.size.height + PADDING_TOP + 5;
+    frame.size.width = 110;
     frame.size.height = 30;
-    UILabel *contentLbl = [[UILabel alloc] initWithFrame:frame];
-    contentLbl.text = @"当前欠费信息";
-    contentLbl.textColor = [UIColor blueColor];
-    [[contentLbl font] fontWithSize:18.0f];
-    [bgScrollView addSubview:contentLbl];
+    UIButton *searchInfoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    searchInfoBtn.frame = frame;
+    [searchInfoBtn setTitle:@"查询欠费信息" forState:UIControlStateNormal];
+    searchInfoBtn.titleLabel.font = [UIFont systemFontOfSize:15.0f];
+    [searchInfoBtn setBackgroundImage:[UIImage imageNamed:@"searchInfo_bg"] forState:UIControlStateNormal];
+    [searchInfoBtn addTarget:self action:@selector(searchInfoBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+    [bgScrollView addSubview:searchInfoBtn];
     
     // contentShowBg
     frame.origin.x = PADDING_LEFT;
-    frame.origin.y += contentLbl.frame.size.height + PADDING_TOP;
+    frame.origin.y += searchInfoBtn.frame.size.height + PADDING_TOP;
     frame.size.width = MAIN_SCREEN_SIZE.width - 2*PADDING_LEFT;
     frame.size.height = bgScrollView.frame.size.height - frame.origin.y - 44 - 10;
     UIImageView *contentShowBg = [[UIImageView alloc] initWithFrame:frame];
@@ -175,7 +185,7 @@
     frame.origin.x += 5;
     frame.origin.y += 15;
     frame.size.width = contentShowBg.frame.size.width - 2*5;
-    frame.size.height = contentShowBg.frame.size.height - 2*15;
+    frame.size.height = contentShowBg.frame.size.height;
     contentTextView = [[UITextView alloc] initWithFrame:frame];
     contentTextView.font = [UIFont systemFontOfSize:16.0f];
     contentTextView.backgroundColor = [UIColor clearColor];
@@ -183,28 +193,13 @@
     contentTextView.text = @"欠费情况";
     contentTextView.textColor = [UIColor redColor];
     [bgScrollView addSubview:contentTextView];
-    
-    // searchInfoBtn
-    frame.origin.x = 0;
-    frame.origin.y = bgScrollView.frame.size.height;
-    frame.size.width = 320;
-    frame.size.height = 45;
-    UIButton *searchInfoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    searchInfoBtn.frame = frame;
-    searchInfoBtn.titleLabel.font = [UIFont systemFontOfSize:18.0f];
-    [searchInfoBtn setTitle:@"欠费查询" forState:UIControlStateNormal];
-    [searchInfoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [searchInfoBtn setBackgroundImage:[UIImage imageNamed:@"loginBtn_bg"] forState:UIControlStateNormal];
-    [searchInfoBtn setBackgroundImage:[UIImage imageNamed:@"login_bg"] forState:UIControlStateHighlighted];
-    [searchInfoBtn addTarget:self action:@selector(searchInfoBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:searchInfoBtn];
 
 }
 
 // 设置小区、楼宇和房号标签
 - (void)viewWillAppear:(BOOL)animated
 {
-    searchLbl.text = [[NSUserDefaults standardUserDefaults] objectForKey:COMDISPLAYNAME];
+    searchLbl.text = [NSString stringWithFormat:@"当前小区为：       %@", [[NSUserDefaults standardUserDefaults] objectForKey:COMDISPLAYNAME]];
     searchBuildingVauleLbl.text = myCommon.m_buildingName;
     searchRoomNumVauleLbl.text = myCommon.m_roomNo;
     

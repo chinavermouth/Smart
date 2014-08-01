@@ -42,12 +42,10 @@
     CGRect frame = self.view.frame;
     
     // bgScrollView
-    if([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
-        frame.size.height -= 45;
-    else
+    if([[[UIDevice currentDevice] systemVersion] floatValue] < 7.0)
     {
         frame.origin.y = 0;
-        frame.size.height -= self.navigationController.navigationBar.bounds.size.height + 45;
+        frame.size.height -= self.navigationController.navigationBar.bounds.size.height;
     }
     bgScrollView = [[UIScrollView alloc]initWithFrame:frame];
     bgScrollView.directionalLockEnabled = YES;
@@ -58,15 +56,25 @@
     bgScrollView.contentSize = CGSizeMake(320, frame.size.height - 64);
     [self.view addSubview:bgScrollView];
     
-    // searchLbl
+    //searchImg
     frame.origin.x = 20;
+    frame.origin.y = 18;
+    frame.size.width = 20;
+    frame.size.height = 20;
+    UIImageView *searchImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"currentRegion"]];
+    searchImg.frame = frame;
+    [bgScrollView addSubview:searchImg];
+    
+    // searchLbl
+    frame.origin.x = 20 + searchImg.frame.size.width + 10;
     frame.origin.y = 15;
     frame.size.width = 280;
     frame.size.height = 30;
     searchLbl = [[UILabel alloc] initWithFrame:frame];
     searchLbl.text = @"";
-    searchLbl.textColor = [UIColor blueColor];
+//    searchLbl.textColor = [UIColor blueColor];
     searchLbl.font = [UIFont systemFontOfSize:18.0f];
+    searchLbl.backgroundColor = [UIColor clearColor];
     [bgScrollView addSubview:searchLbl];
     
     // searchBuildingBtn
@@ -157,18 +165,20 @@
     searchRoomNumIco.image = [UIImage imageNamed:@"arrow"];
     [bgScrollView addSubview:searchRoomNumIco];
     
-    // contentLbl
-    frame.origin.x = 20;
-    frame.origin.y = searchRoomNumBtn.frame.origin.y + searchRoomNumBtn.frame.size.height + PADDING_TOP;
-    frame.size.width = 150;
+    // searchInfoBtn
+    frame.origin.x = PADDING_LEFT + 5;
+    frame.origin.y = searchRoomNumBtn.frame.origin.y + searchRoomNumBtn.frame.size.height + PADDING_TOP + 5;
+    frame.size.width = 110;
     frame.size.height = 30;
-    UILabel *contentLbl = [[UILabel alloc] initWithFrame:frame];
-    contentLbl.text = @"人员信息列表";
-    contentLbl.textColor = [UIColor blueColor];
-    [[contentLbl font] fontWithSize:18.0f];
-    [bgScrollView addSubview:contentLbl];
+    UIButton *searchInfoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    searchInfoBtn.frame = frame;
+    [searchInfoBtn setTitle:@"查询人员信息" forState:UIControlStateNormal];
+    searchInfoBtn.titleLabel.font = [UIFont systemFontOfSize:15.0f];
+    [searchInfoBtn setBackgroundImage:[UIImage imageNamed:@"searchInfo_bg"] forState:UIControlStateNormal];
+    [searchInfoBtn addTarget:self action:@selector(searchInfoBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+    [bgScrollView addSubview:searchInfoBtn];
     
-    frame.origin.x += frame.size.width + 75;
+    frame.origin.x += frame.size.width + 115;
     frame.size.width = 50;
     frame.size.height = 30;
     // editBtn
@@ -184,41 +194,26 @@
     
     // contentShowBg
     frame.origin.x = PADDING_LEFT;
-    frame.origin.y += contentLbl.frame.size.height + PADDING_TOP;
+    frame.origin.y += searchInfoBtn.frame.size.height + PADDING_TOP;
     frame.size.width = MAIN_SCREEN_SIZE.width - 2*PADDING_LEFT;
     if (SYSTEM_VERSION >= 7.0)
         frame.size.height = bgScrollView.frame.size.height - frame.origin.y - 44 - 10;
     else
         frame.size.height = bgScrollView.frame.size.height - frame.origin.y - 44 - 10 + 64;
     UIImageView *contentShowBg = [[UIImageView alloc] initWithFrame:frame];
-    [contentShowBg setImage:[UIImage imageNamed:@"box"]];
+    [contentShowBg setImage:[UIImage imageNamed:@""]];
     [bgScrollView addSubview:contentShowBg];
     
     // myTableView
     frame.origin.x += 5;
     frame.origin.y += 30;
     frame.size.width = contentShowBg.frame.size.width - 2*5;
-    frame.size.height = contentShowBg.frame.size.height - 2*30;
+    frame.size.height = contentShowBg.frame.size.height - 49;
     myTableView = [[UITableView alloc]initWithFrame:frame];
     myTableView.delegate = self;
     myTableView.dataSource = self;
-//    myTableView.allowsMultipleSelectionDuringEditing = YES;
+    myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [bgScrollView addSubview:myTableView];
-    
-    // searchInfoBtn
-    frame.origin.x = 0;
-    frame.origin.y = bgScrollView.frame.size.height;
-    frame.size.width = 320;
-    frame.size.height = 45;
-    UIButton *searchInfoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    searchInfoBtn.frame = frame;
-    searchInfoBtn.titleLabel.font = [UIFont systemFontOfSize:18.0f];
-    [searchInfoBtn setTitle:@"查询信息" forState:UIControlStateNormal];
-    [searchInfoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [searchInfoBtn setBackgroundImage:[UIImage imageNamed:@"loginBtn_bg"] forState:UIControlStateNormal];
-    [searchInfoBtn setBackgroundImage:[UIImage imageNamed:@"login_bg"] forState:UIControlStateHighlighted];
-    [searchInfoBtn addTarget:self action:@selector(searchInfoBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:searchInfoBtn];
     
     // 设置导航栏
     UIToolbar *titleToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
@@ -263,14 +258,12 @@
     [moveOutBtn setBackgroundImage:[UIImage imageNamed:@"news_message_d@2x.png"] forState:UIControlStateDisabled];
     [moveOutBtn addTarget:self action:@selector(moveOutBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     [titleToolbar addSubview:moveOutBtn];
-    
-    
 }
 
 // 设置小区、楼宇和房号标签
 - (void)viewWillAppear:(BOOL)animated
 {
-    searchLbl.text = [[NSUserDefaults standardUserDefaults] objectForKey:COMDISPLAYNAME];
+    searchLbl.text = [NSString stringWithFormat:@"当前小区为：       %@", [[NSUserDefaults standardUserDefaults] objectForKey:COMDISPLAYNAME]];
     searchBuildingVauleLbl.text = myCommon.m_buildingName;
     searchRoomNumVauleLbl.text = myCommon.m_roomNo;
 //    editBtn.alpha = 0;
