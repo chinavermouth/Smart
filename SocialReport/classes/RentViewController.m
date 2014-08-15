@@ -292,20 +292,18 @@
     [bgScrollView addSubview:takePhotoBtn];
     
     // btConnDeviceBtn
-    frame.origin.x = 0;
-    frame.origin.y = bgScrollView.frame.size.height;
-    frame.size.width = 320;
-    frame.size.height = 45;
+    frame.origin.x = 20;
+    frame.origin.y = bgScrollView.frame.size.height+ 8;
+    frame.size.width = 280;
+    frame.size.height = 25;
     UIButton *rentPublishBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     rentPublishBtn.frame = frame;
-    rentPublishBtn.titleLabel.font = [UIFont systemFontOfSize:18.0f];
+    rentPublishBtn.titleLabel.font = [UIFont systemFontOfSize:16.0f];
     [rentPublishBtn setTitle:@"发布租房" forState:UIControlStateNormal];
-    [rentPublishBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [rentPublishBtn setBackgroundImage:[UIImage imageNamed:@"loginBtn_bg"] forState:UIControlStateNormal];
-    [rentPublishBtn setBackgroundImage:[UIImage imageNamed:@"login_bg"] forState:UIControlStateHighlighted];
-    [rentPublishBtn addTarget:self action:@selector(rentPublishBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+    [rentPublishBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [rentPublishBtn setBackgroundColor:[UIColor lightGrayColor]];
+//    [rentPublishBtn addTarget:self action:@selector(rentPublishBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:rentPublishBtn];
-    
     
     // 空白填充按钮
     UIBarButtonItem *spaceButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];

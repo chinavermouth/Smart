@@ -368,6 +368,10 @@
                     UIAlertView *alt = [[UIAlertView alloc] initWithTitle:@"提示" message:@"发布成功!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                     [alt show];
                 }
+                else if([[[respDic objectForKey:@"Info"] objectForKey:@"Code"] intValue] == 2)
+                {
+                    NSLog(@"空值，未知错误！");
+                }
                 else
                 {
                     UIAlertView *alt = [[UIAlertView alloc] initWithTitle:@"提示" message:@"现在网络有点堵车,不加图片试试 ~" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];

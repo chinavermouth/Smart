@@ -89,62 +89,28 @@ typedef enum
 
 
 @interface Common : NSObject
-//{
-//    // openUdid
-//    NSString *m_strOpenUDID;
-//    // 租户号
-//    NSString *m_tenantCode;
-//    // 楼宇名称
-//    NSString *m_buildingName;
-//    // 楼宇代码
-//    NSString *m_buildingNo;
-//    // 房间号
-//    NSString *m_roomNo;
-//    // 参数名称
-//    NSString *m_parameterName;
-//    // 用户编号
-//    NSString *m_clientNo;
-//    // 用户名称
-//    NSString *m_clientName;
-//    // 信息主题ID
-//    NSString *m_subjectId;
-//    // 信息title
-//    NSString *m_infoTitle;
-//    // 小区代码数组
-//    NSMutableArray *m_commCodeAry;
-//    // 小区编号数组
-//    NSMutableArray *m_commNoAry;
-//    // 小区名称数组
-//    NSMutableArray *m_commNameAry;
-//    // 申告帖子ID
-//    NSString *m_reportId;
-//    // 申告帖子标题
-//    NSString *m_reportTitle;
-//    // 申告帖子处理状态
-//    NSString *m_reportStatus;
-//}
 
-@property (nonatomic, retain)  NSString *m_strOpenUDID;
-@property (nonatomic, retain)  NSString *m_tenantCode;
-@property (nonatomic, retain)  NSString *m_buildingName;
-@property (nonatomic, retain)  NSString *m_buildingNo;
-@property (nonatomic, retain)  NSString *m_roomNo;
-@property (nonatomic, retain)  NSString *m_parameterName;
-@property (nonatomic, retain)  NSString *m_clientNo;
-@property (nonatomic, retain)  NSString *m_clientName;
-@property (nonatomic, retain)  NSString *m_subjectId;
-@property (nonatomic, retain)  NSString *m_infoTitle;
-@property (nonatomic, retain)  NSMutableArray *m_commCodeAry;
-@property (nonatomic, retain)  NSMutableArray *m_commNoAry;
-@property (nonatomic, retain)  NSMutableArray *m_commNameAry;
-@property (nonatomic, retain)  NSString *m_reportId;
-@property (nonatomic, retain)  NSString *m_reportTitle;
-@property (nonatomic, retain)  NSString *m_reportStatus;
+@property (nonatomic, retain)  NSString *m_strOpenUDID;     // 手机OPENUDID
+@property (nonatomic, retain)  NSString *m_tenantCode;      // 租户号
+@property (nonatomic, retain)  NSString *m_buildingName;      // 楼宇名称
+@property (nonatomic, retain)  NSString *m_buildingNo;      // 楼宇代码
+@property (nonatomic, retain)  NSString *m_roomNo;        // 房间号
+@property (nonatomic, retain)  NSString *m_parameterName;       // 参数名称
+@property (nonatomic, retain)  NSString *m_clientNo;        // 用户编号
+@property (nonatomic, retain)  NSString *m_clientName;      // 用户名称
+@property (nonatomic, retain)  NSString *m_subjectId;       // 信息主题ID
+@property (nonatomic, retain)  NSString *m_infoTitle;       // 信息标题
+@property (nonatomic, retain)  NSMutableArray *m_commCodeAry;       // 小区代码数组
+@property (nonatomic, retain)  NSMutableArray *m_commNoAry;      // 小区编号数组
+@property (nonatomic, retain)  NSMutableArray *m_commNameAry;       // 小区名称数组
+@property (nonatomic, retain)  NSString *m_reportId;        // 申告帖子ID
+@property (nonatomic, retain)  NSString *m_reportTitle;     // 申告帖子标题
+@property (nonatomic, retain)  NSString *m_reportStatus;      // 申告帖子处理状态
 @property (nonatomic, retain)  NSMutableDictionary *m_imageCacheDic;     // 内存图片缓存数组
 
 
 + (id)shared;
 - (NSString *)getOpenUDID;
-- (void)checkImageMemoryCache;
+- (void)checkImageMemoryCache;      // 检查图片内存缓存
 
 @end
