@@ -11,9 +11,8 @@
 #import "Common.h"
 #import "MainBoardViewController.h"
 
-#define MAIN_SCREEN_HEIGHT [[UIScreen mainScreen] bounds].size.height
 #define PADDING_LEFT 20
-#define PADDING_TOP 70
+#define PADDING_TOP 90
 
 
 @interface LoginViewController ()
@@ -39,93 +38,79 @@
     
     // set background image
     UIImageView *bgView = [[UIImageView alloc] initWithFrame:frame];
-    // bg for ip5
-    if (MAIN_SCREEN_HEIGHT > 480)
+    if (SCREEN_SIZE.height > 480)
     {
         [bgView setImage:[UIImage imageNamed:@"bg-568h"]];
         
     }
-    // bg for ip4
     else
     {
         [bgView setImage:[UIImage imageNamed:@"bg"]];
     }
     [self.view addSubview:bgView];
 
-    // logo
-    frame.origin.x = (320 - 200)/2 + 15;
+    // account background
+    frame.origin.x = (320 - 104.5)/2;
     frame.origin.y = PADDING_TOP;
-    UIImageView *logoView = [[UIImageView alloc] initWithFrame:CGRectMake(frame.origin.x, frame.origin.y, 200, 76)];
-    [logoView setImage:[UIImage imageNamed:@"logo"]];
-    [self.view addSubview:logoView];
+    frame.size.width = 104.5;
+    frame.size.height = 104.5;
+    UIImageView *accountBg = [[UIImageView alloc] initWithFrame:frame];
+    [accountBg setImage:[UIImage imageNamed:@"accountBg"]];
+    [self.view addSubview:accountBg];
     
-    // account bg
-    frame.origin.x = PADDING_LEFT;
-    frame.origin.y = frame.origin.y + logoView.frame.size.height + 105;
-    frame.size.width = 280;
-    frame.size.height = 100;
-    UIImageView *loginBgView = [[UIImageView alloc] initWithFrame:frame];
-    [loginBgView setImage:[UIImage imageNamed:@"login_bg"]];
-    [loginBgView setUserInteractionEnabled:YES];
-    [self.view addSubview:loginBgView];
-    
-    // accountNameLabel
-    UILabel *accountNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 60, 100/2-10)];
-    accountNameLabel.backgroundColor = [UIColor clearColor];
-    accountNameLabel.textAlignment = NSTextAlignmentLeft;
-    accountNameLabel.font = [UIFont systemFontOfSize:16.0f];
-    accountNameLabel.text = @"帐号:";
-    [loginBgView addSubview:accountNameLabel];
+    // account image
+    frame.origin.x = 10.5/2;
+    frame.origin.y = 10.5/2;
+    frame.size.width = 94;
+    frame.size.height = 94;
+    UIImageView *accountImg = [[UIImageView alloc] initWithFrame:frame];
+    [accountImg setImage:[UIImage imageNamed:@"accountImg"]];
+    [accountBg addSubview:accountImg];
     
     // accountNameText
-    accountNameText =[[UITextField alloc] initWithFrame:CGRectMake(60, 10, 200, 100/2-10)];
-    accountNameText.backgroundColor = [UIColor clearColor];
-    accountNameText.textAlignment = NSTextAlignmentLeft;
+    frame.origin.x = (SCREEN_SIZE.width - 213.5)/2;
+    frame.origin.y = accountBg.frame.origin.y + accountBg.frame.size.height + 40;
+    frame.size.width = 213.5;
+    frame.size.height = 28.5;
+    accountNameText =[[UITextField alloc] initWithFrame:frame];
+    [accountNameText setBackground:[UIImage imageNamed:@"userNameBg"]];
+    accountNameText.textAlignment = NSTextAlignmentCenter;
     [accountNameText setReturnKeyType:UIReturnKeyDone];
     // 设置垂直居中
     accountNameText.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    accountNameText.font = [UIFont systemFontOfSize:16.0f];
-    accountNameText.placeholder = @"请输入用户名";
+    accountNameText.font = [UIFont systemFontOfSize:14.0f];
+    accountNameText.placeholder = @"请输入邮箱/账号/昵称";
     accountNameText.autocorrectionType = UITextAutocorrectionTypeNo;    // 关闭自动语法错误提示
     accountNameText.autocapitalizationType = UITextAutocapitalizationTypeNone;    // 关闭自动大小写
+    accountNameText.clearButtonMode = UITextFieldViewModeAlways;
     accountNameText.delegate = self;
-    [loginBgView addSubview:accountNameText];
+    [self.view addSubview:accountNameText];
     
     // 默认用户名
     if([[NSUserDefaults standardUserDefaults] objectForKey:USERID])
         accountNameText.text = [[NSUserDefaults standardUserDefaults] objectForKey:USERID];
     
-    // bgline
-    UILabel *bgLine = [[UILabel alloc] initWithFrame:CGRectMake(10, 10+40, 260, 1)];
-    bgLine.backgroundColor = [UIColor lightGrayColor];
-    [loginBgView addSubview:bgLine];
-    
-    // pwdLabel
-    UILabel *pwdLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 51, 60, 100/2-10)];
-    pwdLabel.backgroundColor = [UIColor clearColor];
-    pwdLabel.textAlignment = NSTextAlignmentLeft;
-    pwdLabel.font = [UIFont systemFontOfSize:16.0f];
-    pwdLabel.text = @"密码:";
-    [loginBgView addSubview:pwdLabel];
-    
     // pwdText
-    pwdText =[[UITextField alloc] initWithFrame:CGRectMake(60, 51, 200, 100/2-10)];
-    pwdText.backgroundColor = [UIColor clearColor];
-    pwdText.textAlignment = NSTextAlignmentLeft;
+    frame.origin.y += accountNameText.frame.size.height + 15;
+    pwdText =[[UITextField alloc] initWithFrame:frame];
+    [pwdText setBackground:[UIImage imageNamed:@"passwdBg"]];
+    pwdText.textAlignment = NSTextAlignmentCenter;
     pwdText.secureTextEntry = YES;
     [pwdText setReturnKeyType:UIReturnKeyDone];
     // 设置垂直居中
     pwdText.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     [pwdText setKeyboardType:UIKeyboardTypeAlphabet];
-    pwdText.font = [UIFont systemFontOfSize:16.0f];
+    pwdText.font = [UIFont systemFontOfSize:14.0f];
     pwdText.placeholder = @"请输入密码";
     pwdText.autocorrectionType = UITextAutocorrectionTypeNo;    // 关闭自动语法错误提示
     pwdText.autocapitalizationType = UITextAutocapitalizationTypeNone;    // 关闭自动大小写
+    pwdText.clearButtonMode = UITextFieldViewModeAlways;
     pwdText.delegate = self;
-    [loginBgView addSubview:pwdText];
-    
+    [self.view addSubview:pwdText];
+
     // autoLoginBtn
-    frame.origin.y = frame.origin.y + loginBgView.frame.size.height + 15 + 10;
+    frame.origin.x += 2;
+    frame.origin.y += pwdText.frame.size.height + 10;
     frame.size.width = 25;
     frame.size.height = 25;
     autoLoginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -134,30 +119,32 @@
     [autoLoginBtn setBackgroundImage:[UIImage imageNamed:@"showMore_h"] forState:UIControlStateSelected];
     [autoLoginBtn addTarget:self action:@selector(autoLoginBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:autoLoginBtn];
-    
+
     // autoLoginLbl
-    frame.origin.x += 25 + 10;
-    frame.origin.y -= 10;
+    frame.origin.x += autoLoginBtn.frame.size.width + 10;
     frame.size.width = 85;
-    frame.size.height = 45;
+    frame.size.height = 25;
     UILabel *autoLoginLbl = [[UILabel alloc] initWithFrame:frame];
-    autoLoginLbl.text = @"自动登录";
-    autoLoginLbl.font = [UIFont systemFontOfSize:16.0f];
+    autoLoginLbl.text = @"是否自动登录";
+    autoLoginLbl.font = [UIFont systemFontOfSize:13.0f];
     autoLoginLbl.backgroundColor = [UIColor clearColor];
     [self.view addSubview:autoLoginLbl];
-    
+
     // loginBtn
-    frame.origin.x += 85;
-    frame.size.width = 160;
-    frame.size.height = 45;
+    frame.origin.x = accountNameText.frame.origin.x;
+    frame.origin.y += autoLoginBtn.frame.size.height + 10;
+    frame.size.width = 213.5;
+    frame.size.height = 29;
     loginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     loginBtn.frame = frame;
-    loginBtn.titleLabel.font = [UIFont systemFontOfSize:18.0f];
-    [loginBtn setTitle:@"登 录" forState:UIControlStateNormal];
-    [loginBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [loginBtn setBackgroundImage:[UIImage imageNamed:@"loginBtn_bg"] forState:UIControlStateNormal];
-    [loginBtn setBackgroundImage:[UIImage imageNamed:@"login_bg"] forState:UIControlStateHighlighted];
+    [loginBtn setBackgroundImage:[UIImage imageNamed:@"loginBtnBg"] forState:UIControlStateNormal];
     [loginBtn addTarget:self action:@selector(loginBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+//    // 给button添加圆角和边框
+//    [loginBtn.layer setCornerRadius:8.0f];
+//    [loginBtn.layer setBorderWidth:1.0f];
+//    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+//    CGColorRef colorref = CGColorCreate(colorSpace, (CGFloat[]){1,1,1,1});
+//    [loginBtn.layer setBorderColor:colorref];
     [self.view addSubview:loginBtn];
 
 }
@@ -196,17 +183,32 @@
 // 点击登录按钮
 -(void)loginBtnClicked
 {
+    if([accountNameText.text isEqualToString:@""])
+    {
+        [myLeenToast settext:@"用户名不能为空"];
+        [myLeenToast show];
+        return;
+    }
+    else if([pwdText.text isEqualToString:@""])
+    {
+        [myLeenToast settext:@"密码不能为空"];
+        [myLeenToast show];
+        return;
+    }
+    
     [accountNameText resignFirstResponder];
     [pwdText resignFirstResponder];
     
     // 设置请求URL
     NSString *strRequestURL;
-    if([accountNameText.placeholder isEqualToString:@"请输入用户名"])
+    if([accountNameText.placeholder isEqualToString:@"请输入邮箱/账号/昵称"])
     {
+        // 正常登陆
         strRequestURL = [NSString stringWithFormat:@"%@?userID=%@&password=%@&tel=%@&rememberMe=%@&vCode=%@&machineKey=%@&type=%@",HTTPURL_LOGIN,accountNameText.text,pwdText.text,@"",isAutoLogin,@"",myCommon.m_strOpenUDID,@"0"];
     }
     else
     {
+        // 手机验证登录
         strRequestURL = [NSString stringWithFormat:@"%@?userID=%@&password=%@&tel=%@&rememberMe=%@&vCode=%@&machineKey=%@&type=%@",HTTPURL_LOGIN,@"",@"",accountNameText.text,isAutoLogin,pwdText.text,myCommon.m_strOpenUDID,@"1"];
     }
 //    NSLog(@"strRequestURL = %@",strRequestURL);
@@ -256,18 +258,6 @@
                  {
                      UIAlertView *alt = [[UIAlertView alloc] initWithTitle:@"提示" message:@"你不在常用地区登录，请用手机验证码登录" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                      [alt show];
-                     return;
-                 }
-                 else if([accountNameText.text isEqualToString:@""])
-                 {
-                     [myLeenToast settext:@"用户名不能为空"];
-                     [myLeenToast show];
-                     return;
-                 }
-                 else if([pwdText.text isEqualToString:@""])
-                 {
-                     [myLeenToast settext:@"密码不能为空"];
-                     [myLeenToast show];
                      return;
                  }
                  else
@@ -321,9 +311,9 @@
         keyboardHeight = 216;
     CGRect frame = textField.frame;
     CGFloat offset;
-    offset = 251 + frame.origin.y + frame.size.height + 60 - (self.view.frame.size.height - keyboardHeight) ;//键盘高度keyboardHeight
+    offset = 20 + frame.origin.y + frame.size.height + 60 - (self.view.frame.size.height - keyboardHeight) ;//键盘高度keyboardHeight
     if(SYSTEM_VERSION < 7.0f)
-        offset = 251 + frame.origin.y + frame.size.height + 50 - (self.view.frame.size.height - keyboardHeight) ;//键盘高度keyboardHeight
+        offset = 20 + frame.origin.y + frame.size.height + 50 - (self.view.frame.size.height - keyboardHeight) ;//键盘高度keyboardHeight
     NSTimeInterval animationDuration = 0.30f;
     [UIView beginAnimations:@"ResizeForKeyBoard" context:nil];
     [UIView setAnimationDuration:animationDuration];
@@ -343,7 +333,6 @@
             CGRect rect = CGRectMake(0.0f, 0.0f,width,height);
             self.view.frame = rect;
         }
-        
     }
     
     [UIView commitAnimations];
@@ -391,7 +380,6 @@
 
 - (void)hudWasHidden:(MBProgressHUD *)hud
 {
-//    NSLog(@"Hud:%@",hud);
     [HUD removeFromSuperview];
     HUD = nil;
 }

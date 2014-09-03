@@ -314,6 +314,61 @@
             }
             break;
             
+        case HTTP_GETCOMMUNITYADDRESSLIST:
+            if (threadType == 0)
+            {
+                [NSThread detachNewThreadSelector:@selector(getCommAddListRequest:) toTarget:self withObject:strJsonContent];
+            }
+            else
+            {
+                dicResult = [self getCommAddListRequest:strJsonContent];
+            }
+            break;
+            
+        case HTTP_DELETEADDRESSLIST:
+            if (threadType == 0)
+            {
+                [NSThread detachNewThreadSelector:@selector(deleteAddressListRequest:) toTarget:self withObject:strJsonContent];
+            }
+            else
+            {
+                dicResult = [self deleteAddressListRequest:strJsonContent];
+            }
+            break;
+        
+        case HTTP_CREATEADDRESSLIST:
+            if (threadType == 0)
+            {
+                [NSThread detachNewThreadSelector:@selector(createAddressListRequest:) toTarget:self withObject:strJsonContent];
+            }
+            else
+            {
+                dicResult = [self createAddressListRequest:strJsonContent];
+            }
+            break;
+            
+        case HTTP_GETCOMMUNITYINFO:
+            if (threadType == 0)
+            {
+                [NSThread detachNewThreadSelector:@selector(getCommunityInfoRequest:) toTarget:self withObject:strJsonContent];
+            }
+            else
+            {
+                dicResult = [self getCommunityInfoRequest:strJsonContent];
+            }
+            break;
+            
+        case HTTP_CREATEORUPDATECOMMINFO:
+            if (threadType == 0)
+            {
+                [NSThread detachNewThreadSelector:@selector(createOrUpdateCommInfoRequest:) toTarget:self withObject:strJsonContent];
+            }
+            else
+            {
+                dicResult = [self createOrUpdateCommInfoRequest:strJsonContent];
+            }
+            break;
+            
         default:
             break;
     }
@@ -1201,7 +1256,7 @@
             
             // get response
             NSString* respString = [request responseString];
-            NSLog(@"getFeedbackDetailsRequest respString = %@",respString);
+//            NSLog(@"getFeedbackDetailsRequest respString = %@",respString);
             NSDictionary *dicResult = [respString JSONValue];
             
             return dicResult;
@@ -1218,7 +1273,7 @@
     }
 }
 
-#pragma mark - 追加故障申告、意见反馈(物业公司对业主提出的问题的处理，使用此接口回复)
+#pragma mark - 追加故障申告、意见反馈(物业公司对业主提出的问题的处理，使用此接口回复) (POST)
 
 - (NSDictionary *)appendFeedbackRequest:(NSString *) strJsonContent
 {
@@ -1245,7 +1300,7 @@
             
             // get response
             NSString* respString = [request responseString];
-            NSLog(@"appendFeedbackRequest respString = %@",respString);
+//            NSLog(@"appendFeedbackRequest respString = %@",respString);
             NSDictionary *dicResult = [respString JSONValue];
             
             return dicResult;
@@ -1254,6 +1309,196 @@
         
         @catch (NSException *exception) {
             strLog = [NSString stringWithFormat:@"appendFeedbackRequest error:catch error(%@)",exception];
+            NSLog(@"%@",strLog);
+            return dicResult;
+            
+        }
+        return dicResult;
+    }
+}
+
+#pragma mark - 获得物业客服通讯录列表
+
+- (NSDictionary *)getCommAddListRequest:(NSString *) strJsonContent
+{
+    @autoreleasepool
+    {
+        NSString *strLog = @"";
+        NSDictionary *dicResult = nil;
+        @try {
+            
+            // make request
+            ASIHTTPRequest* request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:strJsonContent]];
+            
+            [request startSynchronous];
+            
+            // get response
+            NSString* respString = [request responseString];
+//            NSLog(@"getCommAddListRequest respString = %@",respString);
+            NSDictionary *dicResult = [respString JSONValue];
+            
+            return dicResult;
+            
+        }
+        
+        @catch (NSException *exception) {
+            strLog = [NSString stringWithFormat:@"getCommAddListRequest error:catch error(%@)",exception];
+            NSLog(@"%@",strLog);
+            return dicResult;
+            
+        }
+        return dicResult;
+    }
+}
+
+#pragma mark - 删除通讯录
+
+- (NSDictionary *)deleteAddressListRequest:(NSString *) strJsonContent
+{
+    @autoreleasepool
+    {
+        NSString *strLog = @"";
+        NSDictionary *dicResult = nil;
+        @try {
+            
+            // make request
+            ASIHTTPRequest* request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:strJsonContent]];
+            
+            [request startSynchronous];
+            
+            // get response
+            NSString* respString = [request responseString];
+//            NSLog(@"deleteAddressListRequest respString = %@",respString);
+            NSDictionary *dicResult = [respString JSONValue];
+            
+            return dicResult;
+            
+        }
+        
+        @catch (NSException *exception) {
+            strLog = [NSString stringWithFormat:@"deleteAddressListRequest error:catch error(%@)",exception];
+            NSLog(@"%@",strLog);
+            return dicResult;
+            
+        }
+        return dicResult;
+    }
+}
+
+#pragma mark - 创建通讯录 (POST)
+
+- (NSDictionary *)createAddressListRequest:(NSString *) strJsonContent
+{
+    @autoreleasepool
+    {
+        NSString *strLog = @"";
+        NSDictionary *dicResult = nil;
+        @try {
+            
+            // post data
+            NSData *postBody = [strJsonContent dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+            
+            // post length
+            NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)[postBody length]];
+            
+            // make request
+            ASIHTTPRequest* request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@?UID=%@",HTTPURL_CREATEADDRESSLIST,[[NSUserDefaults standardUserDefaults] objectForKey:UID]]]];
+            [request addRequestHeader:@"Content-Type" value:@"application/json"];
+            [request addRequestHeader:@"Content-Length" value:postLength];
+            [request setRequestMethod:@"POST"];
+            [request appendPostData:postBody];
+            [request setValidatesSecureCertificate:NO];
+            [request startSynchronous];
+            
+            // get response
+            NSString* respString = [request responseString];
+//            NSLog(@"createAddressListRequest respString = %@",respString);
+            NSDictionary *dicResult = [respString JSONValue];
+            
+            return dicResult;
+            
+        }
+        
+        @catch (NSException *exception) {
+            strLog = [NSString stringWithFormat:@"createAddressListRequest error:catch error(%@)",exception];
+            NSLog(@"%@",strLog);
+            return dicResult;
+            
+        }
+        return dicResult;
+    }
+}
+
+#pragma mark - 获取小区信息
+
+- (NSDictionary *)getCommunityInfoRequest:(NSString *) strJsonContent
+{
+    @autoreleasepool
+    {
+        NSString *strLog = @"";
+        NSDictionary *dicResult = nil;
+        @try {
+            
+            // make request
+            ASIHTTPRequest* request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:strJsonContent]];
+            
+            [request startSynchronous];
+            
+            // get response
+            NSString* respString = [request responseString];
+            NSLog(@"getCommunityInfoRequest respString = %@",respString);
+            NSDictionary *dicResult = [respString JSONValue];
+            
+            return dicResult;
+            
+        }
+        
+        @catch (NSException *exception) {
+            strLog = [NSString stringWithFormat:@"getCommunityInfoRequest error:catch error(%@)",exception];
+            NSLog(@"%@",strLog);
+            return dicResult;
+            
+        }
+        return dicResult;
+    }
+}
+
+#pragma mark - 创建或编辑小区信息 (POST)
+
+- (NSDictionary *)createOrUpdateCommInfoRequest:(NSString *) strJsonContent
+{
+    @autoreleasepool
+    {
+        NSString *strLog = @"";
+        NSDictionary *dicResult = nil;
+        @try {
+            
+            // post data
+            NSData *postBody = [strJsonContent dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+            
+            // post length
+            NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)[postBody length]];
+            
+            // make request
+            ASIHTTPRequest* request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@?UID=%@",HTTPURL_CREATEORUPDATECOMMINFO,[[NSUserDefaults standardUserDefaults] objectForKey:UID]]]];
+            [request addRequestHeader:@"Content-Type" value:@"application/json"];
+            [request addRequestHeader:@"Content-Length" value:postLength];
+            [request setRequestMethod:@"POST"];
+            [request appendPostData:postBody];
+            [request setValidatesSecureCertificate:NO];
+            [request startSynchronous];
+            
+            // get response
+            NSString* respString = [request responseString];
+            NSLog(@"createOrUpdateCommInfoRequest respString = %@",respString);
+            NSDictionary *dicResult = [respString JSONValue];
+            
+            return dicResult;
+            
+        }
+        
+        @catch (NSException *exception) {
+            strLog = [NSString stringWithFormat:@"createOrUpdateCommInfoRequest error:catch error(%@)",exception];
             NSLog(@"%@",strLog);
             return dicResult;
             

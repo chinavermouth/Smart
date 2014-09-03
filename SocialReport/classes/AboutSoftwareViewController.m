@@ -73,7 +73,7 @@
     frame.size.width = 290;
     frame.size.height = 190;
     UILabel *contentLbl = [[UILabel alloc] initWithFrame:frame];
-    contentLbl.text = @"       数字物业云(www.pmsaas.net)成立于2010年。本软件是由领航互联公司自主开发，非经由本公司授权开发并正式发布的其它任何由本软件衍生的软件均属非法。\n       本版本适用于IOS5及以上版本，如果在其他的手机系统上使用本软件，对于出现的任何问题，领航互联不承担任何责任。本软件使用过程中产生的数据流量费用，由运营商收取。";
+    contentLbl.text = @"       数字物业云(www.pmsaas.net)成立于2010年。本软件是由领航互联公司自主开发，非经由本公司授权开发并正式发布的其它任何由本软件衍生的软件均属非法。\n       本软件适用于IOS6及以上版本，如果在其他的手机系统上使用本软件，对于出现的任何问题，领航互联不承担任何责任。本软件使用过程中产生的数据流量费用，由运营商收取。";
     contentLbl.font = [UIFont systemFontOfSize:13.0f];
     contentLbl.numberOfLines = 15;
     contentLbl.backgroundColor = [UIColor clearColor];
@@ -82,7 +82,7 @@
     frame.origin.y += contentLbl.frame.size.height;
     frame.size.height = 100;
     UILabel *copyrightLbl = [[UILabel alloc] initWithFrame:frame];
-    copyrightLbl.text = @"网址:http://www.baidu.com\n领航互联服务热线:0592-5807033\n厦门领航互联信息技术有限公司版权所有\nCopyright 2014 All Rights Reserved";
+    copyrightLbl.text = @"网址:http://www.10057.com\n领航互联服务热线:0592-5807033\n厦门领航互联信息技术有限公司版权所有\nCopyright 2014 All Rights Reserved";
     copyrightLbl.font = [UIFont systemFontOfSize:12.0f];
     copyrightLbl.textAlignment = NSTextAlignmentCenter;
     copyrightLbl.numberOfLines = 5;

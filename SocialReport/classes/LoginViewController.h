@@ -17,14 +17,14 @@
     LeenToast *myLeenToast;
     float keyboardHeight;       // 键盘高度
     Common *myCommon;
-    
     CommunicationHttp *myCommunicationHttp;
+    NSDictionary *strRespString;        // 回复数据
+    NSString *isAutoLogin;        // 是否自动登录
+    
     UITextField *accountNameText;       // 用户名
     UITextField *pwdText;       // 密码
     UIButton *autoLoginBtn;       // 记住密码
-    NSString *isAutoLogin;        // 是否自动登录
     UIButton *loginBtn;
-    NSDictionary *strRespString;        // 回复数据
 }
 
 @end

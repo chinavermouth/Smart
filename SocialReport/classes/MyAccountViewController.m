@@ -34,7 +34,7 @@
     self = [super init];
     if (self)
     {
-        self.title = @"数字物业云(我的账户)";
+        self.title = @"我的账户";
     }
     return self;
 }
@@ -81,11 +81,11 @@
     [bgScrollView addSubview:broadcastScrollView];
     
     UIImageView *bcImg1 = [[UIImageView alloc] initWithFrame:frame];
-    [bcImg1 setImage:[UIImage imageNamed:@"person_bg"]];
+    [bcImg1 setImage:[UIImage imageNamed:@"personCenterBg"]];
     [broadcastScrollView addSubview:bcImg1];
     
     frame.origin.x = 40;
-    frame.origin.y = 20;
+    frame.origin.y = 37;
     frame.size.width = 55;
     frame.size.height = 55;
     UIButton *personBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -93,7 +93,8 @@
     [personBtn setImage:[UIImage imageNamed:@"person"] forState:UIControlStateNormal];
     [bgScrollView addSubview:personBtn];
     
-    frame.origin.x += personBtn.frame.size.width + 20;
+    frame.origin.x += personBtn.frame.size.width + 30;
+    frame.origin.y = 20;
     frame.size.width = 120;
     frame.size.height = 30;
     UILabel *currentUserLbl = [[UILabel alloc] initWithFrame:frame];

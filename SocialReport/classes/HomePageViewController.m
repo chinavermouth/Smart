@@ -16,7 +16,7 @@
 #import "RentViewController.h"
 #import "CheckInViewController.h"
 #import "PublicReportViewController.h"
-#import "TenementViewController.h"
+#import "TeneServiceViewController.h"
 #import "ListRegionViewController.h"
 #import "FaultReportViewController.h"
 #import "SuggestReportViewController.h"
@@ -44,7 +44,7 @@
     self = [super init];
     if (self)
     {
-        self.title = @"数字物业云(首页)";
+        self.title = [[NSUserDefaults standardUserDefaults] objectForKey:COMDISPLAYNAME];
     }
     return self;
 }
@@ -87,23 +87,16 @@
     broadcastScrollView.showsVerticalScrollIndicator = NO;
     broadcastScrollView.showsHorizontalScrollIndicator = NO;
     broadcastScrollView.indicatorStyle = UIScrollViewIndicatorStyleBlack;
-    broadcastScrollView.contentSize = CGSizeMake(SCREEN_SIZE.width * 5, frame.size.height);
+    broadcastScrollView.contentSize = CGSizeMake(SCREEN_SIZE.width * 3, frame.size.height);
     broadcastScrollView.delegate = self;
     [bgScrollView addSubview:broadcastScrollView];
     
     // pageControl
     pageControl = [[UIPageControl alloc] init];
-    pageControl.frame = CGRectMake(135, frame.size.height - 15, 50, 5);
-    pageControl.numberOfPages = 5;
+    pageControl.frame = CGRectMake(145, frame.size.height - 15, 30, 5);
+    pageControl.numberOfPages = 3;
     pageControl.currentPage = 0;
     [bgScrollView addSubview:pageControl];
-    
-    currentRegionLbl = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 5.0f, 200.0f, 30.0f)];
-    currentRegionLbl.text = [NSString stringWithFormat:@"位置：%@", [[NSUserDefaults standardUserDefaults] objectForKey:COMDISPLAYNAME]];
-    currentRegionLbl.font = [UIFont systemFontOfSize:13.0f];
-    currentRegionLbl.textColor = [UIColor whiteColor];
-    currentRegionLbl.backgroundColor = [UIColor clearColor];
-    [bgScrollView addSubview:currentRegionLbl];
     
     UIImageView *bcImg1 = [[UIImageView alloc] initWithFrame:frame];
     [bcImg1 setImage:[UIImage imageNamed:@"bcImg1"]];
@@ -111,23 +104,23 @@
     
     frame.origin.x = SCREEN_SIZE.width;
     UIImageView *bcImg2 = [[UIImageView alloc] initWithFrame:frame];
-    [bcImg2 setImage:[UIImage imageNamed:@"bcImg1"]];
+    [bcImg2 setImage:[UIImage imageNamed:@"bcImg2"]];
     [broadcastScrollView addSubview:bcImg2];
     
     frame.origin.x = SCREEN_SIZE.width * 2;
     UIImageView *bcImg3 = [[UIImageView alloc] initWithFrame:frame];
-    [bcImg3 setImage:[UIImage imageNamed:@"bcImg1"]];
+    [bcImg3 setImage:[UIImage imageNamed:@"bcImg3"]];
     [broadcastScrollView addSubview:bcImg3];
     
-    frame.origin.x = SCREEN_SIZE.width * 3;
-    UIImageView *bcImg4 = [[UIImageView alloc] initWithFrame:frame];
-    [bcImg4 setImage:[UIImage imageNamed:@"bcImg1"]];
-    [broadcastScrollView addSubview:bcImg4];
-    
-    frame.origin.x = SCREEN_SIZE.width* 4;
-    UIImageView *bcImg5 = [[UIImageView alloc] initWithFrame:frame];
-    [bcImg5 setImage:[UIImage imageNamed:@"bcImg1"]];
-    [broadcastScrollView addSubview:bcImg5];
+//    frame.origin.x = SCREEN_SIZE.width * 3;
+//    UIImageView *bcImg4 = [[UIImageView alloc] initWithFrame:frame];
+//    [bcImg4 setImage:[UIImage imageNamed:@"bcImg1"]];
+//    [broadcastScrollView addSubview:bcImg4];
+//    
+//    frame.origin.x = SCREEN_SIZE.width* 4;
+//    UIImageView *bcImg5 = [[UIImageView alloc] initWithFrame:frame];
+//    [bcImg5 setImage:[UIImage imageNamed:@"bcImg1"]];
+//    [broadcastScrollView addSubview:bcImg5];
     
     // 应用视图
     frame.origin.x = 0;
@@ -175,33 +168,33 @@
     icoLbl.backgroundColor = [UIColor clearColor];
     [reportBtn addSubview:icoLbl];
     
-    // 发布通知按钮
-    frame.origin.x = MARGIN_LEFT + BTN_WIDTH + PADDING_LEFT;
-    frame.origin.y = MARGIN_TOP;
-    frame.size.width = BTN_WIDTH;
-    frame.size.height = BTN_HEIGHT;
-    UIButton *publicReportBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    publicReportBtn.frame = frame;
-    publicReportBtn.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
-    [publicReportBtn addTarget:self action:@selector(publicReportFunc) forControlEvents:UIControlEventTouchUpInside];
-    [appScrollView addSubview:publicReportBtn];
-    
-    // 添加图标
-    icoImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, BTNICON_WIDTH, BTNICON_HEIGHT)];
-    [icoImg setImage:[UIImage imageNamed:@"publicReport"]];
-    [publicReportBtn addSubview:icoImg];
-    
-    // 添加文字
-    icoLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, BTNICON_HEIGHT, BTNLBL_WIDTH, BTNLBL_HEIGHT)];
-    [icoLbl setText:@"发布通知"];
-    icoLbl.textColor = [UIColor blackColor];
-    icoLbl.font = [UIFont systemFontOfSize:12.0f];
-    icoLbl.textAlignment = NSTextAlignmentCenter;
-    icoLbl.backgroundColor = [UIColor clearColor];
-    [publicReportBtn addSubview:icoLbl];
+//    // 发布通知按钮
+//    frame.origin.x = MARGIN_LEFT + BTN_WIDTH + PADDING_LEFT;
+//    frame.origin.y = MARGIN_TOP;
+//    frame.size.width = BTN_WIDTH;
+//    frame.size.height = BTN_HEIGHT;
+//    UIButton *publicReportBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    publicReportBtn.frame = frame;
+//    publicReportBtn.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
+//    [publicReportBtn addTarget:self action:@selector(publicReportFunc) forControlEvents:UIControlEventTouchUpInside];
+//    [appScrollView addSubview:publicReportBtn];
+//    
+//    // 添加图标
+//    icoImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, BTNICON_WIDTH, BTNICON_HEIGHT)];
+//    [icoImg setImage:[UIImage imageNamed:@"publicReport"]];
+//    [publicReportBtn addSubview:icoImg];
+//    
+//    // 添加文字
+//    icoLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, BTNICON_HEIGHT, BTNLBL_WIDTH, BTNLBL_HEIGHT)];
+//    [icoLbl setText:@"发布通知"];
+//    icoLbl.textColor = [UIColor blackColor];
+//    icoLbl.font = [UIFont systemFontOfSize:12.0f];
+//    icoLbl.textAlignment = NSTextAlignmentCenter;
+//    icoLbl.backgroundColor = [UIColor clearColor];
+//    [publicReportBtn addSubview:icoLbl];
     
     // 欠费查询按钮
-    frame.origin.x = MARGIN_LEFT + BTN_WIDTH*2 + PADDING_LEFT*2;
+    frame.origin.x = MARGIN_LEFT + BTN_WIDTH + PADDING_LEFT;
     frame.origin.y = MARGIN_TOP;
     frame.size.width = BTN_WIDTH;
     frame.size.height = BTN_HEIGHT;
@@ -226,7 +219,7 @@
     [arrSeaBtn addSubview:icoLbl];
 
     // 安防巡查按钮
-    frame.origin.x = MARGIN_LEFT + BTN_WIDTH*3 + PADDING_LEFT*3;
+    frame.origin.x = MARGIN_LEFT + BTN_WIDTH*2 + PADDING_LEFT*2;
     frame.origin.y = MARGIN_TOP;
     frame.size.width = BTN_WIDTH;
     frame.size.height = BTN_HEIGHT;
@@ -251,8 +244,8 @@
     [patrolBtn addSubview:icoLbl];
     
     // 故障申告按钮
-    frame.origin.x = MARGIN_LEFT;
-    frame.origin.y = MARGIN_TOP + BTN_HEIGHT + PADDING_TOP;
+    frame.origin.x = MARGIN_LEFT + BTN_WIDTH*3 + PADDING_LEFT*3;
+    frame.origin.y = MARGIN_TOP;
     frame.size.width = BTN_WIDTH;
     frame.size.height = BTN_HEIGHT;
     UIButton *faultBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -276,7 +269,7 @@
     [faultBtn addSubview:icoLbl];
     
     // 环境卫生按钮
-    frame.origin.x = MARGIN_LEFT + BTN_WIDTH + PADDING_LEFT;
+    frame.origin.x = MARGIN_LEFT;
     frame.origin.y = MARGIN_TOP + BTN_HEIGHT + PADDING_TOP;
     frame.size.width = BTN_WIDTH;
     frame.size.height = BTN_HEIGHT;
@@ -300,59 +293,59 @@
     icoLbl.backgroundColor = [UIColor clearColor];
     [hygieneBtn addSubview:icoLbl];
 
-    // 出租出售按钮
-    frame.origin.x = MARGIN_LEFT + BTN_WIDTH*2 + PADDING_LEFT*2;
-    frame.origin.y = MARGIN_TOP + BTN_HEIGHT + PADDING_TOP;
-    frame.size.width = BTN_WIDTH;
-    frame.size.height = BTN_HEIGHT;
-    UIButton *rentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    rentBtn.frame = frame;
-    rentBtn.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
-    [rentBtn addTarget:self action:@selector(rentFunc) forControlEvents:UIControlEventTouchUpInside];
-    [appScrollView addSubview:rentBtn];
-    
-    // 添加图标
-    icoImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, BTNICON_WIDTH, BTNICON_HEIGHT)];
-    [icoImg setImage:[UIImage imageNamed:@"rent"]];
-    [rentBtn addSubview:icoImg];
-    
-    // 添加文字
-    icoLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, BTNICON_HEIGHT, BTNLBL_WIDTH, BTNLBL_HEIGHT)];
-    [icoLbl setText:@"出租出售"];
-    icoLbl.textColor = [UIColor blackColor];
-    icoLbl.font = [UIFont systemFontOfSize:12.0f];
-    icoLbl.textAlignment = NSTextAlignmentCenter;
-    icoLbl.backgroundColor = [UIColor clearColor];
-    [rentBtn addSubview:icoLbl];
-
-    // 访客登记按钮
-    frame.origin.x = MARGIN_LEFT + BTN_WIDTH*3 + PADDING_LEFT*3;
-    frame.origin.y = MARGIN_TOP + BTN_HEIGHT + PADDING_TOP;
-    frame.size.width = BTN_WIDTH;
-    frame.size.height = BTN_HEIGHT;
-    UIButton *checkInBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    checkInBtn.frame = frame;
-    checkInBtn.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
-    [checkInBtn addTarget:self action:@selector(checkInFunc) forControlEvents:UIControlEventTouchUpInside];
-    [appScrollView addSubview:checkInBtn];
-    
-    // 添加图标
-    icoImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, BTNICON_WIDTH, BTNICON_HEIGHT)];
-    [icoImg setImage:[UIImage imageNamed:@"checkIn"]];
-    [checkInBtn addSubview:icoImg];
-    
-    // 添加文字
-    icoLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, BTNICON_HEIGHT, BTNLBL_WIDTH, BTNLBL_HEIGHT)];
-    [icoLbl setText:@"访客登记"];
-    icoLbl.textColor = [UIColor blackColor];
-    icoLbl.font = [UIFont systemFontOfSize:12.0f];
-    icoLbl.textAlignment = NSTextAlignmentCenter;
-    icoLbl.backgroundColor = [UIColor clearColor];
-    [checkInBtn addSubview:icoLbl];
+//    // 出租出售按钮
+//    frame.origin.x = MARGIN_LEFT + BTN_WIDTH*2 + PADDING_LEFT*2;
+//    frame.origin.y = MARGIN_TOP + BTN_HEIGHT + PADDING_TOP;
+//    frame.size.width = BTN_WIDTH;
+//    frame.size.height = BTN_HEIGHT;
+//    UIButton *rentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    rentBtn.frame = frame;
+//    rentBtn.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
+//    [rentBtn addTarget:self action:@selector(rentFunc) forControlEvents:UIControlEventTouchUpInside];
+//    [appScrollView addSubview:rentBtn];
+//    
+//    // 添加图标
+//    icoImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, BTNICON_WIDTH, BTNICON_HEIGHT)];
+//    [icoImg setImage:[UIImage imageNamed:@"rent"]];
+//    [rentBtn addSubview:icoImg];
+//    
+//    // 添加文字
+//    icoLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, BTNICON_HEIGHT, BTNLBL_WIDTH, BTNLBL_HEIGHT)];
+//    [icoLbl setText:@"出租出售"];
+//    icoLbl.textColor = [UIColor blackColor];
+//    icoLbl.font = [UIFont systemFontOfSize:12.0f];
+//    icoLbl.textAlignment = NSTextAlignmentCenter;
+//    icoLbl.backgroundColor = [UIColor clearColor];
+//    [rentBtn addSubview:icoLbl];
+//
+//    // 访客登记按钮
+//    frame.origin.x = MARGIN_LEFT + BTN_WIDTH*3 + PADDING_LEFT*3;
+//    frame.origin.y = MARGIN_TOP + BTN_HEIGHT + PADDING_TOP;
+//    frame.size.width = BTN_WIDTH;
+//    frame.size.height = BTN_HEIGHT;
+//    UIButton *checkInBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    checkInBtn.frame = frame;
+//    checkInBtn.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
+//    [checkInBtn addTarget:self action:@selector(checkInFunc) forControlEvents:UIControlEventTouchUpInside];
+//    [appScrollView addSubview:checkInBtn];
+//    
+//    // 添加图标
+//    icoImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, BTNICON_WIDTH, BTNICON_HEIGHT)];
+//    [icoImg setImage:[UIImage imageNamed:@"checkIn"]];
+//    [checkInBtn addSubview:icoImg];
+//    
+//    // 添加文字
+//    icoLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, BTNICON_HEIGHT, BTNLBL_WIDTH, BTNLBL_HEIGHT)];
+//    [icoLbl setText:@"访客登记"];
+//    icoLbl.textColor = [UIColor blackColor];
+//    icoLbl.font = [UIFont systemFontOfSize:12.0f];
+//    icoLbl.textAlignment = NSTextAlignmentCenter;
+//    icoLbl.backgroundColor = [UIColor clearColor];
+//    [checkInBtn addSubview:icoLbl];
     
     // 用户档案按钮
-    frame.origin.x = MARGIN_LEFT;
-    frame.origin.y = MARGIN_TOP + BTN_HEIGHT*2 + PADDING_TOP*2;
+    frame.origin.x = MARGIN_LEFT + BTN_WIDTH + PADDING_LEFT;
+    frame.origin.y = MARGIN_TOP + BTN_HEIGHT + PADDING_TOP;
     frame.size.width = BTN_WIDTH;
     frame.size.height = BTN_HEIGHT;
     UIButton *residentDocBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -376,8 +369,8 @@
     [residentDocBtn addSubview:icoLbl];
     
     // 故障处理按钮
-    frame.origin.x = MARGIN_LEFT + BTN_WIDTH + PADDING_LEFT;
-    frame.origin.y = MARGIN_TOP + BTN_HEIGHT*2 + PADDING_TOP*2;
+    frame.origin.x = MARGIN_LEFT + BTN_WIDTH*2 + PADDING_LEFT*2;
+    frame.origin.y = MARGIN_TOP + BTN_HEIGHT + PADDING_TOP;
     frame.size.width = BTN_WIDTH;
     frame.size.height = BTN_HEIGHT;
     UIButton *faultDecBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -401,8 +394,8 @@
     [faultDecBtn addSubview:icoLbl];
     
     // 意见反馈按钮
-    frame.origin.x = MARGIN_LEFT + BTN_WIDTH*2 + PADDING_LEFT*2;
-    frame.origin.y = MARGIN_TOP + BTN_HEIGHT*2 + PADDING_TOP*2;
+    frame.origin.x = MARGIN_LEFT + BTN_WIDTH*3 + PADDING_LEFT*3;
+    frame.origin.y = MARGIN_TOP + BTN_HEIGHT + PADDING_TOP;
     frame.size.width = BTN_WIDTH;
     frame.size.height = BTN_HEIGHT;
     UIButton *suggestBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -426,7 +419,7 @@
     [suggestBtn addSubview:icoLbl];
     
     // 物业信息按钮
-    frame.origin.x = MARGIN_LEFT + BTN_WIDTH*3 + PADDING_LEFT*3;
+    frame.origin.x = MARGIN_LEFT;
     frame.origin.y = MARGIN_TOP + BTN_HEIGHT*2 + PADDING_TOP*2;
     frame.size.width = BTN_WIDTH;
     frame.size.height = BTN_HEIGHT;
@@ -443,7 +436,7 @@
     
     // 添加文字
     icoLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, BTNICON_HEIGHT, BTNLBL_WIDTH, BTNLBL_HEIGHT)];
-    [icoLbl setText:@"物业信息"];
+    [icoLbl setText:@"物业客服"];
     icoLbl.textColor = [UIColor blackColor];
     icoLbl.font = [UIFont systemFontOfSize:12.0f];
     icoLbl.textAlignment = NSTextAlignmentCenter;
@@ -455,9 +448,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     // 图片轮播动画
-    timer =  [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(broadcastingImg) userInfo:nil repeats:YES];
+    timer =  [NSTimer scheduledTimerWithTimeInterval:7 target:self selector:@selector(broadcastingImg) userInfo:nil repeats:YES];
     
-    currentRegionLbl.text = [NSString stringWithFormat:@"位置：%@", [[NSUserDefaults standardUserDefaults] objectForKey:COMDISPLAYNAME]];
+    self.title = [[NSUserDefaults standardUserDefaults] objectForKey:COMDISPLAYNAME];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"showTabBarNotification" object:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"addGestureRecognizer" object:nil];
@@ -495,7 +488,7 @@
     NSTimeInterval animationDuration = 0.3f;
     [UIView beginAnimations:@"broadcastingImages" context:nil];
     [UIView setAnimationDuration:animationDuration];
-    if(broadcastScrollView.contentOffset.x < 4 * SCREEN_SIZE.width)
+    if(broadcastScrollView.contentOffset.x < 2 * SCREEN_SIZE.width)
         [broadcastScrollView setContentOffset:CGPointMake(broadcastScrollView.contentOffset.x + SCREEN_SIZE.width, 0.0f)];
     else
         [broadcastScrollView setContentOffset:CGPointMake(0.0f, 0.0f)];
@@ -557,17 +550,17 @@
 // 出租出售
 - (void)rentFunc
 {
-//    [myLeenToast settext:@"^_^，正在努力建设中..."];
-//    [myLeenToast setDuration:1];
-//    [myLeenToast show];
-    RentViewController *rentViewController = [[RentViewController alloc] init];
-    [self.navigationController pushViewController:rentViewController animated:YES];
+    [myLeenToast settext:@"^_^，当前小区暂未开通此功能..."];
+    [myLeenToast setDuration:1];
+    [myLeenToast show];
+//    RentViewController *rentViewController = [[RentViewController alloc] init];
+//    [self.navigationController pushViewController:rentViewController animated:YES];
 }
 
 // 访客登记
 - (void)checkInFunc
 {
-    [myLeenToast settext:@"^_^，正在努力建设中..."];
+    [myLeenToast settext:@"^_^，当前小区暂未开通此功能..."];
     [myLeenToast setDuration:1];
     [myLeenToast show];
     //    CheckInViewController *checkInViewController = [[CheckInViewController alloc] init];
@@ -584,8 +577,8 @@
 // 物业信息
 - (void)tenementFunc
 {
-    TenementViewController *tenementViewController = [[TenementViewController alloc] init];
-    [self.navigationController pushViewController:tenementViewController animated:YES];
+    TeneServiceViewController *teneServiceViewController = [[TeneServiceViewController alloc] init];
+    [self.navigationController pushViewController:teneServiceViewController animated:YES];
 }
 
 // 故障处理
@@ -621,16 +614,16 @@
     {
         pageControl.currentPage = 2;
     }
-    // 第四屏
-    else if(broadcastScrollView.contentOffset.x == SCREEN_SIZE.width * 3)
-    {
-        pageControl.currentPage = 3;
-    }
-    // 第五屏
-    else if(broadcastScrollView.contentOffset.x == SCREEN_SIZE.width * 4)
-    {
-        pageControl.currentPage = 4;
-    }
+//    // 第四屏
+//    else if(broadcastScrollView.contentOffset.x == SCREEN_SIZE.width * 3)
+//    {
+//        pageControl.currentPage = 3;
+//    }
+//    // 第五屏
+//    else if(broadcastScrollView.contentOffset.x == SCREEN_SIZE.width * 4)
+//    {
+//        pageControl.currentPage = 4;
+//    }
 }
 
 #pragma mark - UIAlertViewDelegate

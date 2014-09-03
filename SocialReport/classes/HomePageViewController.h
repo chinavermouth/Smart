@@ -20,7 +20,7 @@
     UIScrollView *broadcastScrollView;      // 轮播动画
     UIPageControl *pageControl;     // 分页控制器
     UIScrollView *appScrollView;        // 应用视图
-    UILabel *currentRegionLbl;      // 当前小区
+//    UILabel *currentRegionLbl;      // 当前小区
 }
 
 @end

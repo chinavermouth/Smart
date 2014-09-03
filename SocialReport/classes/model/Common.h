@@ -12,32 +12,36 @@
 #define SCREEN_SIZE  [UIScreen mainScreen].bounds.size
 
 // 请求地址
-#define HTTPURL_UPDATE      @"http://xxxxxxxxx"     // 检查更新
-#define HTTPURL_IMAGEDATABASE   @"http://app.pmsaas.net"     // 图片位置
-#define HTTPURL_AUTOLOGINAUTH      @"http://app.pmsaas.net/IApp3/IsAuthenticated"        // 自动登录认证
-#define HTTPURL_LOGIN      @"http://app.pmsaas.net/IApp3/Login"        // 用户登录
-#define HTTPURL_LISTREGION     @"http://app.pmsaas.net/IApp3/GetOrgs"      // 列出小区
-#define HTTPURL_LISTBUILDING   @"http://app.pmsaas.net/IApp3/GetBuildings"     // 列出楼宇
-#define HTTPURL_ARRSEARCH      @"http://app.pmsaas.net/IApp3/GetRoomArrears"       // 欠费查询
-#define HTTPURL_LISTROOM   @"http://app.pmsaas.net/IApp3/GetRooms"     // 列出房间
-#define HTTPURL_LISTPERSON   @"http://app.pmsaas.net/IApp3/GetRoomClient"     // 列出使用人或者业主信息
-#define HTTPURL_MOVEIN    @"http://app.pmsaas.net/IApp3/RegisterIDCard"      // 人员入住
-#define HTTPURL_MOVEOUT     @"http://app.pmsaas.net/IApp3/OutRoomClient"     // 人员迁出
-#define HTTPURL_GETPARAM    @"http://app.pmsaas.net/IApp3/GetParameter"       // 获取入住参数
-#define HTTPURL_RENT      @"http://app.10057.com/App3/CreateInformation"       // 出租出售
-#define HTTPURL_LISTREPORT   @"http://app.pmsaas.net/IApp3/GetNoticeList"     // 列出通知公告
-#define HTTPURL_REPORTDETAIL  @"http://app.pmsaas.net/IApp3/GetNotice"    // 通知公告详细
-#define HTTPURL_GETINFORMATION    @"http://app.pmsaas.net/IApp3/GetInformations"   // 安防巡查、故障申告、环境卫生(返回主题列表)
-#define HTTPURL_GETINFORDETAIL    @"http://app.pmsaas.net/IApp3/GetInformationDetails"   // 安防巡查、故障申告、环境卫生(返回主题明细列表)
-#define HTTPURL_PUBINFORMATION    @"http://app.pmsaas.net/IApp3/Information"    // 安防巡查、故障申告、环境卫生(提交主题)
-#define HTTPURL_COMINFORMATION    @"http://app.pmsaas.net/IApp3/InformationDetail"    // 安防巡查、故障申告、环境卫生(追加记录)
-#define HTTPURL_CREATENOTICE      @"http://app.pmsaas.net/IApp3/CreateNotice"        // 创建通知公告(社区和物业公司都可以发布，共用这个接口)
-#define HTTPURL_GETTENANTINFO        @"http://app.pmsaas.net/IApp3/GetTenantInfo"    // 返回社区信息或者物业公司信息
+#define HTTPURL_UPDATE                     @"http://xxxxxxxxx"     // 检查更新
+#define HTTPURL_IMAGEDATABASE              @"http://app.pmsaas.net"     // 图片位置
+#define HTTPURL_AUTOLOGINAUTH              @"http://app.pmsaas.net/IApp3/IsAuthenticated"        // 自动登录认证
+#define HTTPURL_LOGIN                      @"http://app.pmsaas.net/IApp3/Login"        // 用户登录
+#define HTTPURL_LISTREGION                 @"http://app.pmsaas.net/IApp3/GetOrgs"      // 列出小区
+#define HTTPURL_LISTBUILDING               @"http://app.pmsaas.net/IApp3/GetBuildings"     // 列出楼宇
+#define HTTPURL_ARRSEARCH                  @"http://app.pmsaas.net/IApp3/GetRoomArrears"       // 欠费查询
+#define HTTPURL_LISTROOM                   @"http://app.pmsaas.net/IApp3/GetRooms"     // 列出房间
+#define HTTPURL_LISTPERSON                 @"http://app.pmsaas.net/IApp3/GetRoomClient"     // 列出使用人或者业主信息
+#define HTTPURL_MOVEIN                     @"http://app.pmsaas.net/IApp3/RegisterIDCard"      // 人员入住
+#define HTTPURL_MOVEOUT                    @"http://app.pmsaas.net/IApp3/OutRoomClient"     // 人员迁出
+#define HTTPURL_GETPARAM                   @"http://app.pmsaas.net/IApp3/GetParameter"       // 获取入住参数
+#define HTTPURL_RENT                       @"http://app.10057.com/App3/CreateInformation"       // 出租出售
+#define HTTPURL_LISTREPORT                 @"http://app.pmsaas.net/IApp3/GetNoticeList"     // 列出通知公告
+#define HTTPURL_REPORTDETAIL               @"http://app.pmsaas.net/IApp3/GetNotice"    // 通知公告详细
+#define HTTPURL_GETINFORMATION             @"http://app.pmsaas.net/IApp3/GetInformations"   // 安防巡查、故障申告、环境卫生(返回主题列表)
+#define HTTPURL_GETINFORDETAIL             @"http://app.pmsaas.net/IApp3/GetInformationDetails"   // 安防巡查、故障申告、环境卫生(返回主题明细列表)
+#define HTTPURL_PUBINFORMATION             @"http://app.pmsaas.net/IApp3/Information"    // 安防巡查、故障申告、环境卫生(提交主题)
+#define HTTPURL_COMINFORMATION             @"http://app.pmsaas.net/IApp3/InformationDetail"    // 安防巡查、故障申告、环境卫生(追加记录)
+#define HTTPURL_CREATENOTICE               @"http://app.pmsaas.net/IApp3/CreateNotice"        // 创建通知公告(社区和物业公司都可以发布，共用这个接口)
+#define HTTPURL_GETTENANTINFO              @"http://app.pmsaas.net/IApp3/GetTenantInfo"    // 返回社区信息或者物业公司信息
 #define HTTPURL_CREATEORUPDATETENANTINFO   @"http://app.pmsaas.net/IApp3/CreateOrUpdateTenantInfo"   // 创建编辑社区或物业信息(社区和物业公司都可以发布，共用这个接口)
-#define HTTPURL_GETFEEDBACKS        @"http://app.pmsaas.net/IApp3/GetFeedbacks"    // 返回用户提交的故障申告、意见反馈列表
-#define HTTPURL_GETFEEDBACKDETAILS  @"http://app.pmsaas.net/IApp3/GetFeedbackDetails"    // 返回故障申告帖子明细
-#define HTTPURL_APPENDFEEDBACK      @"http://app.pmsaas.net/IApp3/AppendFeedback"     // 追加故障申告、意见反馈(支持多张图片同时上传)
-
+#define HTTPURL_GETFEEDBACKS               @"http://app.pmsaas.net/IApp3/GetFeedbacks"    // 返回用户提交的故障申告、意见反馈列表
+#define HTTPURL_GETFEEDBACKDETAILS         @"http://app.pmsaas.net/IApp3/GetFeedbackDetails"    // 返回故障申告帖子明细
+#define HTTPURL_APPENDFEEDBACK             @"http://app.pmsaas.net/IApp3/AppendFeedback"     // 追加故障申告、意见反馈(支持多张图片同时上传)
+#define HTTPURL_GETCOMMUNITYADDRESSLIST    @"http://app.pmsaas.net/IApp3/GetCommunityAddressList"    // 获得物业客服通讯录列表
+#define HTTPURL_DELETEADDRESSLIST          @"http://app.pmsaas.net/IApp3/DeleteAddressList"    // 删除通讯录
+#define HTTPURL_CREATEADDRESSLIST          @"http://app.pmsaas.net/IApp3/CreateAddressList"    // 创建通讯录
+#define HTTPURL_GETCOMMUNITYINFO           @"http://app.pmsaas.net/IApp3/GetCommunitInfo"      // 获取小区信息
+#define HTTPURL_CREATEORUPDATECOMMINFO     @"http://app.pmsaas.net/IApp3/CreateOrUpdateCommunityInfo"    // 创建或编辑小区信息
 
 #define  SYSTEM_VERSION  [[[UIDevice currentDevice] systemVersion] floatValue]
 #define  SCREEN_SIZE     [UIScreen mainScreen].bounds.size
@@ -84,6 +88,11 @@ typedef enum
     HTTP_GETFEEDBACKS = 21,      // 返回用户提交的故障申告、意见反馈列表
     HTTP_GETFEEDBACKDETAILS = 22,   // 返回故障申告帖子明细
     HTTP_APPENDFEEDBACK = 23,    // 追加故障申告、意见反馈(支持多张图片同时上传)
+    HTTP_GETCOMMUNITYADDRESSLIST = 24,   // 获得物业客服通讯录列表
+    HTTP_DELETEADDRESSLIST = 25,   // 删除通讯录
+    HTTP_CREATEADDRESSLIST = 26,   // 创建通讯录
+    HTTP_GETCOMMUNITYINFO = 27,    // 获取小区信息
+    HTTP_CREATEORUPDATECOMMINFO = 28,   // 创建或编辑小区信息
     
 }HTTPMESSAGETYPE;
 

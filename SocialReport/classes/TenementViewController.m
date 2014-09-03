@@ -32,12 +32,12 @@
 	return _browserView;
 }
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)init
 {
     self = [super init];
     if (self)
     {
-        self.title = @"物业信息";
+        self.title = @"单位信息";
         return self;
     }
     return self;
@@ -101,7 +101,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"< 首页" style:UIBarButtonItemStylePlain target:self action:@selector(backFunc)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"< 物业客服" style:UIBarButtonItemStylePlain target:self action:@selector(backFunc)];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveFunc)];
     
@@ -210,8 +210,8 @@
              HUD = nil;
              if([[[respDic objectForKey:@"Info"] objectForKey:@"Code"] intValue] == 1)
              {
-                 [myLeenToast settext:@"保存成功~"];
-                 [myLeenToast show];
+                 UIAlertView *myAlt = [[UIAlertView alloc] initWithTitle:@"提示" message:@"保存成功~" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                 [myAlt show];
                  return ;
              }
              else
@@ -370,7 +370,7 @@
 // 设置个人图片
 - (void)setPerImg
 {
-    UIActionSheet *altSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"查看大图", @"拍照", @"相册", nil];
+    UIActionSheet *altSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照", @"相册", nil];
     [altSheet showInView:self.view];
 }
 
@@ -422,12 +422,12 @@
     
     switch (buttonIndex) {
             
+//        case 0:
+//        {
+//            [self.browserView show];
+//            return ;
+//        }
         case 0:
-        {
-            [self.browserView show];
-            return ;
-        }
-        case 1:
         {
             // 判断相机是否可用，不可用将sourceType设定为相片库
             if (![UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera])
@@ -436,7 +436,7 @@
             }
             break;
         }
-        case 2:
+        case 1:
         {
             sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
             

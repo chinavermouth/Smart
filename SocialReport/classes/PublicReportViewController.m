@@ -202,7 +202,7 @@
     frame.origin.x += PADDING_LEFT;
     frame.size.width = 100;
     UILabel *reportTypeLbl = [[UILabel alloc] initWithFrame:frame];
-    reportTypeLbl.text = @"对外发布通知";
+    reportTypeLbl.text = @"发布业主通知";
     reportTypeLbl.textAlignment = NSTextAlignmentCenter;
     reportTypeLbl.textColor = [UIColor blackColor];
     reportTypeLbl.font = [UIFont systemFontOfSize:14.0f];
