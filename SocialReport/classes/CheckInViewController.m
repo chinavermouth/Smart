@@ -93,7 +93,7 @@
     picker.delegate = self;
     picker.allowsEditing = YES;//设置可编辑
     picker.sourceType = sourceType;
-    [self presentModalViewController:picker animated:YES];//进入照相界面
+    [self presentViewController:picker animated:YES completion:nil];//进入照相界面
 }
 
 

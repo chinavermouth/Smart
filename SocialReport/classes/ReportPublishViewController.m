@@ -141,20 +141,27 @@
     telephoneText.delegate = self;
     [bgScrollView addSubview:telephoneText];
     
-    frame.origin.x = PADDING_LEFT + 10;
-    frame.origin.y = telephoneBg.frame.origin.y + telephoneBg.frame.size.height + 10 + 5;
+    frame.origin.x = PADDING_LEFT + 5;
+    frame.origin.y = telephoneBg.frame.origin.y + telephoneBg.frame.size.height + 10;
     frame.size.width = 100;
-    frame.size.height = 20;
+    frame.size.height = 30;
     statusBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     statusBtn.frame = frame;
     [statusBtn setTitle:@"选择处理状态" forState:UIControlStateNormal];
-    [statusBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [statusBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     statusBtn.titleLabel.font = [UIFont systemFontOfSize:15.0f];
+    statusBtn.backgroundColor = [UIColor lightGrayColor];
     [statusBtn addTarget:self action:@selector(chooseStatusFunc) forControlEvents:UIControlEventTouchUpInside];
     [bgScrollView addSubview:statusBtn];
     
-    frame.origin.x = statusBtn.frame.origin.x + statusBtn.frame.size.width + 10;
-    frame.size.width = 150;
+    [statusBtn.layer setCornerRadius:6.0f];
+    [statusBtn.layer setBorderWidth:1.0f];
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGColorRef colorref = CGColorCreate(colorSpace, (CGFloat[]){1,1,1,1});
+    [statusBtn.layer setBorderColor:colorref];
+    
+    frame.origin.x = statusBtn.frame.origin.x + statusBtn.frame.size.width + 25;
+    frame.size.width = 100;
     statusLbl = [[UILabel alloc] initWithFrame:frame];
     statusLbl.text = myCommon.m_reportStatus;
     statusLbl.textColor = [UIColor redColor];
@@ -377,7 +384,7 @@
     picker.delegate = self;
     picker.allowsEditing = YES;//设置可编辑
     picker.sourceType = sourceType;
-    [self presentModalViewController:picker animated:YES];//进入照相界面
+    [self presentViewController:picker animated:YES completion:nil];//进入照相界面
 }
 
 #pragma mark UIImagePickerControllerDelegate

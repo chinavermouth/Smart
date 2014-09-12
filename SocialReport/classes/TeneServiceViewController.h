@@ -17,7 +17,7 @@
 @interface TeneServiceViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate>
 {
     CommunicationHttp *myCommunicationHttp;
-    NSDictionary *responseDic;
+    NSArray *resPhoneAry;
     LeenToast *myLeenToast;
     
     UILabel *teneLbl;

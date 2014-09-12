@@ -33,22 +33,15 @@
     CGRect frame = CGRectZero;
     
     // 公告标题
-//    titleStr = @"你是不是要来是不是要来啊来啊";
-//    UIFont *titleFont = [UIFont boldSystemFontOfSize:20.0f];
-//    CGSize titleMaximumLabelSize = CGSizeMake(SCREEN_SIZE.width - 2 * MARGIN_LEFT,MAXFLOAT);
-//    CGSize realTitleLabelSize = [titleStr sizeWithFont:titleFont
-//                                       constrainedToSize:titleMaximumLabelSize
-//                                           lineBreakMode:NSLineBreakByWordWrapping];
     frame.origin.x = MARGIN_LEFT;
     frame.origin.y = MARGIN_TOP + 64;
     if(SYSTEM_VERSION < 7.0)
         frame.origin.y = MARGIN_TOP;
     frame.size.width = SCREEN_SIZE.width - 2 * MARGIN_LEFT;
-    frame.size.height = 75;
-//    NSLog(@"realTitleLabelSize.height = %f\n",realTitleLabelSize.height);
+    frame.size.height = 50;
     titleLbl = [[UILabel alloc] initWithFrame:frame];
     titleLbl.text = titleStr;
-    titleLbl.font = [UIFont boldSystemFontOfSize:18.0f];
+    titleLbl.font = [UIFont boldSystemFontOfSize:16.0f];
     titleLbl.lineBreakMode = NSLineBreakByWordWrapping;
     titleLbl.numberOfLines = 0;
     titleLbl.textAlignment = NSTextAlignmentCenter;
@@ -63,7 +56,7 @@
     authorLbl = [[UILabel alloc] initWithFrame:frame];
     authorLbl.text = @"JimGreen";
     authorLbl.textAlignment = NSTextAlignmentLeft;
-    authorLbl.font = [UIFont systemFontOfSize:15.0f];
+    authorLbl.font = [UIFont systemFontOfSize:14.0f];
     authorLbl.textColor = [UIColor lightGrayColor];
     authorLbl.backgroundColor = [UIColor clearColor];
     [self.view addSubview:authorLbl];
@@ -74,18 +67,27 @@
     timeLbl = [[UILabel alloc] initWithFrame:frame];
     timeLbl.text = @"2014-03-11";
     timeLbl.textAlignment = NSTextAlignmentRight;
-    timeLbl.font = [UIFont systemFontOfSize:15.0f];
+    timeLbl.font = [UIFont systemFontOfSize:14.0f];
     timeLbl.textColor = [UIColor lightGrayColor];
     timeLbl.backgroundColor = [UIColor clearColor];
     [self.view addSubview:timeLbl];
     
+    // separate line
+    frame.origin.x = 5;
+    frame.origin.y += authorLbl.frame.size.height + 5;
+    frame.size.width = SCREEN_SIZE.width - 2*5;
+    frame.size.height = 1;
+    UILabel *sepLineLbl = [[UILabel alloc] initWithFrame:frame];
+    [sepLineLbl setBackgroundColor:[UIColor lightGrayColor]];
+    [self.view addSubview:sepLineLbl];
+    
     // 公告内容
     frame.origin.x = MARGIN_LEFT;
-    frame.origin.y += authorLbl.frame.size.height + 10;
+    frame.origin.y += sepLineLbl.frame.size.height + 10;
     frame.size.width = SCREEN_SIZE.width - 2 * MARGIN_LEFT;
-    frame.size.height = self.view.frame.size.height - frame.origin.y - 20;
+    frame.size.height = self.view.frame.size.height - frame.origin.y - 10;
     if (SYSTEM_VERSION < 7.0)
-        frame.size.height = self.view.frame.size.height - frame.origin.y - 20 - 44;
+        frame.size.height = self.view.frame.size.height - frame.origin.y - 10 - 44;
     contentTextView = [[UITextView alloc] initWithFrame:frame];
     contentTextView.text = @"你你你萨克雷锋克拉克发链接阿卡丽金坷垃联发科;安静路费;安静;乱讲了";
     contentTextView.textColor = [UIColor blackColor];

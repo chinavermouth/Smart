@@ -14,6 +14,7 @@
 #import "JSON.h"
 #import "MJRefresh.h"
 #import "AGPhotoBrowserView.h"
+#import "ToolDrawerView.h"
 
 
 @interface FaultReportDetailViewController : UIViewController<UIScrollViewDelegate, UITableViewDataSource, UITableViewDelegate, MBProgressHUDDelegate, AGPhotoBrowserDelegate, AGPhotoBrowserDataSource, UIGestureRecognizerDelegate, UIGestureRecognizerDelegate, UIAlertViewDelegate>
@@ -28,10 +29,12 @@
     NSMutableArray *infoAry;
     NSDictionary *respDic;
     NSMutableArray *imgAry;  // 存储图片数组，用于浏览
+    ToolDrawerView *myToolBarDrawerView;
     
     UILabel *titleLbl;       // 标题
     UILabel *authorLbl;      // 作者
     UILabel *timeLbl;        // 发布时间
+    UILabel *newTimeLbl;     // 更新时间
     UILabel *contactLbl;     // 联系人
     UILabel *phoneLabel;     // 手机号码
     UILabel *addressLbl;     // 地址

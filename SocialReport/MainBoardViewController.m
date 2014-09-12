@@ -28,11 +28,14 @@
 - (void)initData
 {
     myLeenToast = [[LeenToast alloc] init];
+    myCommon = [Common shared];
 }
 
 - (void)initView
 {
 //    self.tabBar.backgroundColor = [UIColor lightGrayColor];
+    
+    self.view.backgroundColor = [UIColor whiteColor];
     
     homePageViewController = [[HomePageViewController alloc] init];
     homePageViewController.tabBarItem.title = @"首页";

@@ -47,7 +47,7 @@
 {
     myCommon =[Common shared];
     
-    NSArray* property1 = [[NSArray alloc] initWithObjects:@"公司Logo", @"名称", @"地址", @"社区代码", @"简介",nil];
+    NSArray* property1 = [[NSArray alloc] initWithObjects:@"公司标识", @"名称", @"地址", @"社区代码", @"简介",nil];
     NSArray* property2 = [[NSArray alloc] initWithObjects:@"移动电话", @"固定电话", @"联系人", nil];
     NSArray* property3 = [[NSArray alloc] initWithObjects:@"网址", @"邮箱", @"更新时间", nil];
     properties = [[NSArray alloc] initWithObjects: property1, property2, property3, nil];
@@ -62,6 +62,7 @@
     logoImg = nil;
     encodeImageStr = @"";
     myLeenToast = [[LeenToast alloc] init];
+    myCommunicationHttp = [[CommunicationHttp alloc] init];
     
     [self getCommunityInfo];     // 获取社区信息
 }
@@ -101,20 +102,17 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    [self initData];
+    
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"< 物业客服" style:UIBarButtonItemStylePlain target:self action:@selector(backFunc)];
     
+    if([myCommon.m_userPermissionAry[6][1] isEqualToString:@"1"])
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveFunc)];
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        myCommunicationHttp = [[CommunicationHttp alloc] init];
-        [self initData];        // 初始化表数据
-        // 获取键盘高度通知
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    });
-    
+    // 获取键盘高度通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
 }
 
 - (void)backFunc
@@ -184,8 +182,9 @@
     [dicRequestData setValue:@"" forKey:@"createTime"];
     [dicRequestData setValue:contectStr forKey:@"contact"];
     [dicRequestData setValue:websiteStr forKey:@"uRL"];
-    [dicRequestData setValue:codeStr forKey:@"code"];
+    [dicRequestData setValue:[[NSUserDefaults standardUserDefaults] objectForKey:COMMUNITYCODE] forKey:@"code"];
     [dicRequestData setValue:[[NSUserDefaults standardUserDefaults] objectForKey:USERID] forKey:@"userID"];
+    [dicRequestData setValue:@"0" forKey:@"type"];
     
     // 转换成json格式
     NSString *strJsonData = [NSString stringWithFormat:@"%@",[dicRequestData JSONRepresentation]];
@@ -326,6 +325,13 @@
         }
         [cell.rightImgBtn addTarget:self action:@selector(setPerImg) forControlEvents:UIControlEventTouchUpInside];
     }
+    else if(indexPath.section == 0 && indexPath.row == 3)
+    {
+        cell.rightTextField.text = [[NSUserDefaults standardUserDefaults] objectForKey:COMMUNITYCODE];
+        cell.rightTextField.textColor = [UIColor lightGrayColor];
+        cell.rightTextField.backgroundColor = [UIColor colorWithRed:235/255.0f green:235/255.0f blue:235/255.0f alpha:1.0f];
+        cell.rightTextField.enabled = NO;
+    }
     else if(indexPath.section == 0 && indexPath.row == 4)
     {
         cell.rightTextField.text = @"";
@@ -451,7 +457,7 @@
     picker.delegate = self;
     picker.allowsEditing = YES;//设置可编辑
     picker.sourceType = sourceType;
-    [self presentModalViewController:picker animated:YES];//进入照相界面
+    [self presentViewController:picker animated:YES completion:nil];//进入照相界面
 }
 
 

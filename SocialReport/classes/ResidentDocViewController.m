@@ -39,6 +39,8 @@
 
 - (void)initView
 {
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     CGRect frame = self.view.frame;
     
     // bgScrollView
@@ -47,13 +49,14 @@
         frame.origin.y = 0;
         frame.size.height -= self.navigationController.navigationBar.bounds.size.height;
     }
+    frame.size.height += 50;
     bgScrollView = [[UIScrollView alloc]initWithFrame:frame];
     bgScrollView.directionalLockEnabled = YES;
     bgScrollView.pagingEnabled = NO;
     bgScrollView.showsVerticalScrollIndicator = YES;
     bgScrollView.showsHorizontalScrollIndicator = NO;
     bgScrollView.indicatorStyle = UIScrollViewIndicatorStyleBlack;
-    bgScrollView.contentSize = CGSizeMake(320, frame.size.height - 64);
+    bgScrollView.contentSize = CGSizeMake(320, frame.size.height - 64 - 50);
     [self.view addSubview:bgScrollView];
     
     //searchImg
@@ -165,23 +168,35 @@
     searchRoomNumIco.image = [UIImage imageNamed:@"arrow"];
     [bgScrollView addSubview:searchRoomNumIco];
     
-    // searchInfoBtn
+    // yet moved out search
     frame.origin.x = PADDING_LEFT + 5;
     frame.origin.y = searchRoomNumBtn.frame.origin.y + searchRoomNumBtn.frame.size.height + PADDING_TOP + 5;
-    frame.size.width = 110;
+    frame.size.width = 90;
     frame.size.height = 30;
-    UIButton *searchInfoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    searchInfoBtn.frame = frame;
-    [searchInfoBtn setTitle:@"查询人员信息" forState:UIControlStateNormal];
-    searchInfoBtn.titleLabel.font = [UIFont systemFontOfSize:15.0f];
-    [searchInfoBtn setBackgroundImage:[UIImage imageNamed:@"searchInfo_bg"] forState:UIControlStateNormal];
-    [searchInfoBtn addTarget:self action:@selector(searchInfoBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    [bgScrollView addSubview:searchInfoBtn];
+    UIButton *yetMovedOutBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    yetMovedOutBtn.frame = frame;
+    [yetMovedOutBtn setTitle:@"住户迁出" forState:UIControlStateNormal];
+    yetMovedOutBtn.titleLabel.font = [UIFont systemFontOfSize:15.0f];
+    [yetMovedOutBtn setBackgroundImage:[UIImage imageNamed:@"searchInfo_bg"] forState:UIControlStateNormal];
+    [yetMovedOutBtn addTarget:self action:@selector(yetMovedSearchFunc) forControlEvents:UIControlEventTouchUpInside];
+    if([myCommon.m_userPermissionAry[1][2] isEqualToString:@"1"])
+        [bgScrollView addSubview:yetMovedOutBtn];
     
-    frame.origin.x += frame.size.width + 115;
+    // has moved out search
+    frame.origin.x += yetMovedOutBtn.frame.size.width + 10;
+    UIButton *hasMovedOutBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    hasMovedOutBtn.frame = frame;
+    [hasMovedOutBtn setTitle:@"已迁出查询" forState:UIControlStateNormal];
+    hasMovedOutBtn.titleLabel.font = [UIFont systemFontOfSize:15.0f];
+    [hasMovedOutBtn setBackgroundImage:[UIImage imageNamed:@"searchInfo_bg"] forState:UIControlStateNormal];
+    [hasMovedOutBtn addTarget:self action:@selector(hasMovedSearchFunc) forControlEvents:UIControlEventTouchUpInside];
+    if([myCommon.m_userPermissionAry[1][3] isEqualToString:@"1"])
+        [bgScrollView addSubview:hasMovedOutBtn];
+    
+    // editBtn
+    frame.origin.x += hasMovedOutBtn.frame.size.width + 40;
     frame.size.width = 50;
     frame.size.height = 30;
-    // editBtn
     editBtn = [[UIButton alloc] initWithFrame:frame];
     editBtn.titleLabel.font = [UIFont systemFontOfSize:15.0f];
     [editBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -194,7 +209,7 @@
     
     // contentShowBg
     frame.origin.x = PADDING_LEFT;
-    frame.origin.y += searchInfoBtn.frame.size.height + PADDING_TOP;
+    frame.origin.y += yetMovedOutBtn.frame.size.height + PADDING_TOP;
     frame.size.width = MAIN_SCREEN_SIZE.width - 2*PADDING_LEFT;
     if (SYSTEM_VERSION >= 7.0)
         frame.size.height = bgScrollView.frame.size.height - frame.origin.y - 44 - 10;
@@ -202,62 +217,19 @@
         frame.size.height = bgScrollView.frame.size.height - frame.origin.y - 44 - 10 + 64;
     UIImageView *contentShowBg = [[UIImageView alloc] initWithFrame:frame];
     [contentShowBg setImage:[UIImage imageNamed:@""]];
+//    contentShowBg.backgroundColor = [UIColor colorWithRed:250/255.0f green:250/255.0f blue:250/255.0f alpha:1.0f];
     [bgScrollView addSubview:contentShowBg];
     
     // myTableView
-    frame.origin.x += 5;
-    frame.origin.y += 30;
-    frame.size.width = contentShowBg.frame.size.width - 2*5;
-    frame.size.height = contentShowBg.frame.size.height - 49;
+    frame.origin.y += 15;
+    frame.size.width = contentShowBg.frame.size.width;
+    frame.size.height = contentShowBg.frame.size.height - 90;
     myTableView = [[UITableView alloc]initWithFrame:frame];
     myTableView.delegate = self;
     myTableView.dataSource = self;
     myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    myTableView.backgroundColor = [UIColor colorWithRed:248/255.0f green:248/255.0f blue:248/255.0f alpha:1.0f];
     [bgScrollView addSubview:myTableView];
-    
-    // 设置导航栏
-    UIToolbar *titleToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-    [self.navigationItem setTitleView:titleToolbar];
-    
-    // 导航栏标题
-    frame.origin.x = 50;
-    frame.origin.y = 0;
-    frame.size.width = 100;
-    frame.size.height = 44;
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:frame];
-    titleLabel.backgroundColor = [UIColor clearColor];
-    titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.textColor = [UIColor blackColor];
-    titleLabel.font = [UIFont boldSystemFontOfSize:18.0f];
-    titleLabel.text = @"住户档案";
-    [titleToolbar addSubview:titleLabel];
-    
-    // 迁入按钮
-    frame.origin.x = 165;
-    frame.origin.y = titleToolbar.frame.origin.y + 7;
-    frame.size.width = 90/2;
-    frame.size.height = 58/2;
-    UIButton *moveInBtn = [[UIButton alloc] initWithFrame:frame];
-    [moveInBtn setTitle:@"迁入" forState:UIControlStateNormal];
-    [moveInBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    moveInBtn.titleLabel.font = [UIFont systemFontOfSize:14.0f];
-    [moveInBtn setBackgroundImage:[UIImage imageNamed:@"news_neighbour@2x.png"] forState:UIControlStateNormal];
-    [moveInBtn setBackgroundImage:[UIImage imageNamed:@"news_neighbour_d@2x.png"] forState:UIControlStateDisabled];
-    [moveInBtn addTarget:self action:@selector(moveInBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    [titleToolbar addSubview:moveInBtn];
-    
-    // 迁出按钮
-    frame.origin.x += moveInBtn.frame.size.width;
-    frame.size.width = 90/2;
-    frame.size.height = 58/2;
-    UIButton *moveOutBtn = [[UIButton alloc] initWithFrame:frame];
-    [moveOutBtn setTitle:@"迁出" forState:UIControlStateNormal];
-    [moveOutBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    moveOutBtn.titleLabel.font = [UIFont systemFontOfSize:14.0f];
-    [moveOutBtn setBackgroundImage:[UIImage imageNamed:@"news_message@2x.png"] forState:UIControlStateNormal];
-    [moveOutBtn setBackgroundImage:[UIImage imageNamed:@"news_message_d@2x.png"] forState:UIControlStateDisabled];
-    [moveOutBtn addTarget:self action:@selector(moveOutBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    [titleToolbar addSubview:moveOutBtn];
 }
 
 // 设置小区、楼宇和房号标签
@@ -279,6 +251,9 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    myCommon = [Common shared];
+    myCommunicationHttp = [[CommunicationHttp alloc] init];
+    
     [self initView];
     
     //显示导航栏
@@ -286,8 +261,8 @@
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"< 首页" style:UIBarButtonItemStylePlain target:self action:@selector(backFunc)];
     
-    myCommon = [Common shared];
-    myCommunicationHttp = [[CommunicationHttp alloc] init];
+    if([myCommon.m_userPermissionAry[1][1] isEqualToString:@"1"])
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"住户迁入" style:UIBarButtonItemStylePlain target:self action:@selector(moveInBtnClicked)];
     
     searchBuildingVauleLbl.text = @"";
     searchRoomNumVauleLbl.text = @"";
@@ -329,8 +304,8 @@
     [self.navigationController pushViewController:listRoomViewController animated:YES];
 }
 
-// 信息查询
-- (void)searchInfoBtnClicked
+// 未迁出查询
+- (void)yetMovedSearchFunc
 {
     if(searchBuildingVauleLbl.text == nil)
     {
@@ -347,7 +322,7 @@
     
     // 设置请求URL
     NSString *strRequestURL;
-    strRequestURL = [NSString stringWithFormat:@"%@?communityNo=%@&roomNo=%@&tenantCode=%@&UID=%@",HTTPURL_LISTPERSON,[[NSUserDefaults standardUserDefaults] objectForKey:COMMUNITYNO],searchRoomNumVauleLbl.text,[[NSUserDefaults standardUserDefaults] objectForKey:TENANTCODE],[[NSUserDefaults standardUserDefaults] objectForKey:UID]];
+    strRequestURL = [NSString stringWithFormat:@"%@?communityNo=%@&roomNo=%@&tenantCode=%@&currentClient=TRUE&UID=%@",HTTPURL_LISTPERSON,[[NSUserDefaults standardUserDefaults] objectForKey:COMMUNITYNO],searchRoomNumVauleLbl.text,[[NSUserDefaults standardUserDefaults] objectForKey:TENANTCODE],[[NSUserDefaults standardUserDefaults] objectForKey:UID]];
 //    NSLog(@"strRequestURL = %@",strRequestURL);
     
     if(HUD == nil)
@@ -380,6 +355,61 @@
             else
             {
                 editBtn.alpha = 1;
+            }
+            
+            [myTableView reloadData];
+        }];
+    }
+}
+
+// 已迁出查询
+- (void)hasMovedSearchFunc
+{
+    editBtn.alpha = 0;
+    
+    if(searchBuildingVauleLbl.text == nil)
+    {
+        UIAlertView *alt = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请选择楼宇!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alt show];
+        return ;
+    }
+    else if(searchRoomNumVauleLbl.text == nil)
+    {
+        UIAlertView *alt = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请选择房间号!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alt show];
+        return ;
+    }
+    
+    // 设置请求URL
+    NSString *strRequestURL;
+    strRequestURL = [NSString stringWithFormat:@"%@?communityNo=%@&roomNo=%@&tenantCode=%@&currentClient=FALSE&UID=%@",HTTPURL_LISTPERSON,[[NSUserDefaults standardUserDefaults] objectForKey:COMMUNITYNO],searchRoomNumVauleLbl.text,[[NSUserDefaults standardUserDefaults] objectForKey:TENANTCODE],[[NSUserDefaults standardUserDefaults] objectForKey:UID]];
+    //    NSLog(@"strRequestURL = %@",strRequestURL);
+    
+    if(HUD == nil)
+    {
+        HUD = [[MBProgressHUD alloc]initWithFrame:CGRectMake(70, 200, 180, 100)];
+        [self.view addSubview:HUD];
+        HUD.delegate = self;
+        HUD.labelText = @"查询中...";
+        [HUD showAnimated:YES whileExecutingBlock:^{
+            // 发送登录请求
+            strRespString = [myCommunicationHttp sendHttpRequest:HTTP_LISTPERSON threadType:1 strJsonContent:strRequestURL];
+            
+        } completionBlock:^{
+            // 隐藏HUD
+            [HUD removeFromSuperview];
+            HUD = nil;
+            
+            personInfoArr = [[NSMutableArray alloc] init];
+            if([[[strRespString objectForKey:@"Info"] objectForKey:@"Code"] intValue] == 1)
+            {
+                [personInfoArr addObjectsFromArray:[strRespString objectForKey:@"Data"]];
+            }
+            
+            if ([personInfoArr count] == 0)
+            {
+                UIAlertView *alt = [[UIAlertView alloc] initWithTitle:@"提示" message:@"此房间无已迁出信息!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil,  nil];
+                [alt show];
             }
             
             [myTableView reloadData];
@@ -434,7 +464,10 @@
 // 删除提示按钮汉化
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return @"删除";
+    if([[[personInfoArr objectAtIndex:indexPath.row] objectForKey:@"CurrentClient"] intValue] == 1)
+        return @"迁出";
+    else
+        return nil;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -462,25 +495,21 @@
     }
     
     cell.apAddressLabel.text = [NSString stringWithFormat:@"%@   身份证号：%@", [[personInfoArr objectAtIndex:indexPath.row] valueForKey:@"ClientName"], [[personInfoArr objectAtIndex:indexPath.row] valueForKey:@"CertificateNo"]];
-    if([[[personInfoArr objectAtIndex:indexPath.row] objectForKey:@"CurrentClient"] intValue])
-    {
-        cell.apDistanceLabel.text = [NSString stringWithFormat:@"未迁出"];
-    }
+
+    if(![[[personInfoArr objectAtIndex:indexPath.row] valueForKey:@"MobilePhone"] isEqual:[NSNull null]])
+        cell.apDistanceLabel.text = [NSString stringWithFormat:@"联系方式：%@",[[personInfoArr objectAtIndex:indexPath.row] valueForKey:@"MobilePhone"]];
     else
-    {
-        cell.apDistanceLabel.text = [NSString stringWithFormat:@"已迁出"];
-    }
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.apDistanceLabel.text = @"联系方式：暂无";
 
     return cell;
     
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    PersonInfoDetailViewController *personInfoDetailViewController = [[PersonInfoDetailViewController alloc] initWithPersonInfoDetail:[personInfoArr objectAtIndex:indexPath.row]];
-    [self.navigationController pushViewController:personInfoDetailViewController animated:YES];
-}
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    PersonInfoDetailViewController *personInfoDetailViewController = [[PersonInfoDetailViewController alloc] initWithPersonInfoDetail:[personInfoArr objectAtIndex:indexPath.row]];
+//    [self.navigationController pushViewController:personInfoDetailViewController animated:YES];
+//}
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -500,8 +529,8 @@
         }
         else if([[[personInfoArr objectAtIndex:indexPath.row] objectForKey:@"CurrentClient"] intValue] == 0)
         {
-            UIAlertView *alt = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前用户已迁出!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [alt show];
+//            UIAlertView *alt = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前用户已迁出!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//            [alt show];
             return ;
         }
         // NSDate转成NSString
@@ -513,7 +542,7 @@
         // 设置请求URL
         NSString *strRequestURL;
         strRequestURL = [NSString stringWithFormat:@"%@?clientNo=%@&roomNo=%@&outDate=%@&tenantCode=%@&UID=%@", HTTPURL_MOVEOUT, [[personInfoArr objectAtIndex:indexPath.row] objectForKey:@"ClientNo"], myCommon.m_roomNo,nowDate,[[NSUserDefaults standardUserDefaults] objectForKey:TENANTCODE],[[NSUserDefaults standardUserDefaults] objectForKey:UID]];
-        NSLog(@"strRequestURL = %@",strRequestURL);
+//        NSLog(@"strRequestURL = %@",strRequestURL);
         
         // 发送登录请求
         strRespString = [myCommunicationHttp sendHttpRequest:HTTP_MOVEOUT threadType:1 strJsonContent:strRequestURL];
@@ -523,7 +552,7 @@
         // 再在界面显示里删除
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         
-        [self searchInfoBtnClicked];
+        [self yetMovedSearchFunc];
         
         if([[[strRespString objectForKey:@"Info"] objectForKey:@"Code"] intValue] == 1)
         {

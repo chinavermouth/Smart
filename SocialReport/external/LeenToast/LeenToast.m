@@ -43,7 +43,7 @@
 		
 		UILabel *label=[[UILabel alloc] init];
 		label.tag=10;
-		label.textAlignment=UITextAlignmentCenter;
+		label.textAlignment=NSTextAlignmentCenter;
 		label.numberOfLines=0;
 		label.backgroundColor=[UIColor clearColor];
 		label.textColor=[UIColor whiteColor];
@@ -117,7 +117,7 @@
 		
 		UILabel *label=[[UILabel alloc] init];
 		label.tag=10;
-		label.textAlignment=UITextAlignmentCenter;
+		label.textAlignment=NSTextAlignmentCenter;
 		label.numberOfLines=0;
 		label.backgroundColor=[UIColor clearColor];
 		label.textColor=[UIColor whiteColor];

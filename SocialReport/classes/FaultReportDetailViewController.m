@@ -11,6 +11,7 @@
 #import "InfoDetailListCell.h"
 #import "LoginViewController.h"
 
+
 #define MARGIN_LEFT 22
 #define MARGIN_TOP  10
 
@@ -72,6 +73,7 @@ NSString *const faultReportCellId = @"cellIdentifier";
     rightBarBtn.titleLabel.textAlignment = NSTextAlignmentLeft;
     rightBarBtn.backgroundColor = [UIColor clearColor];
     [rightBarBtn addTarget:self action:@selector(publishCommFunc) forControlEvents:UIControlEventTouchUpInside];
+    if([myCommon.m_userPermissionAry[7][2] isEqualToString:@"1"])
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBarBtn];
     
     CGRect frame = self.view.frame;
@@ -96,7 +98,7 @@ NSString *const faultReportCellId = @"cellIdentifier";
     if(SYSTEM_VERSION < 7.0)
         frame.origin.y = MARGIN_TOP;
     frame.size.width = SCREEN_SIZE.width - 2 * MARGIN_LEFT;
-    frame.size.height = 60;
+    frame.size.height = 40;
     titleLbl = [[UILabel alloc] initWithFrame:frame];
     titleLbl.text = [NSString stringWithFormat:@"标题：%@",@""];
     titleLbl.font = [UIFont boldSystemFontOfSize:16.0f];
@@ -104,11 +106,11 @@ NSString *const faultReportCellId = @"cellIdentifier";
     titleLbl.numberOfLines = 0;
     titleLbl.textColor = [UIColor blackColor];
     titleLbl.backgroundColor = [UIColor clearColor];
-    [mainScrollView addSubview:titleLbl];
+//    [mainScrollView addSubview:titleLbl];
     
     // 作者
     frame.origin.y += titleLbl.frame.size.height;
-    frame.size.width = 200;
+    frame.size.width = 220;
     frame.size.height = 40;
     if(SCREEN_SIZE.height < 568.0f)
         frame.size.height = 30;
@@ -122,13 +124,22 @@ NSString *const faultReportCellId = @"cellIdentifier";
     // 发布时间
     frame.origin.y += authorLbl.frame.size.height;
     timeLbl = [[UILabel alloc] initWithFrame:frame];
-    timeLbl.text = [NSString stringWithFormat:@"发布时间：%@",@""];
+    timeLbl.text = @"发布时间：";
     timeLbl.font = [UIFont systemFontOfSize:14.0f];
     timeLbl.backgroundColor = [UIColor clearColor];
     [mainScrollView addSubview:timeLbl];
     
-    // 联系人
+    // 更新时间
     frame.origin.y += timeLbl.frame.size.height;
+    newTimeLbl = [[UILabel alloc] initWithFrame:frame];
+    newTimeLbl.text = [NSString stringWithFormat:@"更新时间：%@",@""];
+    newTimeLbl.textColor = [UIColor redColor];
+    newTimeLbl.font = [UIFont systemFontOfSize:14.0f];
+    newTimeLbl.backgroundColor = [UIColor clearColor];
+    [mainScrollView addSubview:newTimeLbl];
+    
+    // 联系人
+    frame.origin.y += newTimeLbl.frame.size.height;
     contactLbl = [[UILabel alloc] initWithFrame:frame];
     contactLbl.text = [NSString stringWithFormat:@"联系人：%@",@""];
     contactLbl.font = [UIFont systemFontOfSize:14.0f];
@@ -177,9 +188,9 @@ NSString *const faultReportCellId = @"cellIdentifier";
     [mainScrollView addSubview:statusLbl];
     
     if(SYSTEM_VERSION >= 7.0)
-        frame.origin.y += statusLbl.frame.size.height + 45;
-    else
         frame.origin.y += statusLbl.frame.size.height + 30;
+    else
+        frame.origin.y += statusLbl.frame.size.height + 15;
     frame.size.width = 90;
     frame.size.height = 40;
     commentListBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -212,7 +223,7 @@ NSString *const faultReportCellId = @"cellIdentifier";
     [callBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     callBtn.titleLabel.font = [UIFont systemFontOfSize:14.0f];
     [callBtn addTarget:self action:@selector(callBtnFunc) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:callBtn];
+//    [self.view addSubview:callBtn];
     
     frame.origin.x += callBtn.frame.size.width;
     messageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -221,7 +232,7 @@ NSString *const faultReportCellId = @"cellIdentifier";
     [messageBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     messageBtn.titleLabel.font = [UIFont systemFontOfSize:14.0f];
     [messageBtn addTarget:self action:@selector(messageBtnFunc) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:messageBtn];
+//    [self.view addSubview:messageBtn];
     
     frame.origin.x += messageBtn.frame.size.width;
     emailBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -230,7 +241,21 @@ NSString *const faultReportCellId = @"cellIdentifier";
     [emailBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     emailBtn.titleLabel.font = [UIFont systemFontOfSize:14.0f];
     [emailBtn addTarget:self action:@selector(emailBtnFunc) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:emailBtn];
+//    [self.view addSubview:emailBtn];
+    
+    // 拨打业主电话
+    myToolBarDrawerView = [[ToolDrawerView alloc]initInVerticalCorner:kBottomCorner
+                                                  andHorizontalCorner:kRightCorner
+                                                               moving:kHorizontally];
+    
+    UIButton *button;
+	button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setImage:[UIImage imageNamed:@"tenePhone"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(telFunc) forControlEvents:UIControlEventTouchUpInside];
+    if([myCommon.m_userPermissionAry[7][1] isEqualToString:@"1"])
+	[myToolBarDrawerView appendButton:button];
+    
+    [self.view addSubview:myToolBarDrawerView];
     
 }
 
@@ -259,6 +284,22 @@ NSString *const faultReportCellId = @"cellIdentifier";
     [commentTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:faultReportCellId];
     [self addHeader];
     [self addFooter];
+}
+
+// 拨打业主电话
+- (void)telFunc
+{
+    [myToolBarDrawerView close];
+    
+    NSString *phoneNum =[ NSString stringWithFormat:@"%@", [[[respDic objectForKey:@"Data"] objectAtIndex:0] objectForKey:@"Tel"]];
+    if(![phoneNum isEqualToString:@"<null>"]&&![phoneNum isEqualToString:@"null"])
+    {
+        UIWebView*callWebview =[[UIWebView alloc] init];
+        NSString *telUrl = [NSString stringWithFormat:@"tel:%@",phoneNum];
+        NSURL *telURL =[NSURL URLWithString:telUrl];
+        [callWebview loadRequest:[NSURLRequest requestWithURL:telURL]];
+        [self.view addSubview:callWebview];
+    }
 }
 
 - (void)getInfoDetailFunc
@@ -294,7 +335,9 @@ NSString *const faultReportCellId = @"cellIdentifier";
                 
                 titleLbl.text = [NSString stringWithFormat:@"标题：%@", [[[respDic objectForKey:@"Data"] objectAtIndex:0] objectForKey:@"Title"]];
                 authorLbl.text = [NSString stringWithFormat:@"作者：%@", [[[respDic objectForKey:@"Data"] objectAtIndex:0] objectForKey:@"UserName"]];
-                timeLbl.text = [NSString stringWithFormat:@"发布时间：%@", [[[respDic objectForKey:@"Data"] objectAtIndex:0] objectForKey:@"WriteTime"]];
+                if([timeLbl.text isEqualToString:@"发布时间："])
+                    timeLbl.text = [NSString stringWithFormat:@"发布时间：%@", [[[[[respDic objectForKey:@"Data"] objectAtIndex:0] objectForKey:@"Details"] objectAtIndex:0] objectForKey:@"WriteTime"]];
+                newTimeLbl.text = [NSString stringWithFormat:@"更新时间：%@", [[[respDic objectForKey:@"Data"] objectAtIndex:0] objectForKey:@"LastUpdated"]];
                 contactLbl.text = [NSString stringWithFormat:@"联系人：%@", [[[respDic objectForKey:@"Data"] objectAtIndex:0] objectForKey:@"Linkman"]];
                 phoneLabel.text = [NSString stringWithFormat:@"手机号码：%@", [[[respDic objectForKey:@"Data"] objectAtIndex:0] objectForKey:@"Tel"]];
                 addressLbl.text = [NSString stringWithFormat:@"地址：%@", [[[respDic objectForKey:@"Data"] objectAtIndex:0] objectForKey:@"Address"]];
@@ -408,14 +451,14 @@ NSString *const faultReportCellId = @"cellIdentifier";
         
         if(SYSTEM_VERSION >= 7.0)
             if(SCREEN_SIZE.height >= 568)
-                [mainScrollView setContentOffset:CGPointMake(0.0f, 295+64)];
+                [mainScrollView setContentOffset:CGPointMake(0.0f, 300+64)];
             else
-                [mainScrollView setContentOffset:CGPointMake(0.0f, 295)];
+                [mainScrollView setContentOffset:CGPointMake(0.0f, 300)];
         else
             if(SCREEN_SIZE.height >= 568)
-                [mainScrollView setContentOffset:CGPointMake(0.0f, 295+64+40)];
+                [mainScrollView setContentOffset:CGPointMake(0.0f, 300+64+40)];
             else
-                [mainScrollView setContentOffset:CGPointMake(0.0f, 295+40)];
+                [mainScrollView setContentOffset:CGPointMake(0.0f, 300+40)];
         
         [UIView commitAnimations];
         
@@ -449,10 +492,7 @@ NSString *const faultReportCellId = @"cellIdentifier";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if([[[infoAry objectAtIndex:indexPath.row] objectForKey:@"ImageUrl"] count])
-        return InfoDetailListCell.getCellHeight;
-    else
-        return InfoDetailListCell.getCellHeight - 5*2 - 67.5 - 5;
+    return InfoDetailListCell.getCellHeight;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -470,25 +510,25 @@ NSString *const faultReportCellId = @"cellIdentifier";
         cell = [[InfoDetailListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
+    [cell.leftUserImg setImage:[UIImage imageNamed:@"person"]];
     if(indexPath.row == 0)
-        cell.lineOneLbl.text = [NSString stringWithFormat:@"%@", [[[respDic objectForKey:@"Data"] objectAtIndex:0] objectForKey:@"Title"]];
+        cell.rightTitleLbl.text = [NSString stringWithFormat:@"%@", [[[respDic objectForKey:@"Data"] objectAtIndex:0] objectForKey:@"Title"]];
     if([[[infoAry objectAtIndex:indexPath.row] objectForKey:@"Type"] intValue] == 0)
     {
-        cell.lineTwoLeftLbl.text = [NSString stringWithFormat:@"居民:%@",[[infoAry objectAtIndex:indexPath.row] objectForKey:@"UserName"]];
-        cell.lineThreeRightText.textColor = [UIColor blackColor];
+        cell.leftUserLbl.text = [NSString stringWithFormat:@"居民:%@",[[infoAry objectAtIndex:indexPath.row] objectForKey:@"UserName"]];
+        cell.rightContentTextV.textColor = [UIColor blackColor];
     }
     else
     {
-        cell.lineTwoLeftLbl.text = [NSString stringWithFormat:@"物业人员:%@",[[infoAry objectAtIndex:indexPath.row] objectForKey:@"UserName"]];
-        cell.lineThreeRightText.textColor = [UIColor redColor];
+        cell.leftUserLbl.text = [NSString stringWithFormat:@"物业人员:%@",[[infoAry objectAtIndex:indexPath.row] objectForKey:@"UserName"]];
+        cell.rightContentTextV.textColor = [UIColor redColor];
     }
-    cell.lineTwoRightLbl.text = [NSString stringWithFormat:@"%@", [[infoAry objectAtIndex:indexPath.row] objectForKey:@"WriteTime"]];
-    cell.lineThreeRightText.text = [NSString stringWithFormat:@"    %@", [[infoAry objectAtIndex:indexPath.row] objectForKey:@"Content"]];
-    cell.lineFourLeftLbl.text = [NSString stringWithFormat:@"电话:%@", [[infoAry objectAtIndex:indexPath.row] objectForKey:@"Tel"]];
+    cell.bottomTimeLbl.text = [NSString stringWithFormat:@"%@", [[infoAry objectAtIndex:indexPath.row] objectForKey:@"WriteTime"]];
+    cell.rightContentTextV.text = [NSString stringWithFormat:@"    %@", [[infoAry objectAtIndex:indexPath.row] objectForKey:@"Content"]];
     if(indexPath.row != 0)
-        cell.lineFourRightLbl.text = [NSString stringWithFormat:@"%d 楼", indexPath.row+1];
+        cell.bottomRevertLbl.text = [NSString stringWithFormat:@"%ld 楼", indexPath.row+1];
     else
-        cell.lineFourRightLbl.text = [NSString stringWithFormat:@"楼主"];
+        cell.bottomRevertLbl.text = [NSString stringWithFormat:@"楼主"];
     
     // 设置异步加载图片,并做内存和本地缓存
     NSInteger imageCount = [[[infoAry objectAtIndex:indexPath.row] objectForKey:@"ImageUrl"] count];
@@ -516,13 +556,13 @@ NSString *const faultReportCellId = @"cellIdentifier";
         if([myCommon.m_imageCacheDic objectForKey:imageUrl])
         {
             [imageBtn setImage:[myCommon.m_imageCacheDic objectForKey:imageUrl] forState:UIControlStateNormal];
-            [cell.imageScrollView addSubview:imageBtn];
+            [cell.rightImgScrollView addSubview:imageBtn];
         }
         else if([NSData dataWithContentsOfFile:fullPathToFile])
         {
             [myCommon.m_imageCacheDic setValue:[UIImage imageWithData:[NSData dataWithContentsOfFile:fullPathToFile]] forKey:imageUrl];    // 将图片写入内存缓存,以后直接用内存访问
             [imageBtn setImage:[UIImage imageWithData:[NSData dataWithContentsOfFile:fullPathToFile]] forState:UIControlStateNormal];
-            [cell.imageScrollView addSubview:imageBtn];
+            [cell.rightImgScrollView addSubview:imageBtn];
         }
         else
         {
@@ -536,13 +576,13 @@ NSString *const faultReportCellId = @"cellIdentifier";
                                dispatch_async(dispatch_get_main_queue(),
                                               ^{
                                                   [imageBtn setImage:tempImage forState:UIControlStateNormal];
-                                                  [cell.imageScrollView addSubview:imageBtn];
+                                                  [cell.rightImgScrollView addSubview:imageBtn];
                                               });
                            });
         }
     }
     
-    cell.imageScrollView.contentSize = CGSizeMake(imageCount * (90 + 10), 67.5);        // 调整scrollview contentsize 大小
+    cell.rightImgScrollView.contentSize = CGSizeMake(imageCount * (90 + 10), 67.5);        // 调整scrollview contentsize 大小
     
     return cell;
 }
@@ -608,7 +648,7 @@ NSString *const faultReportCellId = @"cellIdentifier";
     {
         LoginViewController *loginViewController = [[LoginViewController alloc] init];
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];
-        [self presentModalViewController:nav animated:YES];
+        [self presentViewController:nav animated:YES completion:nil];
     }
     else if(buttonIndex == 0)
     {

@@ -60,6 +60,7 @@ NSString *const suggestReportDetailViewController = @"suggestReportDetailViewCon
     rightBarBtn.titleLabel.textAlignment = NSTextAlignmentLeft;
     rightBarBtn.backgroundColor = [UIColor clearColor];
     [rightBarBtn addTarget:self action:@selector(publishCommFunc) forControlEvents:UIControlEventTouchUpInside];
+    if([myCommon.m_userPermissionAry[8][2] isEqualToString:@"1"])
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBarBtn];
     
     CGRect frame = self.view.frame;
@@ -96,7 +97,7 @@ NSString *const suggestReportDetailViewController = @"suggestReportDetailViewCon
     
     // 作者
     frame.origin.y += titleLbl.frame.size.height;
-    frame.size.width = 200;
+    frame.size.width = 220;
     frame.size.height = 40;
     if(SCREEN_SIZE.height < 568.0f)
         frame.size.height = 30;
@@ -110,7 +111,7 @@ NSString *const suggestReportDetailViewController = @"suggestReportDetailViewCon
     // 发布时间
     frame.origin.y += authorLbl.frame.size.height;
     timeLbl = [[UILabel alloc] initWithFrame:frame];
-    timeLbl.text = [NSString stringWithFormat:@"发布时间：%@",@""];
+    timeLbl.text = @"发布时间：";
     timeLbl.font = [UIFont systemFontOfSize:14.0f];
     timeLbl.backgroundColor = [UIColor clearColor];
     [mainScrollView addSubview:timeLbl];
@@ -200,7 +201,7 @@ NSString *const suggestReportDetailViewController = @"suggestReportDetailViewCon
     [callBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     callBtn.titleLabel.font = [UIFont systemFontOfSize:14.0f];
     [callBtn addTarget:self action:@selector(callBtnFunc) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:callBtn];
+//    [self.view addSubview:callBtn];
     
     frame.origin.x += callBtn.frame.size.width;
     messageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -209,7 +210,7 @@ NSString *const suggestReportDetailViewController = @"suggestReportDetailViewCon
     [messageBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     messageBtn.titleLabel.font = [UIFont systemFontOfSize:14.0f];
     [messageBtn addTarget:self action:@selector(messageBtnFunc) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:messageBtn];
+//    [self.view addSubview:messageBtn];
     
     frame.origin.x += messageBtn.frame.size.width;
     emailBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -218,8 +219,21 @@ NSString *const suggestReportDetailViewController = @"suggestReportDetailViewCon
     [emailBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     emailBtn.titleLabel.font = [UIFont systemFontOfSize:14.0f];
     [emailBtn addTarget:self action:@selector(emailBtnFunc) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:emailBtn];
+//    [self.view addSubview:emailBtn];
     
+    // 拨打业主电话
+    myToolBarDrawerView = [[ToolDrawerView alloc]initInVerticalCorner:kBottomCorner
+                                                  andHorizontalCorner:kRightCorner
+                                                               moving:kHorizontally];
+    
+    UIButton *button;
+	button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setImage:[UIImage imageNamed:@"tenePhone"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(telFunc) forControlEvents:UIControlEventTouchUpInside];
+    if([myCommon.m_userPermissionAry[8][1] isEqualToString:@"1"])
+	[myToolBarDrawerView appendButton:button];
+    
+    [self.view addSubview:myToolBarDrawerView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -247,6 +261,22 @@ NSString *const suggestReportDetailViewController = @"suggestReportDetailViewCon
     [commentTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:suggestReportDetailViewController];
     [self addHeader];
     [self addFooter];
+}
+
+// 拨打业主电话
+- (void)telFunc
+{
+    [myToolBarDrawerView close];
+    
+    NSString *phoneNum =[ NSString stringWithFormat:@"%@", [[[respDic objectForKey:@"Data"] objectAtIndex:0] objectForKey:@"Tel"]];
+    if(![phoneNum isEqualToString:@"<null>"]&&![phoneNum isEqualToString:@"null"])
+    {
+        UIWebView*callWebview =[[UIWebView alloc] init];
+        NSString *telUrl = [NSString stringWithFormat:@"tel:%@",phoneNum];
+        NSURL *telURL =[NSURL URLWithString:telUrl];
+        [callWebview loadRequest:[NSURLRequest requestWithURL:telURL]];
+        [self.view addSubview:callWebview];
+    }
 }
 
 - (void)getInfoDetailFunc
@@ -282,7 +312,8 @@ NSString *const suggestReportDetailViewController = @"suggestReportDetailViewCon
                 
                 titleLbl.text = [NSString stringWithFormat:@"标题：%@", [[[respDic objectForKey:@"Data"] objectAtIndex:0] objectForKey:@"Title"]];
                 authorLbl.text = [NSString stringWithFormat:@"作者：%@", [[[respDic objectForKey:@"Data"] objectAtIndex:0] objectForKey:@"UserName"]];
-                timeLbl.text = [NSString stringWithFormat:@"发布时间：%@", [[[respDic objectForKey:@"Data"] objectAtIndex:0] objectForKey:@"WriteTime"]];
+                if([timeLbl.text isEqualToString:@"发布时间："])
+                    timeLbl.text = [NSString stringWithFormat:@"发布时间：%@", [[[[[respDic objectForKey:@"Data"] objectAtIndex:0] objectForKey:@"Details"] objectAtIndex:0] objectForKey:@"WriteTime"]];
                 contactLbl.text = [NSString stringWithFormat:@"联系人：%@", [[[respDic objectForKey:@"Data"] objectAtIndex:0] objectForKey:@"Linkman"]];
                 phoneLabel.text = [NSString stringWithFormat:@"手机号码：%@", [[[respDic objectForKey:@"Data"] objectAtIndex:0] objectForKey:@"Tel"]];
                 addressLbl.text = [NSString stringWithFormat:@"地址：%@", [[[respDic objectForKey:@"Data"] objectAtIndex:0] objectForKey:@"Address"]];
@@ -437,7 +468,7 @@ NSString *const suggestReportDetailViewController = @"suggestReportDetailViewCon
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return InfoDetailListCell.getCellHeight - 5*2 - 67.5 - 5;
+    return InfoDetailListCell.getCellHeight;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -455,25 +486,25 @@ NSString *const suggestReportDetailViewController = @"suggestReportDetailViewCon
         cell = [[InfoDetailListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
+    [cell.leftUserImg setImage:[UIImage imageNamed:@"person"]];
     if(indexPath.row == 0)
-        cell.lineOneLbl.text = [NSString stringWithFormat:@"%@", [[[respDic objectForKey:@"Data"] objectAtIndex:0] objectForKey:@"Title"]];
+        cell.rightTitleLbl.text = [NSString stringWithFormat:@"%@", [[[respDic objectForKey:@"Data"] objectAtIndex:0] objectForKey:@"Title"]];
     if([[[infoAry objectAtIndex:indexPath.row] objectForKey:@"Type"] intValue] == 0)
     {
-        cell.lineTwoLeftLbl.text = [NSString stringWithFormat:@"居民:%@",[[infoAry objectAtIndex:indexPath.row] objectForKey:@"UserName"]];
-        cell.lineThreeRightText.textColor = [UIColor blackColor];
+        cell.leftUserLbl.text = [NSString stringWithFormat:@"居民:%@",[[infoAry objectAtIndex:indexPath.row] objectForKey:@"UserName"]];
+        cell.rightContentTextV.textColor = [UIColor blackColor];
     }
     else
     {
-        cell.lineTwoLeftLbl.text = [NSString stringWithFormat:@"物业人员:%@",[[infoAry objectAtIndex:indexPath.row] objectForKey:@"UserName"]];
-        cell.lineThreeRightText.textColor = [UIColor redColor];
+        cell.leftUserLbl.text = [NSString stringWithFormat:@"物业人员:%@",[[infoAry objectAtIndex:indexPath.row] objectForKey:@"UserName"]];
+        cell.rightContentTextV.textColor = [UIColor redColor];
     }
-    cell.lineTwoRightLbl.text = [NSString stringWithFormat:@"%@", [[infoAry objectAtIndex:indexPath.row] objectForKey:@"WriteTime"]];
-    cell.lineThreeRightText.text = [NSString stringWithFormat:@"    %@", [[infoAry objectAtIndex:indexPath.row] objectForKey:@"Content"]];
-    cell.lineFourLeftLbl.text = [NSString stringWithFormat:@"电话:%@", [[infoAry objectAtIndex:indexPath.row] objectForKey:@"Tel"]];
+    cell.bottomTimeLbl.text = [NSString stringWithFormat:@"%@", [[infoAry objectAtIndex:indexPath.row] objectForKey:@"WriteTime"]];
+    cell.rightContentTextV.text = [NSString stringWithFormat:@"    %@", [[infoAry objectAtIndex:indexPath.row] objectForKey:@"Content"]];
     if(indexPath.row != 0)
-        cell.lineFourRightLbl.text = [NSString stringWithFormat:@"%d 楼", indexPath.row+1];
+        cell.bottomRevertLbl.text = [NSString stringWithFormat:@"%ld 楼", indexPath.row+1];
     else
-        cell.lineFourRightLbl.text = [NSString stringWithFormat:@"楼主"];
+        cell.bottomRevertLbl.text = [NSString stringWithFormat:@"楼主"];
     
     return cell;
 }
@@ -494,7 +525,7 @@ NSString *const suggestReportDetailViewController = @"suggestReportDetailViewCon
     {
         LoginViewController *loginViewController = [[LoginViewController alloc] init];
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];
-        [self presentModalViewController:nav animated:YES];
+        [self presentViewController:nav animated:YES completion:nil];
     }
     else if(buttonIndex == 0)
     {

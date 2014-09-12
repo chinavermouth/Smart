@@ -152,6 +152,7 @@
     reportBtn.frame = frame;
     reportBtn.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
     [reportBtn addTarget:self action:@selector(reportFunc) forControlEvents:UIControlEventTouchUpInside];
+    if([myCommon.m_userPermissionAry[0][0] isEqualToString:@"1"])
     [appScrollView addSubview:reportBtn];
     
     // 添加图标
@@ -202,6 +203,7 @@
     arrSeaBtn.frame = frame;
     arrSeaBtn.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
     [arrSeaBtn addTarget:self action:@selector(arrSeaFunc) forControlEvents:UIControlEventTouchUpInside];
+    if([myCommon.m_userPermissionAry[1][0] isEqualToString:@"1"])
     [appScrollView addSubview:arrSeaBtn];
     
     // 添加图标
@@ -227,6 +229,7 @@
     patrolBtn.frame = frame;
     patrolBtn.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
     [patrolBtn addTarget:self action:@selector(patrolFunc) forControlEvents:UIControlEventTouchUpInside];
+    if([myCommon.m_userPermissionAry[2][0] isEqualToString:@"1"])
     [appScrollView addSubview:patrolBtn];
     
     // 添加图标
@@ -252,6 +255,7 @@
     faultBtn.frame = frame;
     faultBtn.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
     [faultBtn addTarget:self action:@selector(faultFunc) forControlEvents:UIControlEventTouchUpInside];
+    if([myCommon.m_userPermissionAry[3][0] isEqualToString:@"1"])
     [appScrollView addSubview:faultBtn];
     
     // 添加图标
@@ -277,6 +281,7 @@
     hygieneBtn.frame = frame;
     hygieneBtn.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
     [hygieneBtn addTarget:self action:@selector(hygieneFunc) forControlEvents:UIControlEventTouchUpInside];
+    if([myCommon.m_userPermissionAry[4][0] isEqualToString:@"1"])
     [appScrollView addSubview:hygieneBtn];
     
     // 添加图标
@@ -352,6 +357,7 @@
     residentDocBtn.frame = frame;
     residentDocBtn.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
     [residentDocBtn addTarget:self action:@selector(residentDocFunc) forControlEvents:UIControlEventTouchUpInside];
+    if([myCommon.m_userPermissionAry[5][0] isEqualToString:@"1"])
     [appScrollView addSubview:residentDocBtn];
     
     // 添加图标
@@ -377,6 +383,7 @@
     faultDecBtn.frame = frame;
     faultDecBtn.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
     [faultDecBtn addTarget:self action:@selector(faultDecFunc) forControlEvents:UIControlEventTouchUpInside];
+    if([myCommon.m_userPermissionAry[6][0] isEqualToString:@"1"])
     [appScrollView addSubview:faultDecBtn];
     
     // 添加图标
@@ -402,6 +409,7 @@
     suggestBtn.frame = frame;
     suggestBtn.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
     [suggestBtn addTarget:self action:@selector(suggestFunc) forControlEvents:UIControlEventTouchUpInside];
+    if([myCommon.m_userPermissionAry[7][0] isEqualToString:@"1"])
     [appScrollView addSubview:suggestBtn];
     
     // 添加图标
@@ -427,6 +435,7 @@
     tenementBtn.frame = frame;
     tenementBtn.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
     [tenementBtn addTarget:self action:@selector(tenementFunc) forControlEvents:UIControlEventTouchUpInside];
+    if([myCommon.m_userPermissionAry[8][0] isEqualToString:@"1"])
     [appScrollView addSubview:tenementBtn];
     
     // 添加图标
@@ -633,7 +642,7 @@
     if(buttonIndex == 0)
     {
         ListRegionViewController *listRegionViewController = [[ListRegionViewController alloc] init];
-        [self presentModalViewController:listRegionViewController animated:YES];
+        [self presentViewController:listRegionViewController animated:YES completion:nil];
     }
 }
 

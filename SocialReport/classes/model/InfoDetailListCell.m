@@ -15,56 +15,58 @@
 
 
 @implementation InfoDetailListCell
-@synthesize lineOneLbl, lineTwoLeftLbl, lineTwoRightLbl, lineThreeLeftImgBtn, lineThreeRightText, lineFourLeftLbl, lineFourRightLbl, imageScrollView;
+@synthesize leftUserBtn = _leftUserBtn, leftUserImg = _leftUserImg, leftUserLbl = _leftUserLbl, rightTitleLbl = _rightTitleLbl, rightContentTextV = _rightContentTextV, rightImgScrollView = _rightImgScrollView, bottomTimeLbl = _bottomTimeLbl, bottomRevertLbl = _bottomRevertLbl;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
     {
-        lineOneLbl = [[UILabel alloc] initWithFrame:CGRectZero];
-        [lineOneLbl setFont: [UIFont boldSystemFontOfSize:15.0f]];
-        [lineOneLbl setBackgroundColor:[UIColor clearColor]];
-        lineOneLbl.textAlignment = NSTextAlignmentCenter;
-        [self addSubview:lineOneLbl];
+        _leftUserBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self addSubview:_leftUserBtn];
         
-        lineTwoLeftLbl = [[UILabel alloc] initWithFrame:CGRectZero];
-        [lineTwoLeftLbl setFont:[UIFont systemFontOfSize:13.0f]];
-        [lineTwoLeftLbl setBackgroundColor:[UIColor clearColor]];
-        lineTwoLeftLbl.textAlignment = NSTextAlignmentCenter;
-        [self addSubview:lineTwoLeftLbl];
+        _leftUserImg = [[UIImageView alloc] init];
+        [_leftUserBtn addSubview:_leftUserImg];
         
-        lineTwoRightLbl = [[UILabel alloc] initWithFrame:CGRectZero];
-        [lineTwoRightLbl setFont:[UIFont systemFontOfSize:13.0f]];
-        [lineTwoRightLbl setBackgroundColor:[UIColor clearColor]];
-        lineTwoRightLbl.textAlignment = NSTextAlignmentCenter;
-        [self addSubview:lineTwoRightLbl];
+        _leftUserLbl = [[UILabel alloc] init];
+        [_leftUserLbl setFont: [UIFont boldSystemFontOfSize:12.0f]];
+        [_leftUserLbl setTextColor:[UIColor lightGrayColor]];
+        [_leftUserLbl setBackgroundColor:[UIColor clearColor]];
+        _leftUserLbl.textAlignment = NSTextAlignmentCenter;
+        [_leftUserBtn addSubview:_leftUserLbl];
         
-        lineThreeLeftImgBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self addSubview:lineThreeLeftImgBtn];
+        _rightTitleLbl = [[UILabel alloc] init];
+        _rightTitleLbl.font = [UIFont systemFontOfSize:14.0f];
+        _rightTitleLbl.textColor = [UIColor blackColor];
+        _rightTitleLbl.backgroundColor = [UIColor clearColor];
+        _rightTitleLbl.textAlignment = NSTextAlignmentCenter;
+        _rightTitleLbl.numberOfLines = 0;
+        [self addSubview:_rightTitleLbl];
         
-        lineThreeRightText = [[UITextView alloc] initWithFrame:CGRectZero];
-        [lineThreeRightText setFont:[UIFont systemFontOfSize:13.0f]];
-        [lineThreeRightText setBackgroundColor:[UIColor clearColor]];
-        lineThreeRightText.editable = NO;
-        [self addSubview:lineThreeRightText];
+        _rightContentTextV = [[UITextView alloc] init];
+        _rightContentTextV.font = [UIFont systemFontOfSize:13.0f];
+        _rightContentTextV.textColor = [UIColor blackColor];
+        _rightContentTextV.backgroundColor = [UIColor clearColor];
+        _rightContentTextV.editable = NO;
+        [self addSubview:_rightContentTextV];
         
-        lineFourLeftLbl = [[UILabel alloc] initWithFrame:CGRectZero];
-        [lineFourLeftLbl setFont:[UIFont systemFontOfSize:13.0f]];
-        [lineFourLeftLbl setBackgroundColor:[UIColor clearColor]];
-        lineFourLeftLbl.textAlignment = NSTextAlignmentCenter;
-        [self addSubview:lineFourLeftLbl];
+        _rightImgScrollView = [[UIScrollView alloc] init];
+        [self addSubview:_rightImgScrollView];
         
-        lineFourRightLbl = [[UILabel alloc] initWithFrame:CGRectZero];
-        [lineFourRightLbl setFont:[UIFont systemFontOfSize:13.0f]];
-        [lineFourRightLbl setBackgroundColor:[UIColor clearColor]];
-        lineFourRightLbl.textAlignment = NSTextAlignmentCenter;
-        [self addSubview:lineFourRightLbl];
+        _bottomTimeLbl = [[UILabel alloc] init];
+        [_bottomTimeLbl setFont: [UIFont boldSystemFontOfSize:12.0f]];
+        [_bottomTimeLbl setTextColor:[UIColor lightGrayColor]];
+        [_bottomTimeLbl setBackgroundColor:[UIColor clearColor]];
+        //        _bottomTimeLbl.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:_bottomTimeLbl];
         
-        imageScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
-        [self addSubview:imageScrollView];
+        _bottomRevertLbl = [[UILabel alloc] init];
+        [_bottomRevertLbl setFont: [UIFont boldSystemFontOfSize:13.0f]];
+        [_bottomRevertLbl setTextColor:[UIColor blackColor]];
+        [_bottomRevertLbl setBackgroundColor:[UIColor clearColor]];
+        //        _bottomRevertLbl.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:_bottomRevertLbl];
     }
-    
     return self;
 }
 
@@ -72,55 +74,58 @@
 {
     [super layoutSubviews];
     
-    CGRect cellBaseRect = self.bounds;
-    CGRect rect;
+    CGRect frame;
     
-    rect.origin.x = PADDING_LEFT;
-    rect.origin.y = PADDING_TOP;
-    rect.size.width = cellBaseRect.size.width - 2*PADDING_LEFT;
-    rect.size.height = 25;
-    lineOneLbl.frame = rect;
+    frame.origin.x = PADDING_LEFT;
+    frame.origin.y = PADDING_TOP;
+    frame.size.height = 75;
+    frame.size.width = 75;
+    _leftUserBtn.frame = frame;
     
-    rect.origin.y += lineOneLbl.frame.size.height + PADDING_VER;
-    rect.size.width = (cellBaseRect.size.width - 2*PADDING_LEFT)/2 - 30;
-    rect.size.height = 20;
-    lineTwoLeftLbl.frame = rect;
+    frame.origin.x = 10;
+    frame.origin.y = 0;
+    frame.size.width = 55;
+    frame.size.height = 55;
+    _leftUserImg.frame = frame;
     
-    rect.origin.x += lineTwoLeftLbl.frame.size.width;
-    rect.size.width = (cellBaseRect.size.width - 2*PADDING_LEFT)/2 + 30;
-    lineTwoRightLbl.frame = rect;
+    frame.origin.x = 0;
+    frame.origin.y = 55;
+    frame.size.width = 75;
+    frame.size.height = 20;
+    _leftUserLbl.frame = frame;
     
-    rect.origin.x = PADDING_LEFT + 10;
-    rect.origin.y += lineTwoRightLbl.frame.size.height + PADDING_VER;
-    rect.size.width = 100;
-    rect.size.height = 100;
-    lineThreeLeftImgBtn.frame = rect;
+    frame.origin.x += _leftUserBtn.frame.size.width + PADDING_HOR;
+    frame.origin.y = PADDING_TOP;
+    frame.size.width = 210;
+    frame.size.height = 30;
+    _rightTitleLbl.frame = frame;
     
-    rect.origin.x += lineThreeLeftImgBtn.frame.size.width + PADDING_HOR;
-    rect.size.width = (cellBaseRect.size.width - 2*PADDING_LEFT) - lineThreeLeftImgBtn.frame.size.width - 2*PADDING_LEFT - 10;
-    rect.size.height = 100;
-    lineThreeRightText.frame = rect;
+    frame.origin.y += _rightTitleLbl.frame.size.height;
+    frame.size.width = 210;
+    frame.size.height = 60;
+    _rightContentTextV.frame = frame;
     
-    rect.origin.x = PADDING_LEFT;
-    rect.origin.y += lineThreeRightText.frame.size.height + PADDING_VER;
-    rect.size.width = (cellBaseRect.size.width - 2*PADDING_LEFT)/2 - 30;
-    rect.size.height = 20;
-    lineFourLeftLbl.frame = rect;
+    frame.origin.y += _rightContentTextV.frame.size.height + PADDING_VER * 3;
+    frame.size.width = 210;
+    frame.size.height = 67.5;
+    _rightImgScrollView.frame = frame;
     
-    rect.origin.x += lineFourLeftLbl.frame.size.width;
-    rect.size.width = (cellBaseRect.size.width - 2*PADDING_LEFT)/2 + 30;
-    lineFourRightLbl.frame = rect;
+    frame.origin.x = PADDING_LEFT * 2;
+    frame.origin.y += _rightImgScrollView.frame.size.height + PADDING_VER * 3;
+    frame.size.width = 220;
+    frame.size.height = 20;
+    _bottomTimeLbl.frame = frame;
     
-    rect.origin.x = 15;
-    rect.origin.y += lineFourLeftLbl.frame.size.height + PADDING_VER*2;
-    rect.size.width = cellBaseRect.size.width - 2*15;
-    rect.size.height = 67.5;
-    imageScrollView.frame = rect;
+    frame.origin.x += _bottomTimeLbl.frame.size.width;
+    frame.size.width = 60;
+    frame.size.height = 20;
+    _bottomRevertLbl.frame = frame;
 }
 
 // 返回单元格高
 + (NSUInteger)getCellHeight
 {
-    return PADDING_TOP * 2 + PADDING_VER * 5 + 25 + 20 + 100 + 20 + 67.5;
+    return PADDING_TOP + 30 + 60 + 67.5 + PADDING_VER * 6 + 20 + PADDING_TOP;
 }
+
 @end

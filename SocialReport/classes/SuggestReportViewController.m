@@ -7,7 +7,7 @@
 //
 
 #import "SuggestReportViewController.h"
-#import "InfoListCell.h"
+#import "InfoListCell2.h"
 #import "LoginViewController.h"
 #import "SuggestReportDetailViewController.h"
 
@@ -212,7 +212,7 @@ NSString *const suggestReportCellIdentifier = @"suggestReportCellIdentifier";
 
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    return InfoListCell.getCellHeight - 3*4 - 67.5 - 5;
+    return InfoListCell2.getCellHeight - 3*4 - 67.5 - 5;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -223,17 +223,16 @@ NSString *const suggestReportCellIdentifier = @"suggestReportCellIdentifier";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    InfoListCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    InfoListCell2 *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
     {
-        cell = [[InfoListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[InfoListCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     }
-    cell.topLbl.text = [NSString stringWithFormat:@"%@", [[faultListData objectAtIndex:indexPath.row] objectForKey:@"Title"]];
-    cell.middleLbl.text = [NSString stringWithFormat:@"电话:%@", [[faultListData objectAtIndex:indexPath.row] objectForKey:@"Tel"]];
-    cell.bottomLbl1.text = [NSString stringWithFormat:@"联系人:%@", [[faultListData objectAtIndex:indexPath.row] objectForKey:@"Linkman"]];
-    cell.bottomLbl2.text = [NSString stringWithFormat:@"%@", [[faultListData objectAtIndex:indexPath.row] objectForKey:@"WriteTime"]];
-    cell.bottomLbl3.text = [NSString stringWithFormat:@"%@", [[faultListData objectAtIndex:indexPath.row] objectForKey:@"Status"]];
+    cell.topLbl.text = [NSString stringWithFormat:@"%@", [[faultListData objectAtIndex:indexPath.row] objectForKey:@"Content"]];
+    cell.middleLbl.text = [NSString stringWithFormat:@"发布于:%@", [[faultListData objectAtIndex:indexPath.row] objectForKey:@"WriteTime"]];
+    cell.bottomLbl1.text = [NSString stringWithFormat:@"更新于:%@", [[faultListData objectAtIndex:indexPath.row] objectForKey:@"LastUpdated"]];
+    cell.bottomLbl2.text = [NSString stringWithFormat:@"状态:%@", [[faultListData objectAtIndex:indexPath.row] objectForKey:@"Status"]];
     
     return cell;
 }
@@ -266,7 +265,7 @@ NSString *const suggestReportCellIdentifier = @"suggestReportCellIdentifier";
     {
         LoginViewController *loginViewController = [[LoginViewController alloc] init];
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];
-        [self presentModalViewController:nav animated:YES];
+        [self presentViewController:nav animated:YES completion:nil];
     }
     else if(buttonIndex == 0)
     {

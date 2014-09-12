@@ -22,6 +22,7 @@
     MBProgressHUD *HUD;
     CommunicationHttp *myCommunicationHttp;
     NSDictionary *respDic;        // 回复数据
+    int photoStatistics;   // 图片总数
     
     UIScrollView *bgScrollView;
     UIImageView *titleBg;

@@ -33,10 +33,12 @@
 {
     myCommunicationHttp = [[CommunicationHttp alloc] init];
     myLeenToast = [[LeenToast alloc] init];
+    myCommon = [Common shared];
 }
 
 - (void)initView
 {
+    if([myCommon.m_userPermissionAry[6][1] isEqualToString:@"1"])
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveFunc)];
     
     self.view.backgroundColor = [UIColor whiteColor];
@@ -516,7 +518,7 @@
     picker.delegate = self;
     picker.allowsEditing = YES;//设置可编辑
     picker.sourceType = sourceType;
-    [self presentModalViewController:picker animated:YES];//进入照相界面
+    [self presentViewController:picker animated:YES completion:nil];//进入照相界面
 }
 
 #pragma mark UIImagePickerControllerDelegate

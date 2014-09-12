@@ -27,6 +27,8 @@
 
 - (void)initView
 {
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"< 我的账户" style:UIBarButtonItemStylePlain target:self action:@selector(backFunc)];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"用户协议" style:UIBarButtonItemStylePlain target:self action:@selector(protocolFunc)];
@@ -61,7 +63,7 @@
     frame.size.width = SCREEN_SIZE.width;
     frame.size.height = 100;
     UILabel *logoLbl = [[UILabel alloc] initWithFrame:frame];
-    logoLbl.text = @"数字物业云\nwww.pmsaas.net\n云的力量改变您的世界\n云平台助力企业迈向成功的彼岸\n版本：1.0.0";
+    logoLbl.text =  [NSString stringWithFormat:@"数字物业云\nwww.pmsaas.net\n云平台助力企业迈向成功的彼岸\n版本：%@",[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
     logoLbl.font = [UIFont systemFontOfSize:15.0f];
     logoLbl.numberOfLines = 5;
     logoLbl.backgroundColor = [UIColor clearColor];
@@ -82,7 +84,7 @@
     frame.origin.y += contentLbl.frame.size.height;
     frame.size.height = 100;
     UILabel *copyrightLbl = [[UILabel alloc] initWithFrame:frame];
-    copyrightLbl.text = @"网址:http://www.10057.com\n领航互联服务热线:0592-5807033\n厦门领航互联信息技术有限公司版权所有\nCopyright 2014 All Rights Reserved";
+    copyrightLbl.text = @"网址:http://www.pmsaas.cn\n领航互联服务热线:0592-5807033\n厦门领航互联信息技术有限公司版权所有\nCopyright 2014 All Rights Reserved";
     copyrightLbl.font = [UIFont systemFontOfSize:12.0f];
     copyrightLbl.textAlignment = NSTextAlignmentCenter;
     copyrightLbl.numberOfLines = 5;

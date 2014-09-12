@@ -57,7 +57,7 @@
     frame.size.height = 30;
     UILabel *titleLable = [[UILabel alloc] initWithFrame:frame];
     titleLable.backgroundColor = [UIColor clearColor];
-    titleLable.textAlignment = UITextAlignmentLeft;
+    titleLable.textAlignment = NSTextAlignmentLeft;
     titleLable.text = @"人员详细信息:";
     titleLable.textColor = [UIColor blueColor];
     [self.view addSubview:titleLable];
@@ -70,7 +70,7 @@
         frame.size.height = self.view.frame.size.height - frame.origin.y - 20 - 44;
     infoTextView = [[UITextView alloc] initWithFrame:frame];
     infoTextView.backgroundColor = [UIColor colorWithRed:239/255.0 green:239/255.0 blue:245/255.0 alpha:1.0];
-    infoTextView.textAlignment = UITextAlignmentLeft;
+    infoTextView.textAlignment = NSTextAlignmentLeft;
     infoTextView.font = [UIFont systemFontOfSize:15.0f];
 //    infoTextView.layer.cornerRadius = 5;
 //    infoTextView.layer.borderWidth = 1;

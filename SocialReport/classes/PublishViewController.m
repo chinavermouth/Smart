@@ -51,6 +51,8 @@
 {
     CGRect frame = self.view.frame;
     
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     // bgScrollView
     if([[[UIDevice currentDevice] systemVersion] floatValue] < 7.0)
     {
@@ -245,6 +247,14 @@
 // 点击照相
 - (void)addPhotoBtnClicked
 {
+    if(photoStatistics++ >= 6)
+    {
+        UIAlertView *myAlt = [[UIAlertView alloc] initWithTitle:@"提示" message:@"一次最多只能传六张哦~" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [myAlt show];
+        
+        return;
+    }
+    
     UIActionSheet *altSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照", @"相册", nil];
     [altSheet showInView:self.view];
 }
@@ -370,11 +380,12 @@
                 }
                 else if([[[respDic objectForKey:@"Info"] objectForKey:@"Code"] intValue] == 2)
                 {
-                    NSLog(@"空值，未知错误！");
+                    UIAlertView *alt = [[UIAlertView alloc] initWithTitle:@"提示" message:@"发表成功!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    [alt show];
                 }
                 else
                 {
-                    UIAlertView *alt = [[UIAlertView alloc] initWithTitle:@"提示" message:@"现在网络有点堵车,不加图片试试 ~" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    UIAlertView *alt = [[UIAlertView alloc] initWithTitle:@"提示" message:@"发布成功!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                     [alt show];
                 }
             }];
@@ -421,7 +432,7 @@
     picker.delegate = self;
     picker.allowsEditing = YES;//设置可编辑
     picker.sourceType = sourceType;
-    [self presentModalViewController:picker animated:YES];//进入照相界面
+    [self presentViewController:picker animated:YES completion:nil];//进入照相界面
 }
 
 #pragma mark UIImagePickerControllerDelegate

@@ -91,7 +91,7 @@
 // dismissView
 - (void)dismissView
 {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
@@ -144,7 +144,7 @@
     // 保存租户号
     [[NSUserDefaults standardUserDefaults] setValue:[[regionAry objectAtIndex:indexPath.row] valueForKey:@"TenantCode"] forKey:TENANTCODE];
     
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 // 设置区域头customView

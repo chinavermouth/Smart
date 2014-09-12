@@ -39,6 +39,8 @@
 {
     CGRect frame = self.view.frame;
     
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     // bgScrollView
     if([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
         frame.size.height -= 45;

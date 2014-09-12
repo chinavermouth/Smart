@@ -62,7 +62,7 @@
     NetworkStatus networkStatus = [reach currentReachabilityStatus];
     if(networkStatus == kNotReachable)
     {
-        [self showAlertMessage:@"亲，社区通需要连接网络才能使用哦~"];
+        [self showAlertMessage:@"亲，物业云需要连接网络才能使用哦~"];
     }
     else
     {

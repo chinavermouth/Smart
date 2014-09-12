@@ -9,6 +9,7 @@
 #import "ReportFuncViewController.h"
 #import "ReportDetailViewController.h"
 #import "PublicReportViewController.h"
+#import "ReportListCell.h"
 
 NSString *const CellIdentifier = @"cellIdentifier";
 
@@ -50,18 +51,21 @@ NSString *const CellIdentifier = @"cellIdentifier";
 {
     [super viewDidLoad];
     
+    [self initData];
+    
     [self.view setBackgroundColor:[UIColor whiteColor]];
     //显示导航栏
 	[self.navigationController setNavigationBarHidden:NO];
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"< 首页" style:UIBarButtonItemStylePlain target:self action:@selector(backFunc)];
+    if([myCommon.m_userPermissionAry[0][1] isEqualToString:@"1"])
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNew)];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        [self initData];
         [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
         [self listReports];
+        [self addHeader];
         [self addFooter];
     });
     
@@ -155,6 +159,9 @@ NSString *const CellIdentifier = @"cellIdentifier";
     header.scrollView = self.tableView;
     header.beginRefreshingBlock = ^(MJRefreshBaseView *refreshView)
     {
+        reportAry = [[NSMutableArray alloc] init];
+        pageIndex = 0;
+        
         // 增加数据
         [self listReports];
         // 加载数据,结束加载
@@ -211,103 +218,23 @@ NSString *const CellIdentifier = @"cellIdentifier";
 // 设置单元格cell高
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    
-    UITableViewCell *cell =[self tableView:tableView cellForRowAtIndexPath:indexPath];
-    
-    return cell.frame.size.height;
+    return [ReportListCell getCellHeight];
     
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    ReportListCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.textLabel.backgroundColor = [UIColor clearColor];
+        cell = [[ReportListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.backgroundColor = [UIColor whiteColor];
-        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-        
-        UILabel*label =[[UILabel alloc] initWithFrame:CGRectZero];
-        
-        label.tag =1;
-        
-        label.lineBreakMode =UILineBreakModeWordWrap;
-        
-        label.highlightedTextColor =[UIColor whiteColor];
-        
-        label.numberOfLines =0;
-        
-        label.opaque = NO;// 选中Opaque表示视图后面的任何内容都不应该绘制
-        
-        label.backgroundColor =[UIColor clearColor];
-        
-        [cell.contentView addSubview:label];
+        cell.selectionStyle = UITableViewCellSelectionStyleGray;
     }
     
-//    // 列宽
-//    CGFloat contentWidth = self.tableView.frame.size.width;
-//    // 用何種字體進行顯示
-//    UIFont *font = [UIFont systemFontOfSize:14.0f];
-//    // 該行要顯示的內容
-//    NSString *content = [NSString stringWithFormat:@"    %@",[[reportAry objectAtIndex:indexPath.row] valueForKey:@"Title"]];
-//    // 計算出顯示完內容需要的最小尺寸
-//    CGSize size = [content sizeWithFont:font constrainedToSize:CGSizeMake(contentWidth, 1000) lineBreakMode:NSLineBreakByWordWrapping];
-//    
-//    CGRect rect = [cell.textLabel textRectForBounds:cell.textLabel.frame limitedToNumberOfLines:0];
-//    // 設置顯示榘形大小
-//    rect.size = size;
-//    // 重置列文本區域
-//    cell.textLabel.frame = rect;
-//    
-//    cell.textLabel.text = content;
-//    
-//    cell.textLabel.textColor = [UIColor blueColor];
-//    
-//    // 設置自動換行(重要)
-//    cell.textLabel.numberOfLines = 0;
-//    // 設置顯示字體(一定要和之前計算時使用字體一至)
-//    cell.textLabel.font = font;
-    
-    UILabel *label =(UILabel*)[cell viewWithTag:1];
-    
-    NSString *text;
-    
-    text = [NSString stringWithFormat:@"       %@  (发布时间:%@)",[[reportAry objectAtIndex:indexPath.row] valueForKey:@"Title"], [[reportAry objectAtIndex:indexPath.row] valueForKey:@"IssuesTime"]];
-    
-    CGRect cellFrame =[cell frame];
-    
-    cellFrame.origin =CGPointMake(0,0);
-    
-    
-    
-    label.text = text;
-    
-    label.font = [UIFont systemFontOfSize:15.0f];
-    
-    CGRect rect =CGRectInset(cellFrame,27,22);
-    
-    label.frame = rect;
-    
-    [label sizeToFit];
-    
-    if(label.frame.size.height >46){
-        
-        cellFrame.size.height =70+ label.frame.size.height -46;
-        
-    }
-    
-    else{
-        
-        cellFrame.size.height =70;
-        
-    }  
-    
-    [cell setFrame:cellFrame];  
-    
-
+    cell.titleLbl.text = [NSString stringWithFormat:@"%@", [[reportAry objectAtIndex:indexPath.row] valueForKey:@"Title"]];
+    cell.timeLbl.text = [NSString stringWithFormat:@"%@", [[reportAry objectAtIndex:indexPath.row] valueForKey:@"IssuesTime"]];
     
     return cell;
 }

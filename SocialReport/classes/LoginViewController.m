@@ -249,10 +249,9 @@
                      [myLeenToast settext:@"登录成功"];
                      [myLeenToast show];
                      
-                     // 切换到主界面
-                     MainBoardViewController *mainBoardViewController = [[MainBoardViewController alloc] init];
-                     [self setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-                     [self presentModalViewController:mainBoardViewController animated:YES];
+                     // 获取用户菜单按钮权限
+                     [self getUserPermission];
+        
                  }
                  else if([[[strRespString objectForKey:@"Info"] objectForKey:@"Code"] intValue] == 8)
                  {
@@ -278,6 +277,164 @@
          }];
 
     }
+}
+
+// 获取用户菜单按钮权限
+- (void)getUserPermission
+{
+    // 设置请求URL
+    NSString *strRequestURL;
+    strRequestURL = [NSString stringWithFormat:@"%@?UID=%@",HTTPURL_GETPERMISSION, [[NSUserDefaults standardUserDefaults] objectForKey:UID]];
+//    NSLog(@"getUserPermission strRequestURL = %@",strRequestURL);
+    
+    __block NSDictionary *respDic;
+    if(HUD == nil)
+    {
+        HUD = [[MBProgressHUD alloc] initWithFrame:CGRectMake(70, 200, 180, 100)];
+        [self.view addSubview:HUD];
+        HUD.labelText = @"加载中...";
+        [HUD showAnimated:YES whileExecutingBlock:^
+         {
+             // 发送请求
+             respDic = [myCommunicationHttp sendHttpRequest:HTTP_GETPERMISSION threadType:1 strJsonContent:strRequestURL];
+         }
+          completionBlock:^
+         {
+             // 隐藏HUD
+             [HUD removeFromSuperview];
+             HUD = nil;
+             if([[[respDic objectForKey:@"Info"] objectForKey:@"Code"] intValue] == 1)
+             {
+                 NSMutableArray *localPermissionAry = [[NSMutableArray alloc] init];
+                 NSMutableArray *module1 = [[NSMutableArray alloc] initWithArray:@[@"0",@"0"]];
+                 NSMutableArray *module2 = [[NSMutableArray alloc] initWithArray:@[@"0",@"0",@"0",@"0"]];
+                 NSMutableArray *module3 = [[NSMutableArray alloc] initWithArray:@[@"0",@"0"]];
+                 NSMutableArray *module4 = [[NSMutableArray alloc] initWithArray:@[@"0",@"0",@"0"]];
+                 NSMutableArray *module5 = [[NSMutableArray alloc] initWithArray:@[@"0",@"0",@"0"]];
+                 NSMutableArray *module6 = [[NSMutableArray alloc] initWithArray:@[@"0",@"0",@"0"]];
+                 NSMutableArray *module7 = [[NSMutableArray alloc] initWithArray:@[@"0",@"0"]];
+                 NSMutableArray *module8 = [[NSMutableArray alloc] initWithArray:@[@"0",@"0",@"0"]];
+                 NSMutableArray *module9 = [[NSMutableArray alloc] initWithArray:@[@"0",@"0",@"0"]];
+                 [localPermissionAry addObject:module1];
+                 [localPermissionAry addObject:module2];
+                 [localPermissionAry addObject:module3];
+                 [localPermissionAry addObject:module4];
+                 [localPermissionAry addObject:module5];
+                 [localPermissionAry addObject:module6];
+                 [localPermissionAry addObject:module7];
+                 [localPermissionAry addObject:module8];
+                 [localPermissionAry addObject:module9];
+                 
+                 NSArray *detailPermissionAry;
+                 
+                 for(int i = 0; i<[[respDic objectForKey:@"Data"] count]; i++)
+                 {
+                    detailPermissionAry = [[[respDic objectForKey:@"Data"] objectAtIndex:i] objectForKey:@"Actions"];
+                    for(int j = 0; j < [detailPermissionAry count]; j++)
+                    {
+                        switch ([[[detailPermissionAry objectAtIndex:j] objectForKey:@"ActionCode"] intValue])
+                        {
+                            case 6010001:
+                                localPermissionAry[0][0] = @"1";
+                                break;
+                            case 6010002:
+                                localPermissionAry[0][1] = @"1";
+                                break;
+                            case 6020001:
+                                localPermissionAry[1][0] = @"1";
+                                break;
+                            case 6020002:
+                                localPermissionAry[1][1] = @"1";
+                                break;
+                            case 6020003:
+                                localPermissionAry[1][2] = @"1";
+                                break;
+                            case 6020004:
+                                localPermissionAry[1][3] = @"1";
+                                break;
+                            case 6030001:
+                                localPermissionAry[2][0] = @"1";
+                                break;
+                            case 6030002:
+                                localPermissionAry[2][1] = @"1";
+                                break;
+                            case 6040001:
+                                localPermissionAry[3][0] = @"1";
+                                break;
+                            case 6040002:
+                                localPermissionAry[3][1] = @"1";
+                                break;
+                            case 6040003:
+                                localPermissionAry[3][2] = @"1";
+                                break;
+                            case 6050001:
+                                localPermissionAry[4][0] = @"1";
+                                break;
+                            case 6050002:
+                                localPermissionAry[4][1] = @"1";
+                                break;
+                            case 6050003:
+                                localPermissionAry[4][2] = @"1";
+                                break;
+                            case 6060001:
+                                localPermissionAry[5][0] = @"1";
+                                break;
+                            case 6060002:
+                                localPermissionAry[5][1] = @"1";
+                                break;
+                            case 6060003:
+                                localPermissionAry[5][2] = @"1";
+                                break;
+                            case 6070001:
+                                localPermissionAry[6][0] = @"1";
+                                break;
+                            case 6070002:
+                                localPermissionAry[6][1] = @"1";
+                                break;
+                            case 6080001:
+                                localPermissionAry[7][0] = @"1";
+                                break;
+                            case 6080002:
+                                localPermissionAry[7][1] = @"1";
+                                break;
+                            case 6080003:
+                                localPermissionAry[7][2] = @"1";
+                                break;
+                            case 6090001:
+                                localPermissionAry[8][0] = @"1";
+                                break;
+                            case 6090002:
+                                localPermissionAry[8][1] = @"1";
+                                break;
+                            case 6090003:
+                                localPermissionAry[8][2] = @"1";
+                                break;
+                                
+                            default:
+                                break;
+
+                        }
+                    }
+                 }
+                 
+                 [[NSUserDefaults standardUserDefaults] setObject:localPermissionAry forKey:USERPERMISSIONARY];
+                 myCommon.m_userPermissionAry = [[NSUserDefaults standardUserDefaults] objectForKey:USERPERMISSIONARY];
+                 
+                 // 进入主界面
+                 MainBoardViewController *mainBoardViewController = [[MainBoardViewController alloc] init];
+                 [self setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+                 [self presentViewController:mainBoardViewController animated:YES completion:nil];
+                 
+//                 NSLog(@"myCommon.m_userPermissionAry = %@",myCommon.m_userPermissionAry);
+             }
+             else
+             {
+                 UIAlertView *alt = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络异常,请重试!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                 [alt show];
+             }
+         }];
+    }
+
 }
 
 // 是否记住密码自动登录

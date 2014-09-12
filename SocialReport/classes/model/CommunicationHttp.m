@@ -325,6 +325,17 @@
             }
             break;
             
+        case HTTP_GETALLCOMMUNITYINFO:
+            if (threadType == 0)
+            {
+                [NSThread detachNewThreadSelector:@selector(getAllCommunityInfo:) toTarget:self withObject:strJsonContent];
+            }
+            else
+            {
+                dicResult = [self getAllCommunityInfo:strJsonContent];
+            }
+            break;
+            
         case HTTP_DELETEADDRESSLIST:
             if (threadType == 0)
             {
@@ -366,6 +377,28 @@
             else
             {
                 dicResult = [self createOrUpdateCommInfoRequest:strJsonContent];
+            }
+            break;
+            
+        case HTTP_GETPERMISSION:
+            if (threadType == 0)
+            {
+                [NSThread detachNewThreadSelector:@selector(getPermissionRequest:) toTarget:self withObject:strJsonContent];
+            }
+            else
+            {
+                dicResult = [self getPermissionRequest:strJsonContent];
+            }
+            break;
+            
+        case HTTP_GETUSERINFO:
+            if (threadType == 0)
+            {
+                [NSThread detachNewThreadSelector:@selector(getUserInfoRequest:) toTarget:self withObject:strJsonContent];
+            }
+            else
+            {
+                dicResult = [self getUserInfoRequest:strJsonContent];
             }
             break;
             
@@ -976,7 +1009,7 @@
             
             // get response
             NSString* respString = [request responseString];
-            NSLog(@"getInfoDetailRequest respString = %@",respString);
+//            NSLog(@"getInfoDetailRequest respString = %@",respString);
             NSDictionary *dicResult = [respString JSONValue];
             
             return dicResult;
@@ -1144,7 +1177,7 @@
             
             // get response
             NSString* respString = [request responseString];
-//            NSLog(@"getTenantInfoRequest respString = %@",respString);
+            NSLog(@"getTenantInfoRequest respString = %@",respString);
             NSDictionary *dicResult = [respString JSONValue];
             
             return dicResult;
@@ -1205,7 +1238,7 @@
     }
 }
 
-#pragma mark - 返回社区信息或者物业公司信息
+#pragma mark - 返回用户提交的故障申告、意见反馈列表
 
 - (NSDictionary *)getFeedbacksRequest:(NSString *) strJsonContent
 {
@@ -1351,6 +1384,40 @@
     }
 }
 
+#pragma mark - 获得物业信息主界面所有数据
+
+- (NSDictionary *)getAllCommunityInfo:(NSString *) strJsonContent
+{
+    @autoreleasepool
+    {
+        NSString *strLog = @"";
+        NSDictionary *dicResult = nil;
+        @try {
+            
+            // make request
+            ASIHTTPRequest* request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:strJsonContent]];
+            
+            [request startSynchronous];
+            
+            // get response
+            NSString* respString = [request responseString];
+//            NSLog(@"getAllCommunityInfo respString = %@",respString);
+            NSDictionary *dicResult = [respString JSONValue];
+            
+            return dicResult;
+            
+        }
+        
+        @catch (NSException *exception) {
+            strLog = [NSString stringWithFormat:@"getAllCommunityInfo error:catch error(%@)",exception];
+            NSLog(@"%@",strLog);
+            return dicResult;
+            
+        }
+        return dicResult;
+    }
+}
+
 #pragma mark - 删除通讯录
 
 - (NSDictionary *)deleteAddressListRequest:(NSString *) strJsonContent
@@ -1446,7 +1513,7 @@
             
             // get response
             NSString* respString = [request responseString];
-            NSLog(@"getCommunityInfoRequest respString = %@",respString);
+//            NSLog(@"getCommunityInfoRequest respString = %@",respString);
             NSDictionary *dicResult = [respString JSONValue];
             
             return dicResult;
@@ -1490,7 +1557,7 @@
             
             // get response
             NSString* respString = [request responseString];
-            NSLog(@"createOrUpdateCommInfoRequest respString = %@",respString);
+//            NSLog(@"createOrUpdateCommInfoRequest respString = %@",respString);
             NSDictionary *dicResult = [respString JSONValue];
             
             return dicResult;
@@ -1499,6 +1566,74 @@
         
         @catch (NSException *exception) {
             strLog = [NSString stringWithFormat:@"createOrUpdateCommInfoRequest error:catch error(%@)",exception];
+            NSLog(@"%@",strLog);
+            return dicResult;
+            
+        }
+        return dicResult;
+    }
+}
+
+#pragma mark - 获取菜单按钮权限
+
+- (NSDictionary *)getPermissionRequest:(NSString *) strJsonContent
+{
+    @autoreleasepool
+    {
+        NSString *strLog = @"";
+        NSDictionary *dicResult = nil;
+        @try {
+            
+            // make request
+            ASIHTTPRequest* request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:strJsonContent]];
+            
+            [request startSynchronous];
+            
+            // get response
+            NSString* respString = [request responseString];
+//            NSLog(@"getPermissionRequest respString = %@",respString);
+            NSDictionary *dicResult = [respString JSONValue];
+            
+            return dicResult;
+            
+        }
+        
+        @catch (NSException *exception) {
+            strLog = [NSString stringWithFormat:@"getPermissionRequest error:catch error(%@)",exception];
+            NSLog(@"%@",strLog);
+            return dicResult;
+            
+        }
+        return dicResult;
+    }
+}
+
+#pragma mark - 获得用户信息
+
+- (NSDictionary *)getUserInfoRequest:(NSString *) strJsonContent
+{
+    @autoreleasepool
+    {
+        NSString *strLog = @"";
+        NSDictionary *dicResult = nil;
+        @try {
+            
+            // make request
+            ASIHTTPRequest* request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:strJsonContent]];
+            
+            [request startSynchronous];
+            
+            // get response
+            NSString* respString = [request responseString];
+//            NSLog(@"getUserInfoRequest respString = %@",respString);
+            NSDictionary *dicResult = [respString JSONValue];
+            
+            return dicResult;
+            
+        }
+        
+        @catch (NSException *exception) {
+            strLog = [NSString stringWithFormat:@"getUserInfoRequest error:catch error(%@)",exception];
             NSLog(@"%@",strLog);
             return dicResult;
             

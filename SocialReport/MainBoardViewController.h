@@ -11,12 +11,14 @@
 #import "HomePageViewController.h"
 #import "OAWorkViewController.h"
 #import "MyAccountViewController.h"
+#import "Common.h"
 
 @interface MainBoardViewController : UITabBarController
 {
     UISwipeGestureRecognizer *leftRecognizer;
     UISwipeGestureRecognizer *rightRecognizer;
     LeenToast *myLeenToast;
+    Common *myCommon;
     
     HomePageViewController *homePageViewController;
     OAWorkViewController *oaWorkViewController;

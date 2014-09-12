@@ -19,6 +19,7 @@
     CommunicationHttp *myCommunicationHttp;
     NSDictionary *respDic;
     LeenToast *myLeenToast;
+    Common *myCommon;
     
     UIScrollView *bgScrollView;
     UIButton *addPhotoBtn;

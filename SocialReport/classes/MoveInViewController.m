@@ -37,6 +37,8 @@
 
 - (void)initView
 {
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     CGRect frame = self.view.frame;
     
     // bgScrollView
@@ -85,10 +87,10 @@
     // portraitImgView
     frame.origin.x += portraitLbl.frame.size.width + 5;
     frame.origin.y -= 20;
-    frame.size.width = 80;
-    frame.size.height = 80;
+    frame.size.width = 70;
+    frame.size.height = 70;
     portraitImgView = [[UIImageView alloc] initWithFrame:frame];
-    portraitImgView.image = [UIImage imageNamed:@"Default"];
+    portraitImgView.image = [UIImage imageNamed:@"person"];
     [bgScrollView addSubview:portraitImgView];
     
     // addPhotoButton
@@ -1148,7 +1150,7 @@
     btConnDeviceBtn.frame = frame;
     btConnDeviceBtn.titleLabel.font = [UIFont systemFontOfSize:18.0f];
     [btConnDeviceBtn setTitle:@"用户迁入" forState:UIControlStateNormal];
-    [btConnDeviceBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [btConnDeviceBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [btConnDeviceBtn setBackgroundImage:[UIImage imageNamed:@"loginBtn_bg"] forState:UIControlStateNormal];
     [btConnDeviceBtn setBackgroundImage:[UIImage imageNamed:@"login_bg"] forState:UIControlStateHighlighted];
     [btConnDeviceBtn addTarget:self action:@selector(moveInFunc) forControlEvents:UIControlEventTouchUpInside];
@@ -1764,7 +1766,7 @@
         picker.delegate = self;
         picker.allowsEditing = YES;//设置可编辑
         picker.sourceType = sourceType;
-        [self presentModalViewController:picker animated:YES];//进入照相界面
+        [self presentViewController:picker animated:YES completion:nil];//进入照相界面
     }
     else if(buttonIndex > 0)
     {

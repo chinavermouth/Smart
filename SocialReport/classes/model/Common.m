@@ -13,15 +13,17 @@ static Common *instance;
 
 @implementation Common
 
-@synthesize m_strOpenUDID, m_tenantCode, m_buildingName, m_buildingNo, m_roomNo, m_parameterName, m_clientNo, m_clientName, m_subjectId, m_infoTitle, m_commCodeAry, m_commNoAry, m_commNameAry, m_reportId, m_reportTitle, m_reportStatus, m_imageCacheDic;
+@synthesize m_strOpenUDID = _m_strOpenUDID, m_imageCacheDic = _m_imageCacheDic, m_userPermissionAry = _m_userPermissionAry;
 
 - (id)init
 {
 	if (self = [super init])
     {
-        m_strOpenUDID = @"";
-        m_imageCacheDic = [[NSMutableDictionary alloc] init];
+        _m_strOpenUDID = @"";
+        _m_imageCacheDic = [[NSMutableDictionary alloc] init];
+        _m_userPermissionAry = [[NSUserDefaults standardUserDefaults] objectForKey:USERPERMISSIONARY];
     }
+    
 	return self;
 }
 
@@ -30,7 +32,7 @@ static Common *instance;
     if (instance == nil){
         @synchronized(self){
             if (instance == nil){
-                instance = [[Common alloc]init];
+                instance = [[Common alloc] init];
             }
         }
     }
@@ -47,9 +49,9 @@ static Common *instance;
 // 检查图片内存缓存
 - (void)checkImageMemoryCache
 {
-    if([m_imageCacheDic count] >= 50)
+    if([_m_imageCacheDic count] >= 50)
     {
-        m_imageCacheDic = [[NSMutableDictionary alloc] init];
+        _m_imageCacheDic = [[NSMutableDictionary alloc] init];
         NSLog(@"Up to 50 pics,clear image memory cache !");
     }
 }

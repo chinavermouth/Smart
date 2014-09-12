@@ -33,6 +33,8 @@
 
 - (void)initView
 {
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     CGRect frame = self.view.frame;
     
     // bgScrollView
@@ -170,6 +172,7 @@
     searchInfoBtn.titleLabel.font = [UIFont systemFontOfSize:15.0f];
     [searchInfoBtn setBackgroundImage:[UIImage imageNamed:@"searchInfo_bg"] forState:UIControlStateNormal];
     [searchInfoBtn addTarget:self action:@selector(searchInfoBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+    if([myCommon.m_userPermissionAry[2][1] isEqualToString:@"1"])
     [bgScrollView addSubview:searchInfoBtn];
     
     // contentShowBg
@@ -179,6 +182,7 @@
     frame.size.height = bgScrollView.frame.size.height - frame.origin.y - 44 - 10;
     UIImageView *contentShowBg = [[UIImageView alloc] initWithFrame:frame];
     [contentShowBg setImage:[UIImage imageNamed:@"box"]];
+    if([myCommon.m_userPermissionAry[2][1] isEqualToString:@"1"])
     [bgScrollView addSubview:contentShowBg];
     
     // contentTextView
@@ -192,6 +196,7 @@
     contentTextView.editable = NO;       // 设置不可编辑
     contentTextView.text = @"欠费情况";
     contentTextView.textColor = [UIColor redColor];
+    if([myCommon.m_userPermissionAry[2][1] isEqualToString:@"1"])
     [bgScrollView addSubview:contentTextView];
 
 }
@@ -208,23 +213,27 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"removeGestureRecognizer" object:nil];
 }
 
+- (void)initData
+{
+    myCommon = [Common shared];
+    myCommunicationHttp = [[CommunicationHttp alloc] init];
+    
+    searchBuildingVauleLbl.text = @"";
+    searchRoomNumVauleLbl.text = @"";
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    [self initData];
     [self initView];
     
     //显示导航栏
 	[self.navigationController setNavigationBarHidden:NO];
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"< 首页" style:UIBarButtonItemStylePlain target:self action:@selector(backFunc)];
-    
-    myCommon = [Common shared];
-    myCommunicationHttp = [[CommunicationHttp alloc] init];
-    
-    searchBuildingVauleLbl.text = @"";
-    searchRoomNumVauleLbl.text = @"";
 }
 
 - (void)didReceiveMemoryWarning

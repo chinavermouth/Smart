@@ -40,6 +40,8 @@
 {
     CGRect frame = self.view.frame;
     
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     // bgScrollView
     if([[[UIDevice currentDevice] systemVersion] floatValue] < 7.0)
     {
@@ -373,7 +375,7 @@
 - (void)chooseRegionFunc
 {
     ChooseRegionViewController *chooseRegionViewController = [[ChooseRegionViewController alloc] init];
-    [self presentModalViewController:[[UINavigationController alloc] initWithRootViewController:chooseRegionViewController] animated:YES];
+    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:chooseRegionViewController] animated:YES completion:nil];
 }
 
 // 发布通知

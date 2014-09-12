@@ -273,7 +273,7 @@
 - (void)listRegionFunc
 {
     ListRegionViewController *listRegionViewController = [[ListRegionViewController alloc] init];
-    [self presentModalViewController:listRegionViewController animated:YES];
+    [self presentViewController:listRegionViewController animated:YES completion:nil];
 }
 
 - (void)checkVersonFunc
@@ -295,7 +295,7 @@
     if(buttonIndex == 1)
     {
         LoginViewController *loginViewController = [[LoginViewController alloc] init];
-        [self presentModalViewController:loginViewController animated:YES];
+        [self presentViewController:loginViewController animated:YES completion:nil];
         
         [[NSUserDefaults standardUserDefaults] setValue:@"isNotLogined" forKey:ISFIRSTLOGIN];
         [[NSUserDefaults standardUserDefaults] setValue:nil forKey:COMDISPLAYNAME];

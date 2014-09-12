@@ -38,16 +38,20 @@
 #define HTTPURL_GETFEEDBACKDETAILS         @"http://app.pmsaas.net/IApp3/GetFeedbackDetails"    // 返回故障申告帖子明细
 #define HTTPURL_APPENDFEEDBACK             @"http://app.pmsaas.net/IApp3/AppendFeedback"     // 追加故障申告、意见反馈(支持多张图片同时上传)
 #define HTTPURL_GETCOMMUNITYADDRESSLIST    @"http://app.pmsaas.net/IApp3/GetCommunityAddressList"    // 获得物业客服通讯录列表
+#define HTTPURL_GETALLCOMMUNITYINFO        @"http://app.pmsaas.net/IApp3/GetAllCommunityInfo"    // 获得物业信息主界面所有数据
 #define HTTPURL_DELETEADDRESSLIST          @"http://app.pmsaas.net/IApp3/DeleteAddressList"    // 删除通讯录
 #define HTTPURL_CREATEADDRESSLIST          @"http://app.pmsaas.net/IApp3/CreateAddressList"    // 创建通讯录
 #define HTTPURL_GETCOMMUNITYINFO           @"http://app.pmsaas.net/IApp3/GetCommunitInfo"      // 获取小区信息
 #define HTTPURL_CREATEORUPDATECOMMINFO     @"http://app.pmsaas.net/IApp3/CreateOrUpdateCommunityInfo"    // 创建或编辑小区信息
+#define HTTPURL_GETPERMISSION              @"http://app.pmsaas.net/IApp3/GetPermission"        // 获取菜单按钮权限
+#define HTTPURL_GETUSERINFO                @"http://app.pmsaas.net/IApp3/GetGetUserInfo"       // 获得用户信息
 
 #define  SYSTEM_VERSION  [[[UIDevice currentDevice] systemVersion] floatValue]
 #define  SCREEN_SIZE     [UIScreen mainScreen].bounds.size
 #define  SIGNLINE_HEIGHT     20
 #define  NAV_HEIGHT          44
 #define  TAB_HEIGHT          49
+#define  USERPERMISSIONARY   @"UserPermissionAry"
 
 #define  ISFIRSTLOGIN    @"isFirstLogin"      // 检查是否登录成功过
 #define  UID             @"UID"               // 请求令牌口令
@@ -66,33 +70,36 @@ typedef enum
     HTTP_TEST = -1,     // 测试
     HTTP_UPDATE = 0,     // 检查更新
     HTTP_AUTOLOGINAUTH = 1,     //自动登录认证
-    HTTP_LOGIN = 2,     // 用户登录
-    HTTP_LISTREGION = 3,    // 列出小区
-    HTTP_LISTBUILDING = 4,   // 列出楼宇
-    HTTP_ARRSEARCH = 5,       // 欠费查询
-    HTTP_LISTROOM = 6,       // 列出房间
-    HTTP_LISTPERSON = 7,      // 列出使用人或者业主信息
-    HTTP_MOVEOUT = 8,        // 人员迁出
-    HTTP_GETPARAM = 9,       // 参数列表
-    HTTP_MOVEIN = 10,         // 人员入住
-    HTTP_RENT = 11,          // 出租出售
-    HTTP_LISTREPORT = 12,         // 列出通知公告
-    HTTP_REPORTDETAIL = 13,    // 通知公告详细
-    HTTP_GETINFORMATION = 14,        // 安防巡查、故障申告、环境卫生(返回主题列表)
-    HTTP_GETINFORDETAIL = 15,        // 安防巡查、故障申告、环境卫生(返回主题明细列表)
-    HTTP_PUBINFORMATION = 16,    // 安防巡查、故障申告、环境卫生(提交主题)
-    HTTP_COMINFORMATION = 17,    // 安防巡查、故障申告、环境卫生(追加记录)
-    HTTP_CREATENOTICE = 18,      // 创建通知公告(社区和物业公司都可以发布，共用这个接口)
-    HTTP_GETTENANTINFO = 19,     // 返回社区信息或者物业公司信息
-    HTTP_CREATEORUPDATETENANTINFO = 20,     // 创建编辑社区或物业信息(社区和物业公司都可以发布，共用这个接口)
-    HTTP_GETFEEDBACKS = 21,      // 返回用户提交的故障申告、意见反馈列表
-    HTTP_GETFEEDBACKDETAILS = 22,   // 返回故障申告帖子明细
-    HTTP_APPENDFEEDBACK = 23,    // 追加故障申告、意见反馈(支持多张图片同时上传)
-    HTTP_GETCOMMUNITYADDRESSLIST = 24,   // 获得物业客服通讯录列表
-    HTTP_DELETEADDRESSLIST = 25,   // 删除通讯录
-    HTTP_CREATEADDRESSLIST = 26,   // 创建通讯录
-    HTTP_GETCOMMUNITYINFO = 27,    // 获取小区信息
-    HTTP_CREATEORUPDATECOMMINFO = 28,   // 创建或编辑小区信息
+    HTTP_LOGIN,     // 用户登录
+    HTTP_LISTREGION,    // 列出小区
+    HTTP_LISTBUILDING,   // 列出楼宇
+    HTTP_ARRSEARCH,       // 欠费查询
+    HTTP_LISTROOM,       // 列出房间
+    HTTP_LISTPERSON,      // 列出使用人或者业主信息
+    HTTP_MOVEOUT,        // 人员迁出
+    HTTP_GETPARAM,       // 参数列表
+    HTTP_MOVEIN,         // 人员入住
+    HTTP_RENT,          // 出租出售
+    HTTP_LISTREPORT,         // 列出通知公告
+    HTTP_REPORTDETAIL,    // 通知公告详细
+    HTTP_GETINFORMATION,        // 安防巡查、故障申告、环境卫生(返回主题列表)
+    HTTP_GETINFORDETAIL,        // 安防巡查、故障申告、环境卫生(返回主题明细列表)
+    HTTP_PUBINFORMATION,    // 安防巡查、故障申告、环境卫生(提交主题)
+    HTTP_COMINFORMATION,    // 安防巡查、故障申告、环境卫生(追加记录)
+    HTTP_CREATENOTICE,      // 创建通知公告(社区和物业公司都可以发布，共用这个接口)
+    HTTP_GETTENANTINFO,     // 返回社区信息或者物业公司信息
+    HTTP_CREATEORUPDATETENANTINFO,     // 创建编辑社区或物业信息(社区和物业公司都可以发布，共用这个接口)
+    HTTP_GETFEEDBACKS,      // 返回用户提交的故障申告、意见反馈列表
+    HTTP_GETFEEDBACKDETAILS,   // 返回故障申告帖子明细
+    HTTP_APPENDFEEDBACK,    // 追加故障申告、意见反馈(支持多张图片同时上传)
+    HTTP_GETCOMMUNITYADDRESSLIST,   // 获得物业客服通讯录列表
+    HTTP_GETALLCOMMUNITYINFO,   // 获得物业信息主界面所有数据
+    HTTP_DELETEADDRESSLIST,   // 删除通讯录
+    HTTP_CREATEADDRESSLIST,   // 创建通讯录
+    HTTP_GETCOMMUNITYINFO,    // 获取小区信息
+    HTTP_CREATEORUPDATECOMMINFO,   // 创建或编辑小区信息
+    HTTP_GETPERMISSION,       // 获取菜单按钮权限
+    HTTP_GETUSERINFO,         // 获得用户信息
     
 }HTTPMESSAGETYPE;
 
@@ -116,6 +123,7 @@ typedef enum
 @property (nonatomic, retain)  NSString *m_reportTitle;     // 申告帖子标题
 @property (nonatomic, retain)  NSString *m_reportStatus;      // 申告帖子处理状态
 @property (nonatomic, retain)  NSMutableDictionary *m_imageCacheDic;     // 内存图片缓存数组
+@property (nonatomic, retain)  NSArray *m_userPermissionAry;     // 用户权限数组
 
 
 + (id)shared;

@@ -10,6 +10,7 @@
 #import "Common.h"
 #import "InfoDetailListCell.h"
 #import "PublishViewController.h"
+#import "PersonInfoViewController.h"
 
 
 @interface HygieneDetailViewController ()
@@ -122,7 +123,11 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    myCommon = [Common shared];
+    
     [self.tableView setBackgroundColor:[UIColor whiteColor]];
+    
+    if([myCommon.m_userPermissionAry[5][2] isEqualToString:@"1"])
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"发表评论" style:UIBarButtonItemStylePlain target:self action:@selector(addRecordFunc)];
     
     NSString *const CellIdentifier = @"cellIdentifier";
@@ -251,16 +256,18 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
+    cell.leftUserBtn.tag = indexPath.row;
+    [cell.leftUserBtn addTarget:self action:@selector(personInfoFunc:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.leftUserImg setImage:[UIImage imageNamed:@"person"]];
+    [cell.leftUserLbl setText:[NSString stringWithFormat:@"%@",[[infoAry objectAtIndex:indexPath.row] objectForKey:@"UserName"]]];
     if(indexPath.row == 0)
-        cell.lineOneLbl.text = myCommon.m_infoTitle;
-    cell.lineTwoLeftLbl.text = [[infoAry objectAtIndex:indexPath.row] objectForKey:@"UserName"];
-    cell.lineTwoRightLbl.text = [NSString stringWithFormat:@"发表于：%@", [[infoAry objectAtIndex:indexPath.row] objectForKey:@"IssuesTime"]];
-    cell.lineThreeRightText.text = [NSString stringWithFormat:@"%@", [[infoAry objectAtIndex:indexPath.row] objectForKey:@"Content"]];
-    cell.lineFourLeftLbl.text = [NSString stringWithFormat:@"电话:%@", [[infoAry objectAtIndex:indexPath.row] objectForKey:@"Tel"]];
+        cell.rightTitleLbl.text = myCommon.m_infoTitle;
+    cell.rightContentTextV.text = [NSString stringWithFormat:@"%@",[[infoAry objectAtIndex:indexPath.row] objectForKey:@"Content"]];
+    cell.bottomTimeLbl.text = [NSString stringWithFormat:@"%@",[[infoAry objectAtIndex:indexPath.row] objectForKey:@"IssuesTime"]];
     if(indexPath.row != 0)
-        cell.lineFourRightLbl.text = [NSString stringWithFormat:@"%d 楼", indexPath.row+1];
+        cell.bottomRevertLbl.text = [NSString stringWithFormat:@"%ld 楼", indexPath.row+1];
     else
-        cell.lineFourRightLbl.text = [NSString stringWithFormat:@"更新于：%@", [[infoAry objectAtIndex:indexPath.row] objectForKey:@"LastUpdated"]];
+        cell.bottomRevertLbl.text = [NSString stringWithFormat:@"楼主"];
     
     // 设置异步加载图片,并做内存和本地缓存
     NSInteger imageCount = [[[infoAry objectAtIndex:indexPath.row] objectForKey:@"ImageList"] count];
@@ -288,13 +295,13 @@
         if([myCommon.m_imageCacheDic objectForKey:imageUrl])
         {
             [imageBtn setImage:[myCommon.m_imageCacheDic objectForKey:imageUrl] forState:UIControlStateNormal];
-            [cell.imageScrollView addSubview:imageBtn];
+            [cell.rightImgScrollView addSubview:imageBtn];
         }
         else if([NSData dataWithContentsOfFile:fullPathToFile])
         {
             [myCommon.m_imageCacheDic setValue:[UIImage imageWithData:[NSData dataWithContentsOfFile:fullPathToFile]] forKey:imageUrl];    // 将图片写入内存缓存,以后直接用内存访问
             [imageBtn setImage:[UIImage imageWithData:[NSData dataWithContentsOfFile:fullPathToFile]] forState:UIControlStateNormal];
-            [cell.imageScrollView addSubview:imageBtn];
+            [cell.rightImgScrollView addSubview:imageBtn];
         }
         else
         {
@@ -308,15 +315,21 @@
                                dispatch_async(dispatch_get_main_queue(),
                                               ^{
                                                   [imageBtn setImage:tempImage forState:UIControlStateNormal];
-                                                  [cell.imageScrollView addSubview:imageBtn];
+                                                  [cell.rightImgScrollView addSubview:imageBtn];
                                               });
                            });
         }
     }
     
-    cell.imageScrollView.contentSize = CGSizeMake(imageCount * (90 + 10), 67.5);        // 调整scrollview contentsize 大小
+    cell.rightImgScrollView.contentSize = CGSizeMake(imageCount * (90 + 10), 67.5);        // 调整scrollview contentsize 大小
     
     return cell;
+}
+
+- (void)personInfoFunc:(UIButton *)sender
+{
+    PersonInfoViewController *personInfoViewController = [[PersonInfoViewController alloc] initWithUserID:[[infoAry objectAtIndex:sender.tag] objectForKey:@"UserID"]];
+    [self.navigationController pushViewController:personInfoViewController animated:YES];
 }
 
 // 显示大图
@@ -329,10 +342,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if([[[infoAry objectAtIndex:indexPath.row] objectForKey:@"ImageList"] count])
-        return InfoDetailListCell.getCellHeight;
-    else
-        return InfoDetailListCell.getCellHeight - 5*2 - 67.5 - 5;
+    return InfoDetailListCell.getCellHeight;
 }
 
 

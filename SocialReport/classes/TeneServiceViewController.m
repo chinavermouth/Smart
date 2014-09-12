@@ -276,29 +276,29 @@
     [self initData];
     [self initView];
     
-    [self getCommunityInfo];     // 获取社区信息
-    [self getCommAddList];    // 获取物业客服通讯录列表
+    // 获取主界面物业信息
+    [self getAllCommunityInfo];
 }
 
-// 获取社区信息
-- (void)getCommunityInfo
+// 获取主界面物业信息
+- (void)getAllCommunityInfo
 {
     // 设置请求URL
     NSString *strRequestURL;
-    strRequestURL = [NSString stringWithFormat:@"%@?userID=%@&UID=%@",HTTPURL_GETTENANTINFO,[[NSUserDefaults standardUserDefaults] objectForKey:USERID],[[NSUserDefaults standardUserDefaults] objectForKey:UID]];
-    //    NSLog(@"strRequestURL = %@",strRequestURL);
+    strRequestURL = [NSString stringWithFormat:@"%@?communityCode=%@&tenantCode=%@&UID=%@",HTTPURL_GETALLCOMMUNITYINFO, [[NSUserDefaults standardUserDefaults] objectForKey:COMMUNITYCODE], [[NSUserDefaults standardUserDefaults] objectForKey:TENANTCODE], [[NSUserDefaults standardUserDefaults] objectForKey:UID]];
+//    NSLog(@"strRequestURL = %@",strRequestURL);
     
     __block NSDictionary *respDic;
     __block MBProgressHUD *HUD;
     if(HUD == nil)
     {
-        HUD = [[MBProgressHUD alloc]initWithFrame:CGRectMake(70, 200, 180, 100)];
+        HUD = [[MBProgressHUD alloc] initWithFrame:CGRectMake(70, 200, 180, 100)];
         [self.view addSubview:HUD];
         HUD.labelText = @"加载中...";
         [HUD showAnimated:YES whileExecutingBlock:^
          {
              // 发送请求
-             respDic = [myCommunicationHttp sendHttpRequest:HTTP_GETTENANTINFO threadType:1 strJsonContent:strRequestURL];
+             respDic = [myCommunicationHttp sendHttpRequest:HTTP_GETALLCOMMUNITYINFO threadType:1 strJsonContent:strRequestURL];
          }
           completionBlock:^
          {
@@ -309,44 +309,10 @@
              {
                  NSDictionary *dataDic = [[respDic objectForKey:@"Data"] objectAtIndex:0];
                  
-                 teneLbl.text = [NSString stringWithFormat:@"服务单位：%@",[dataDic objectForKey:@"DisplayName"]];
-             }
-             else
-             {
-                 UIAlertView *alt = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络异常,请重试!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                 [alt show];
-             }
-         }];
-    }
-}
-
-// 获取物业客服通讯录列表
-- (void)getCommAddList
-{
-    // 设置请求URL
-    NSString *strRequestURL;
-    strRequestURL = [NSString stringWithFormat:@"%@?communityCode=%@&UID=%@",HTTPURL_GETCOMMUNITYADDRESSLIST,[[NSUserDefaults standardUserDefaults] objectForKey:COMMUNITYCODE],[[NSUserDefaults standardUserDefaults] objectForKey:UID]];
-//    NSLog(@"strRequestURL = %@",strRequestURL);
-    
-    __block MBProgressHUD *HUD;
-    responseDic = [[NSDictionary alloc] init];
-    if(HUD == nil)
-    {
-        HUD = [[MBProgressHUD alloc]initWithFrame:CGRectMake(70, 200, 180, 100)];
-        [self.view addSubview:HUD];
-        HUD.labelText = @"加载中...";
-        [HUD showAnimated:YES whileExecutingBlock:^
-         {
-             // 发送请求
-             responseDic = [myCommunicationHttp sendHttpRequest:HTTP_GETCOMMUNITYADDRESSLIST threadType:1 strJsonContent:strRequestURL];
-         }
-          completionBlock:^
-         {
-             // 隐藏HUD
-             [HUD removeFromSuperview];
-             HUD = nil;
-             if([[[responseDic objectForKey:@"Info"] objectForKey:@"Code"] intValue] == 1)
-             {
+                 teneLbl.text = [NSString stringWithFormat:@"服务单位：%@",[dataDic objectForKey:@"ServiceUnit"]];
+                 
+                 resPhoneAry = [dataDic objectForKey:@"List"];
+                 
                  [numberTable reloadData];
              }
              else
@@ -400,17 +366,17 @@
     NSString *strJsonData = [requestDic JSONRepresentation];
     
     __block MBProgressHUD *HUD;
-    responseDic = [[NSDictionary alloc] init];
+    __block NSDictionary *responseDic = [[NSDictionary alloc] init];
     if(HUD == nil)
     {
-        HUD = [[MBProgressHUD alloc]initWithFrame:CGRectMake(70, 200, 180, 100)];
-        [self.view addSubview:HUD];
+        HUD = [[MBProgressHUD alloc] initWithFrame:CGRectMake(70, 200, 180, 100)];
+        [[[[UIApplication sharedApplication] windows] firstObject] addSubview:HUD];    // 添加在myAltView所在层级之上,才能屏蔽这个层级
         HUD.labelText = @"添加中...";
-        [HUD showAnimated:YES whileExecutingBlock:^(void){
+        [HUD showAnimated:YES whileExecutingBlock:^{
             
             responseDic = [myCommunicationHttp sendHttpRequest:HTTP_CREATEADDRESSLIST threadType:1 strJsonContent:strJsonData];
             
-        } completionBlock:^(void){
+        } completionBlock:^{
             
             // 隐藏HUD
             [HUD removeFromSuperview];
@@ -418,7 +384,7 @@
             if([[[responseDic objectForKey:@"Info"] objectForKey:@"Code"] intValue] == 1)
             {
                 [myAltView close];
-                [self getCommAddList];    // 获取物业客服通讯录列表
+                [self getAllCommunityInfo];    // 刷新物业客服通讯录列表
                 UIAlertView *myAlt = [[UIAlertView alloc] initWithTitle:@"提示" message:@"添加成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
                 [myAlt show];
             }
@@ -467,7 +433,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[responseDic objectForKey:@"Data"] count];
+    return [resPhoneAry count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -479,7 +445,7 @@
         cell = [[TenePhoneNumberCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
     }
-    cell.phoneNumLbl.text = [NSString stringWithFormat:@"%@：%@",[[[responseDic objectForKey:@"Data"] objectAtIndex:indexPath.row] objectForKey:@"Name"], [[[responseDic objectForKey:@"Data"] objectAtIndex:indexPath.row] objectForKey:@"PhoneCode"]];
+    cell.phoneNumLbl.text = [NSString stringWithFormat:@"%@：%@",[[resPhoneAry objectAtIndex:indexPath.row] objectForKey:@"Name"], [[resPhoneAry objectAtIndex:indexPath.row] objectForKey:@"PhoneCode"]];
     [cell.rightDelBtn addTarget:self action:@selector(delPhoneNumFunc:) forControlEvents:UIControlEventTouchUpInside];
     cell.rightDelBtn.tag = indexPath.row;
     
@@ -510,11 +476,11 @@
         // 删除通讯录电话
         // 设置请求URL
         NSString *strRequestURL;
-        strRequestURL = [NSString stringWithFormat:@"%@?id=%@&UID=%@",HTTPURL_DELETEADDRESSLIST, [[[responseDic objectForKey:@"Data"] objectAtIndex:alertView.tag] objectForKey:@"ID"], [[NSUserDefaults standardUserDefaults] objectForKey:UID]];
+        strRequestURL = [NSString stringWithFormat:@"%@?id=%@&UID=%@",HTTPURL_DELETEADDRESSLIST, [[resPhoneAry objectAtIndex:alertView.tag] objectForKey:@"ID"], [[NSUserDefaults standardUserDefaults] objectForKey:UID]];
 //        NSLog(@"strRequestURL = %@",strRequestURL);
         
         __block MBProgressHUD *HUD;
-        responseDic = [[NSDictionary alloc] init];
+        __block NSDictionary *responseDic = [[NSDictionary alloc] init];
         if(HUD == nil)
         {
             HUD = [[MBProgressHUD alloc]initWithFrame:CGRectMake(70, 200, 180, 100)];
@@ -532,7 +498,7 @@
                  HUD = nil;
                  if([[[responseDic objectForKey:@"Info"] objectForKey:@"Code"] intValue] == 1)
                  {
-                     [self getCommAddList];    // 获取物业客服通讯录列表
+                     [self getAllCommunityInfo];    // 刷新物业客服通讯录列表
                      UIAlertView *myAlt = [[UIAlertView alloc] initWithTitle:@"提示" message:@"删除成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
                      [myAlt show];
                  }
