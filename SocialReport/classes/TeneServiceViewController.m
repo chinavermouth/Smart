@@ -454,8 +454,20 @@
 
 - (void)delPhoneNumFunc:(UIButton *)sender
 {
-    UIAlertView *myAlt = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确定删除?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    UIAlertView *myAlt = [[UIAlertView alloc] initWithTitle:@"提示" message:@"删除此服务电话?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     myAlt.tag = sender.tag;
+    [myAlt show];
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *callContentStr = [NSString stringWithFormat:@"拨打%@?",[[resPhoneAry objectAtIndex:indexPath.row] objectForKey:@"Name"]];
+    phoneNum = [[resPhoneAry objectAtIndex:indexPath.row] objectForKey:@"PhoneCode"];
+    
+    UIAlertView *myAlt = [[UIAlertView alloc] initWithTitle:@"提示" message:callContentStr delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    myAlt.tag = 1000;
     [myAlt show];
 }
 
@@ -470,8 +482,18 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-
-    if(buttonIndex == 1)
+    if(alertView.tag == 1000)
+    {
+        if(buttonIndex == 1)
+        {
+            UIWebView*callWebview =[[UIWebView alloc] init];
+            NSString *telUrl = [NSString stringWithFormat:@"tel:%@",phoneNum];
+            NSURL *telURL =[NSURL URLWithString:telUrl];
+            [callWebview loadRequest:[NSURLRequest requestWithURL:telURL]];
+            [self.view addSubview:callWebview];
+        }
+    }
+    else if(buttonIndex == 1)
     {
         // 删除通讯录电话
         // 设置请求URL

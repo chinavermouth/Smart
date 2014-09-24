@@ -19,6 +19,7 @@
     CommunicationHttp *myCommunicationHttp;
     NSArray *resPhoneAry;
     LeenToast *myLeenToast;
+    NSString *phoneNum;  // 物业服务电话
     
     UILabel *teneLbl;
     UIScrollView *bgScrollView;

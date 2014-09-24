@@ -291,14 +291,19 @@ NSString *const faultReportCellId = @"cellIdentifier";
 {
     [myToolBarDrawerView close];
     
-    NSString *phoneNum =[ NSString stringWithFormat:@"%@", [[[respDic objectForKey:@"Data"] objectAtIndex:0] objectForKey:@"Tel"]];
+    phoneNum =[ NSString stringWithFormat:@"%@", [[[respDic objectForKey:@"Data"] objectAtIndex:0] objectForKey:@"Tel"]];
+    
     if(![phoneNum isEqualToString:@"<null>"]&&![phoneNum isEqualToString:@"null"])
     {
-        UIWebView*callWebview =[[UIWebView alloc] init];
-        NSString *telUrl = [NSString stringWithFormat:@"tel:%@",phoneNum];
-        NSURL *telURL =[NSURL URLWithString:telUrl];
-        [callWebview loadRequest:[NSURLRequest requestWithURL:telURL]];
-        [self.view addSubview:callWebview];
+        
+        UIAlertView *myAlt = [[UIAlertView alloc] initWithTitle:@"提示" message:@"拨打业主电话？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        myAlt.tag = 100;
+        [myAlt show];
+    }
+    else
+    {
+        UIAlertView *myAlt = [[UIAlertView alloc] initWithTitle:@"提示" message:@"此业主暂时没有电话~" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:@"", nil];
+        [myAlt show];
     }
 }
 
@@ -307,7 +312,7 @@ NSString *const faultReportCellId = @"cellIdentifier";
     // 设置请求URL
     NSString *strRequestURL;
     strRequestURL = [NSString stringWithFormat:@"%@?id=%@&Index=1&pageIndex=%d&pageSize=5&UID=%@", HTTPURL_GETFEEDBACKDETAILS, myCommon.m_reportId, pageIndex++, [[NSUserDefaults standardUserDefaults] objectForKey:UID]];
-    NSLog(@"strRequestURL = %@",strRequestURL);
+//    NSLog(@"strRequestURL = %@",strRequestURL);
     
     __block MBProgressHUD *HUD;
     
@@ -547,7 +552,7 @@ NSString *const faultReportCellId = @"cellIdentifier";
         imageBtn.frame = frame;
         [imageBtn addTarget:self action:@selector(showImageFunc:) forControlEvents:UIControlEventTouchUpInside];
         imageUrl = [NSString stringWithFormat:@"%@%@", HTTPURL_IMAGEDATABASE, [[[[infoAry objectAtIndex:indexPath.row] objectForKey:@"ImageUrl"] objectAtIndex:i] objectForKey:@"Src"]];
-        NSLog(@"imageUrl: %@",imageUrl);
+//        NSLog(@"imageUrl: %@",imageUrl);
         
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsDirectory = [paths objectAtIndex:0];    // 找到document目录
@@ -644,15 +649,16 @@ NSString *const faultReportCellId = @"cellIdentifier";
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if(buttonIndex == 1)
+    if(alertView.tag == 100)
     {
-        LoginViewController *loginViewController = [[LoginViewController alloc] init];
-        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];
-        [self presentViewController:nav animated:YES completion:nil];
-    }
-    else if(buttonIndex == 0)
-    {
-        [self.navigationController popViewControllerAnimated:YES];
+        if(buttonIndex == 1)
+        {
+            UIWebView*callWebview =[[UIWebView alloc] init];
+            NSString *telUrl = [NSString stringWithFormat:@"tel:%@",phoneNum];
+            NSURL *telURL =[NSURL URLWithString:telUrl];
+            [callWebview loadRequest:[NSURLRequest requestWithURL:telURL]];
+            [self.view addSubview:callWebview];
+        }
     }
 }
 

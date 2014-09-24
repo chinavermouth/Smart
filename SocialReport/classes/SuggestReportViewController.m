@@ -104,7 +104,7 @@ NSString *const suggestReportCellIdentifier = @"suggestReportCellIdentifier";
     // 设置请求URL
     NSString *strRequestURL;
     strRequestURL = [NSString stringWithFormat:@"%@?communityCode=%@&Type=%@&Index=1&pageIndex=%d&pageSize=7&UID=%@", HTTPURL_GETFEEDBACKS, [[NSUserDefaults standardUserDefaults] objectForKey:COMMUNITYCODE],@"咨询建议", pageIndex++, [[NSUserDefaults standardUserDefaults] objectForKey:UID]];
-    NSLog(@"getReportInfo strRequestURL = %@",strRequestURL);
+//    NSLog(@"getReportInfo strRequestURL = %@",strRequestURL);
     
     __block NSMutableDictionary *dicRespData;
     

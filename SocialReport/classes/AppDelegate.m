@@ -103,7 +103,7 @@
 
 
     // 判断网络连接，检查更新
-    [self judgeNetworkStatus];
+//    [self judgeNetworkStatus];
     
     if([[[NSUserDefaults standardUserDefaults] valueForKey:ISFIRSTLOGIN] isEqualToString:@"isLogined"])
     {

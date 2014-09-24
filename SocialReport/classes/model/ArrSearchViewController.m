@@ -292,7 +292,7 @@
         // 设置请求URL
         NSString *strRequestURL;
         strRequestURL = [NSString stringWithFormat:@"%@?roomNo=%@&buildNo=%@&communityNo=%@&tenantCode=%@&UID=%@",HTTPURL_ARRSEARCH,myCommon.m_roomNo,myCommon.m_buildingNo,[[NSUserDefaults standardUserDefaults] objectForKey:COMMUNITYNO],[[NSUserDefaults standardUserDefaults] objectForKey:TENANTCODE],[[NSUserDefaults standardUserDefaults] objectForKey:UID]];
-//        NSLog(@"strRequestURL = %@",strRequestURL);
+        NSLog(@"searchInfoBtnClicked strRequestURL = %@",strRequestURL);
         
         if(HUD == nil)
         {
@@ -301,7 +301,7 @@
             HUD.delegate = self;
             HUD.labelText = @"查询中...";
             [HUD showAnimated:YES whileExecutingBlock:^{
-                // 发送登录请求
+                // 发送请求
                 strRespString = [myCommunicationHttp sendHttpRequest:HTTP_ARRSEARCH threadType:1 strJsonContent:strRequestURL];
                 
             } completionBlock:^{
@@ -313,14 +313,23 @@
                 
                 if([[[strRespString objectForKey:@"Info"] objectForKey:@"Code"] intValue] == 1)
                 {
-                    for (NSDictionary *tempDic in [strRespString objectForKey:@"Data"])
+                    NSDictionary *tempDic = [[strRespString objectForKey:@"Data"] objectAtIndex:0];
+                    
+                    for (NSDictionary *tmpDic in [tempDic objectForKey:@"Details"])
                     {
-                        [arrInfoStr appendString:@"    "];
-                        [arrInfoStr appendString:[tempDic objectForKey:@"Name"]];
+                        [arrInfoStr appendString:@"  "];
+                        [arrInfoStr appendString:[tmpDic objectForKey:@"SubjectName"]];
+                        [arrInfoStr appendString:@": "];
+                        [arrInfoStr appendString:[tmpDic objectForKey:@"AmountMoney"]];
                         [arrInfoStr appendString:@"\n"];
                     }
+                    
+                    [arrInfoStr appendString:@"\n"];
+                    [arrInfoStr appendString:[NSString stringWithFormat:@"  合计:  %@",[tempDic objectForKey:@"AmountMoney"]]];
+                    
+                    contentTextView.text = arrInfoStr;
                 }
-                contentTextView.text = arrInfoStr;
+
             }];
         }
     }

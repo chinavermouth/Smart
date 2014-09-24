@@ -766,6 +766,8 @@
 		E98F28D818AB0EE200D9E0B5 /* classes */ = {
 			isa = PBXGroup;
 			children = (
+				F666D04B19D2AAAB00BE5512 /* others */,
+				F666D04819D2A92E00BE5512 /* tabModule */,
 				E98F28DB18AB0EE200D9E0B5 /* model */,
 				E98F28D918AB0EE200D9E0B5 /* AppDelegate.h */,
 				E98F28DA18AB0EE200D9E0B5 /* AppDelegate.m */,
@@ -773,80 +775,20 @@
 				E98F291218AB186400D9E0B5 /* LoginViewController.m */,
 				F66C2A7319415C7000E49ECD /* MainBoardViewController.h */,
 				F66C2A7419415C7000E49ECD /* MainBoardViewController.m */,
-				F66C2A7619415E4400E49ECD /* HomePageViewController.h */,
-				F66C2A7719415E4400E49ECD /* HomePageViewController.m */,
-				F66C2A7919415E8800E49ECD /* OAWorkViewController.h */,
-				F66C2A7A19415E8800E49ECD /* OAWorkViewController.m */,
-				F66C2A7C19415EA200E49ECD /* MyAccountViewController.h */,
-				F66C2A7D19415EA200E49ECD /* MyAccountViewController.m */,
-				E922AD9618BC809800F87BAA /* ListRegionViewController.h */,
-				E922AD9718BC809800F87BAA /* ListRegionViewController.m */,
-				E93333E018ACC3FC0045D2C2 /* ReportFuncViewController.h */,
-				E93333E118ACC3FC0045D2C2 /* ReportFuncViewController.m */,
-				F6A33B6918F68425008CFEC5 /* ReportDetailViewController.h */,
-				F6A33B6A18F68425008CFEC5 /* ReportDetailViewController.m */,
 				E93EB98D18ADAC92003E0A6A /* PublishViewController.h */,
 				E93EB98E18ADAC92003E0A6A /* PublishViewController.m */,
-				E924BB2218C70F8E00A5FE6B /* ResidentDocViewController.h */,
-				E924BB2318C70F8E00A5FE6B /* ResidentDocViewController.m */,
-				F648F07418EAAF520027EB27 /* PersonInfoDetailViewController.h */,
-				F648F07518EAAF520027EB27 /* PersonInfoDetailViewController.m */,
-				E9748F8118B2F067002D06E3 /* MoveOutViewController.h */,
-				E9748F8218B2F067002D06E3 /* MoveOutViewController.m */,
-				E93EB99218ADF8E8003E0A6A /* MoveInViewController.h */,
-				E93EB99318ADF8E8003E0A6A /* MoveInViewController.m */,
 				E9196EF218C4B6E9007F68D2 /* ListRoomViewController.h */,
 				E9196EF318C4B6E9007F68D2 /* ListRoomViewController.m */,
 				E9B1EFE218C0329E008CB563 /* ListBuildingViewController.h */,
 				E9B1EFE318C0329E008CB563 /* ListBuildingViewController.m */,
 				F60BC81518E5029B0041CC65 /* ListPersonViewController.h */,
 				F60BC81618E5029B0041CC65 /* ListPersonViewController.m */,
-				E975F21918B08F5D00C678D1 /* ArrSearchViewController.h */,
-				E975F21A18B08F5D00C678D1 /* ArrSearchViewController.m */,
-				E975F21E18B0996600C678D1 /* CheckInViewController.h */,
-				E975F21F18B0996600C678D1 /* CheckInViewController.m */,
-				E975F22118B09C8F00C678D1 /* PatrolViewController.h */,
-				E975F22218B09C8F00C678D1 /* PatrolViewController.m */,
-				F68B084E1904B5F800A02087 /* PatrolDetailViewController.h */,
-				F68B084F1904B5F800A02087 /* PatrolDetailViewController.m */,
-				E918962318B1A2CE00AC21D7 /* FaultViewController.h */,
-				E918962418B1A2CE00AC21D7 /* FaultViewController.m */,
-				F65E19D5190661AC00D14741 /* FaultDetailViewController.h */,
-				F65E19D6190661AC00D14741 /* FaultDetailViewController.m */,
-				E918962618B1A40A00AC21D7 /* HygieneViewController.h */,
-				E918962718B1A40A00AC21D7 /* HygieneViewController.m */,
-				F65E19D81906620100D14741 /* HygieneDetailViewController.h */,
-				F65E19D91906620100D14741 /* HygieneDetailViewController.m */,
 				F64BE27619C03517004151D0 /* PersonInfoViewController.h */,
 				F64BE27719C03517004151D0 /* PersonInfoViewController.m */,
-				E918962918B1A54300AC21D7 /* RentViewController.h */,
-				E918962A18B1A54300AC21D7 /* RentViewController.m */,
 				F642482E1945B98D004E6FE8 /* ChooseRegionViewController.h */,
 				F642482F1945B98D004E6FE8 /* ChooseRegionViewController.m */,
-				F66C2A8D1941A07700E49ECD /* PublicReportViewController.h */,
-				F66C2A8E1941A07700E49ECD /* PublicReportViewController.m */,
-				F6206B5A19B577C800854403 /* TeneServiceViewController.h */,
-				F6206B5B19B577C800854403 /* TeneServiceViewController.m */,
-				F6A0514F19B6A19300D1211F /* CommunityViewController.h */,
-				F6A0515019B6A19300D1211F /* CommunityViewController.m */,
-				F66C2A941941A2BB00E49ECD /* TenementViewController.h */,
-				F66C2A951941A2BB00E49ECD /* TenementViewController.m */,
-				E918962C18B20DB500AC21D7 /* SuggestViewController.h */,
-				E918962D18B20DB500AC21D7 /* SuggestViewController.m */,
-				F621829C1948416F00E4456F /* AboutSoftwareViewController.h */,
-				F621829D1948416F00E4456F /* AboutSoftwareViewController.m */,
-				F66A0DBA19493D770083B7E8 /* UserProtocolViewController.h */,
-				F66A0DBB19493D770083B7E8 /* UserProtocolViewController.m */,
 				F6D8C8ED195C299700892669 /* ReportPublishViewController.h */,
 				F6D8C8EE195C299700892669 /* ReportPublishViewController.m */,
-				F6AF7131195C1BDE0012940D /* FaultReportViewController.h */,
-				F6AF7132195C1BDE0012940D /* FaultReportViewController.m */,
-				F64F6BD3195C255200A31729 /* FaultReportDetailViewController.h */,
-				F64F6BD4195C255200A31729 /* FaultReportDetailViewController.m */,
-				F6CB344C1962C1FB004F6FB9 /* SuggestReportViewController.h */,
-				F6CB344D1962C1FB004F6FB9 /* SuggestReportViewController.m */,
-				F6CB344F1962C47F004F6FB9 /* SuggestReportDetailViewController.h */,
-				F6CB34501962C47F004F6FB9 /* SuggestReportDetailViewController.m */,
 			);
 			path = classes;
 			sourceTree = "<group>";
@@ -988,6 +930,96 @@
 				F620985219177333009DEF99 /* ComboBox.m */,
 			);
 			path = ComboBox;
+			sourceTree = "<group>";
+		};
+		F666D04819D2A92E00BE5512 /* tabModule */ = {
+			isa = PBXGroup;
+			children = (
+				F666D04919D2A9BA00BE5512 /* home */,
+				F666D04A19D2A9C600BE5512 /* personalCenter */,
+			);
+			name = tabModule;
+			sourceTree = "<group>";
+		};
+		F666D04919D2A9BA00BE5512 /* home */ = {
+			isa = PBXGroup;
+			children = (
+				F66C2A7619415E4400E49ECD /* HomePageViewController.h */,
+				F66C2A7719415E4400E49ECD /* HomePageViewController.m */,
+				E93333E018ACC3FC0045D2C2 /* ReportFuncViewController.h */,
+				E93333E118ACC3FC0045D2C2 /* ReportFuncViewController.m */,
+				F6A33B6918F68425008CFEC5 /* ReportDetailViewController.h */,
+				F6A33B6A18F68425008CFEC5 /* ReportDetailViewController.m */,
+				F66C2A8D1941A07700E49ECD /* PublicReportViewController.h */,
+				F66C2A8E1941A07700E49ECD /* PublicReportViewController.m */,
+				E975F21918B08F5D00C678D1 /* ArrSearchViewController.h */,
+				E975F21A18B08F5D00C678D1 /* ArrSearchViewController.m */,
+				E975F22118B09C8F00C678D1 /* PatrolViewController.h */,
+				E975F22218B09C8F00C678D1 /* PatrolViewController.m */,
+				F68B084E1904B5F800A02087 /* PatrolDetailViewController.h */,
+				F68B084F1904B5F800A02087 /* PatrolDetailViewController.m */,
+				E918962318B1A2CE00AC21D7 /* FaultViewController.h */,
+				E918962418B1A2CE00AC21D7 /* FaultViewController.m */,
+				F65E19D5190661AC00D14741 /* FaultDetailViewController.h */,
+				F65E19D6190661AC00D14741 /* FaultDetailViewController.m */,
+				E918962618B1A40A00AC21D7 /* HygieneViewController.h */,
+				E918962718B1A40A00AC21D7 /* HygieneViewController.m */,
+				F65E19D81906620100D14741 /* HygieneDetailViewController.h */,
+				F65E19D91906620100D14741 /* HygieneDetailViewController.m */,
+				E924BB2218C70F8E00A5FE6B /* ResidentDocViewController.h */,
+				E924BB2318C70F8E00A5FE6B /* ResidentDocViewController.m */,
+				E93EB99218ADF8E8003E0A6A /* MoveInViewController.h */,
+				E93EB99318ADF8E8003E0A6A /* MoveInViewController.m */,
+				E9748F8118B2F067002D06E3 /* MoveOutViewController.h */,
+				E9748F8218B2F067002D06E3 /* MoveOutViewController.m */,
+				F6AF7131195C1BDE0012940D /* FaultReportViewController.h */,
+				F6AF7132195C1BDE0012940D /* FaultReportViewController.m */,
+				F64F6BD3195C255200A31729 /* FaultReportDetailViewController.h */,
+				F64F6BD4195C255200A31729 /* FaultReportDetailViewController.m */,
+				F6CB344C1962C1FB004F6FB9 /* SuggestReportViewController.h */,
+				F6CB344D1962C1FB004F6FB9 /* SuggestReportViewController.m */,
+				F6CB344F1962C47F004F6FB9 /* SuggestReportDetailViewController.h */,
+				F6CB34501962C47F004F6FB9 /* SuggestReportDetailViewController.m */,
+				F6206B5A19B577C800854403 /* TeneServiceViewController.h */,
+				F6206B5B19B577C800854403 /* TeneServiceViewController.m */,
+				F6A0514F19B6A19300D1211F /* CommunityViewController.h */,
+				F6A0515019B6A19300D1211F /* CommunityViewController.m */,
+				F66C2A941941A2BB00E49ECD /* TenementViewController.h */,
+				F66C2A951941A2BB00E49ECD /* TenementViewController.m */,
+			);
+			name = home;
+			sourceTree = "<group>";
+		};
+		F666D04A19D2A9C600BE5512 /* personalCenter */ = {
+			isa = PBXGroup;
+			children = (
+				F66C2A7C19415EA200E49ECD /* MyAccountViewController.h */,
+				F66C2A7D19415EA200E49ECD /* MyAccountViewController.m */,
+				E922AD9618BC809800F87BAA /* ListRegionViewController.h */,
+				E922AD9718BC809800F87BAA /* ListRegionViewController.m */,
+				F621829C1948416F00E4456F /* AboutSoftwareViewController.h */,
+				F621829D1948416F00E4456F /* AboutSoftwareViewController.m */,
+				F66A0DBA19493D770083B7E8 /* UserProtocolViewController.h */,
+				F66A0DBB19493D770083B7E8 /* UserProtocolViewController.m */,
+			);
+			name = personalCenter;
+			sourceTree = "<group>";
+		};
+		F666D04B19D2AAAB00BE5512 /* others */ = {
+			isa = PBXGroup;
+			children = (
+				F66C2A7919415E8800E49ECD /* OAWorkViewController.h */,
+				F66C2A7A19415E8800E49ECD /* OAWorkViewController.m */,
+				F648F07418EAAF520027EB27 /* PersonInfoDetailViewController.h */,
+				F648F07518EAAF520027EB27 /* PersonInfoDetailViewController.m */,
+				E918962918B1A54300AC21D7 /* RentViewController.h */,
+				E918962A18B1A54300AC21D7 /* RentViewController.m */,
+				E918962C18B20DB500AC21D7 /* SuggestViewController.h */,
+				E918962D18B20DB500AC21D7 /* SuggestViewController.m */,
+				E975F21E18B0996600C678D1 /* CheckInViewController.h */,
+				E975F21F18B0996600C678D1 /* CheckInViewController.m */,
+			);
+			name = others;
 			sourceTree = "<group>";
 		};
 		F66A0DBD194947930083B7E8 /* GTMBase64 */ = {
@@ -1429,7 +1461,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -1461,7 +1493,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

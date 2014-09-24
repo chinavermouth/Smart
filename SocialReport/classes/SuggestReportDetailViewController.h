@@ -29,6 +29,7 @@
     NSDictionary *respDic;
     NSMutableArray *imgAry;  // 存储图片数组，用于浏览
     ToolDrawerView *myToolBarDrawerView;
+    NSString *phoneNum;
     
     UILabel *titleLbl;       // 标题
     UILabel *authorLbl;      // 作者

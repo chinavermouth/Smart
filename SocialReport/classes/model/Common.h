@@ -18,7 +18,7 @@
 #define HTTPURL_LOGIN                      @"http://app.pmsaas.net/IApp3/Login"        // 用户登录
 #define HTTPURL_LISTREGION                 @"http://app.pmsaas.net/IApp3/GetOrgs"      // 列出小区
 #define HTTPURL_LISTBUILDING               @"http://app.pmsaas.net/IApp3/GetBuildings"     // 列出楼宇
-#define HTTPURL_ARRSEARCH                  @"http://app.pmsaas.net/IApp3/GetRoomArrears"       // 欠费查询
+#define HTTPURL_ARRSEARCH                  @"http://app.pmsaas.net/IApp3/GetCharge"       // 欠费查询
 #define HTTPURL_LISTROOM                   @"http://app.pmsaas.net/IApp3/GetRooms"     // 列出房间
 #define HTTPURL_LISTPERSON                 @"http://app.pmsaas.net/IApp3/GetRoomClient"     // 列出使用人或者业主信息
 #define HTTPURL_MOVEIN                     @"http://app.pmsaas.net/IApp3/RegisterIDCard"      // 人员入住

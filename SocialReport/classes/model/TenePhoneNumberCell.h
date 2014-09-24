@@ -11,6 +11,7 @@
 @interface TenePhoneNumberCell : UITableViewCell
 
 @property (nonatomic, retain)UILabel *phoneNumLbl;
+@property (nonatomic, retain)UIImageView *rightDelImg;
 @property (nonatomic, retain)UIButton *rightDelBtn;
 
 @end

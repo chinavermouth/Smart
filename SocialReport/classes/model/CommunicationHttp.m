@@ -643,7 +643,7 @@
             
             // get response
             NSString* respString = [request responseString];
-//            NSLog(@"respString = %@",respString);
+            NSLog(@"arrSearchRequest respString = %@",respString);
             NSDictionary *dicResult = [respString JSONValue];
             
             return dicResult;
@@ -1053,7 +1053,7 @@
             
             // get response
             NSString* respString = [request responseString];
-            NSLog(@"pubInformationRequest respString = %@",respString);
+//            NSLog(@"pubInformationRequest respString = %@",respString);
             NSDictionary *dicResult = [respString JSONValue];
             
             return dicResult;
@@ -1098,7 +1098,7 @@
             
             // get response
             NSString* respString = [request responseString];
-            NSLog(@"comInformationRequest respString = %@",respString);
+//            NSLog(@"comInformationRequest respString = %@",respString);
             NSDictionary *dicResult = [respString JSONValue];
             
             return dicResult;
@@ -1177,7 +1177,7 @@
             
             // get response
             NSString* respString = [request responseString];
-            NSLog(@"getTenantInfoRequest respString = %@",respString);
+//            NSLog(@"getTenantInfoRequest respString = %@",respString);
             NSDictionary *dicResult = [respString JSONValue];
             
             return dicResult;

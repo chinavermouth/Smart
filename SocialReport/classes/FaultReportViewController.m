@@ -118,7 +118,7 @@ NSString *const faultReportCellIdentifier = @"faultReportCellIdentifier";
     // 设置请求URL
     NSString *strRequestURL;
     strRequestURL = [NSString stringWithFormat:@"%@?communityCode=%@&Type=%@&Index=1&pageIndex=%d&pageSize=7&UID=%@", HTTPURL_GETFEEDBACKS, [[NSUserDefaults standardUserDefaults] objectForKey:COMMUNITYCODE],@"故障申告", pageIndex++, [[NSUserDefaults standardUserDefaults] objectForKey:UID]];
-    NSLog(@"getReportInfo strRequestURL = %@",strRequestURL);
+//    NSLog(@"getReportInfo strRequestURL = %@",strRequestURL);
     
     __block NSMutableDictionary *dicRespData;
     
@@ -267,7 +267,7 @@ NSString *const faultReportCellIdentifier = @"faultReportCellIdentifier";
         imageBtn.frame = frame;
         [imageBtn addTarget:self action:@selector(showImageFunc:) forControlEvents:UIControlEventTouchUpInside];
         imageUrl = [NSString stringWithFormat:@"%@%@", HTTPURL_IMAGEDATABASE, [[[[faultListData objectAtIndex:indexPath.row] objectForKey:@"ImageList"] objectAtIndex:i] objectForKey:@"Src"]];
-        NSLog(@"imageUrl: %@",imageUrl);
+//        NSLog(@"imageUrl: %@",imageUrl);
         
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsDirectory = [paths objectAtIndex:0];    // 找到document目录

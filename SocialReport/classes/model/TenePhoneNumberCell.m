@@ -11,7 +11,7 @@
 
 @implementation TenePhoneNumberCell
 
-@synthesize phoneNumLbl = _phoneNumLbl, rightDelBtn = _rightDelBtn;
+@synthesize phoneNumLbl = _phoneNumLbl, rightDelImg = _rightDelImg, rightDelBtn = _rightDelBtn;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -23,8 +23,10 @@
         [self addSubview:_phoneNumLbl];
         
         _rightDelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_rightDelBtn setImage:[UIImage imageNamed:@"teneMinus"] forState:UIControlStateNormal];
         [self addSubview:_rightDelBtn];
+        
+        _rightDelImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"teneMinus"]];
+        [_rightDelBtn addSubview:_rightDelImg];
     }
     return self;
 }
@@ -39,10 +41,17 @@
     frame.size.height = 20;
     _phoneNumLbl.frame = frame;
     
-    frame.origin.x = SCREEN_SIZE.width - 17 - 20;
+    frame.origin.x = SCREEN_SIZE.width - 17 - 50;
+    frame.origin.y = 0;
+    frame.size.width = 50 + 17;
+    frame.size.height = 40;
+    _rightDelBtn.frame = frame;
+    
+    frame.origin.x = 30;
+    frame.origin.y = 10;
     frame.size.width = 20;
     frame.size.height = 20;
-    _rightDelBtn.frame = frame;
+    _rightDelImg.frame = frame;
 }
 
 - (void)awakeFromNib
