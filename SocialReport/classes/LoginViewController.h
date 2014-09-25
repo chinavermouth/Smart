@@ -10,8 +10,10 @@
 #import "MBProgressHUD.h"
 #import "CommunicationHttp.h"
 #import "LeenToast.h"
+#import "CustomIOS7AlertView.h"
 
-@interface LoginViewController : UIViewController <MBProgressHUDDelegate, UITextFieldDelegate, UIAlertViewDelegate>
+
+@interface LoginViewController : UIViewController <MBProgressHUDDelegate, UITextFieldDelegate, UIAlertViewDelegate, CustomIOS7AlertViewDelegate>
 {
     MBProgressHUD *HUD;
     LeenToast *myLeenToast;
@@ -21,6 +23,7 @@
     NSDictionary *strRespString;        // 回复数据
     NSString *isAutoLogin;        // 是否自动登录
     
+    CustomIOS7AlertView *myAltView;
     UITextField *accountNameText;       // 用户名
     UITextField *pwdText;       // 密码
     UIButton *autoLoginBtn;       // 记住密码

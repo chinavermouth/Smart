@@ -73,6 +73,8 @@ NSString *const CellIdentifier = @"cellIdentifier";
     headViewImg.frame = CGRectMake(0, 0, 320, 200);
     self.tableView.tableHeaderView = headViewImg;
 
+    if(SYSTEM_VERSION >= 8.0)
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 - (void)didReceiveMemoryWarning

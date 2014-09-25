@@ -84,6 +84,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideTabBarFunc) name:@"hideTabBarNotification" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTabBarFunc) name:@"showTabBarNotification" object:nil];
+    
 }
 
 - (void)didReceiveMemoryWarning
